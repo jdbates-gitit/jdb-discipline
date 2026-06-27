@@ -1,0 +1,46 @@
+name: Daily Discipline
+
+on:
+  schedule:
+    # Window target: 2-5 AM CT. GitHub cron is UTC and fires late, so we cast
+    # crons across the early-morning UTC hours that map into the CT window
+    # (and its CST/CDT shift), and the Python gate runs only the first one
+    # that lands in 2:00-5:59 AM CT.
+    # CDT (UTC-5): 2 AM CT = 07 UTC ... 5 AM CT = 10 UTC
+    # CST (UTC-6): 2 AM CT = 08 UTC ... 5 AM CT = 11 UTC
+    - cron: '0 7 * * *'
+    - cron: '0 8 * * *'
+    - cron: '0 9 * * *'
+    - cron: '0 10 * * *'
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-discipline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run discipline script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUN_NOW: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+        run: python discipline_dashboard.py
+      - name: Commit and push updated dashboard
+        run: |
+          git config --global user.email "jdbates@gmail.com"
+          git config --global user.name "jdbates-gitit"
+          git add index.html run_state.json
+          git diff --staged --quiet || git commit -m "auto-update daily discipline"
+          git push
