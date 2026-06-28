@@ -156,6 +156,14 @@ def build_html(num, verse, refl):
     -webkit-font-smoothing:antialiased;padding:0 0 60px}}
   a{{color:inherit;text-decoration:none}}
   .wrap{{max-width:760px;margin:0 auto;padding:0 28px}}
+  .topnav{{display:flex;align-items:center;justify-content:space-between;
+    padding:16px 0;border-bottom:1px solid var(--line-2)}}
+  .topnav .home{{font-family:var(--mono);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-dim);transition:color .2s}}
+  .topnav .home span{{color:var(--brass);font-weight:600}}
+  .topnav .home:hover{{color:var(--brass)}}
+  .topnav .here{{font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:14px;color:var(--ink-dim)}}
   .top{{padding:56px 0 28px;border-bottom:1px solid var(--line-2);margin-bottom:40px}}
   .top .kicker{{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass);margin-bottom:14px}}
   .top h1{{font-family:var(--display);font-weight:330;font-size:clamp(34px,5vw,52px);letter-spacing:-.02em;line-height:1.04}}
@@ -189,6 +197,11 @@ def build_html(num, verse, refl):
 </head>
 <body>
 <div class="wrap">
+
+  <div class="topnav">
+    <a class="home" href="https://jdb-builds.com"><span>JDB</span> · Home</a>
+    <span class="here">Daily Discipline</span>
+  </div>
 
   <div class="top">
     <div class="kicker">Daily Discipline</div>
