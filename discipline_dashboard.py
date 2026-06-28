@@ -55,7 +55,7 @@ def gate():
     now = datetime.datetime.now(ZoneInfo("America/Chicago"))
     today = now.strftime("%Y-%m-%d")
     hour = now.hour
-    if not (2 <= hour < 6):  # window 2:00-5:59 AM CT (generous tail past 5)
+    if not (4 <= hour < 9):  # window 4:00-8:59 AM CT (absorbs GitHub cron lag)
         log(f"Outside run window (CT hour={hour}). Exiting cleanly.")
         sys.exit(0)
     state = {"date": today, "morning": False}
