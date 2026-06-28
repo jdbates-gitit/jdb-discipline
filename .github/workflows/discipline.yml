@@ -41,6 +41,7 @@ jobs:
         run: |
           git config --global user.email "jdbates@gmail.com"
           git config --global user.name "jdbates-gitit"
-          git add index.html run_state.json
+          git add index.html
+          if [ -f run_state.json ]; then git add run_state.json; fi
           git diff --staged --quiet || git commit -m "auto-update daily discipline"
           git push
