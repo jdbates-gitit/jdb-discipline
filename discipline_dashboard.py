@@ -33,6 +33,31 @@ STATE_FILE = HERE / "run_state.json"
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 MODEL = "claude-haiku-4-5-20251001"
 
+# ---------------------------------------------------------------------------
+# Companion-text sources. Pluggable: add a new dict here (id, file, label,
+# relationship) and it's picked up automatically -- no other code changes
+# needed. "relationship" controls how the Claude prompt frames the day's
+# pairing against the Tao chapter:
+#   complement  -- same lineage, different mode (e.g. story vs. aphorism)
+#   convergence -- independent tradition, same insight anyway
+#   opposite    -- opposite prescription, same underlying diagnosis
+COMPANION_SOURCES = [
+    {
+        "id": "chuangtzu",
+        "file": HERE / "sources" / "chuangtzu.json",
+        "label": "Chuang Tzu",
+        "sublabel": "same root, different voice",
+        "relationship": "complement",
+    },
+    {
+        "id": "heraclitus",
+        "file": HERE / "sources" / "heraclitus.json",
+        "label": "Heraclitus",
+        "sublabel": "no contact, same mountain",
+        "relationship": "convergence",
+    },
+]
+
 # Launchpad sources (we link, never reproduce — these are copyrighted)
 LINKS = {
     "aa_reflection": "https://www.aa.org/daily-reflections",
@@ -95,6 +120,110 @@ def pick_chapter(tao):
     return num, tao[num]
 
 
+# ---------------------------------------------------------------------------
+# Companion text selection + Claude reflection
+# ---------------------------------------------------------------------------
+def pick_companion():
+    # Even-weight pick of which companion source pairs with today's Tao
+    # chapter, then a random passage from within that source. Missing/empty
+    # source files are skipped gracefully -- if you've only built one of
+    # the two sources.json files so far, this still works with just that one.
+    available = [s for s in COMPANION_SOURCES if s["file"].exists()]
+    if not available:
+        return None
+    source = random.choice(available)
+    with open(source["file"], "r", encoding="utf-8") as f:
+        passages = json.load(f)
+    if not passages:
+        return None
+    passage_id = random.choice(list(passages.keys()))
+    entry = passages[passage_id]
+    # Support both the {id: "text"} shape (Heraclitus) and the
+    # {id: {"title":..., "text":...}} shape (Chuang Tzu chapters).
+    if isinstance(entry, dict):
+        passage_text = entry.get("text", "")
+        passage_title = entry.get("title")
+    else:
+        passage_text = entry
+        passage_title = None
+    return {
+        "source": source,
+        "passage_id": passage_id,
+        "passage_title": passage_title,
+        "passage_text": passage_text,
+    }
+
+
+RELATIONSHIP_FRAMING = {
+    "complement": (
+        "This companion text (Chuang Tzu) comes from the SAME Taoist lineage "
+        "as the Tao Te Ching, sharing its commitment to non-striving -- but "
+        "taught through story, parable, and dream rather than compressed "
+        "aphorism. Your closing line should note how the same teaching is "
+        "being carried by a different mode (story vs. aphorism), not a "
+        "different claim. Be specific to what was actually pulled today, "
+        "not a generic 'both are wise' statement."
+    ),
+    "convergence": (
+        "This companion text (Heraclitus) comes from an INDEPENDENT "
+        "tradition -- pre-Socratic Greek, no historical contact with "
+        "Taoism whatsoever -- yet converges on strikingly similar "
+        "conclusions about flux, the unity of opposites, and an underlying "
+        "order to things. Your closing line should make that independence "
+        "the point: these traditions never touched, and the insight showed "
+        "up anyway. Be specific to what was actually pulled today, not a "
+        "generic 'great minds think alike' statement."
+    ),
+    "opposite": (
+        "This companion text comes from a tradition that reaches a similar "
+        "diagnosis but an OPPOSITE prescription. Name the actual mechanism "
+        "of that opposition plainly and specifically -- not a vague "
+        "'different perspectives' gesture."
+    ),
+}
+
+
+def reflect_companion(client, tao_num, tao_verse, companion):
+    source = companion["source"]
+    label = source["label"]
+    relationship = source["relationship"]
+    framing = RELATIONSHIP_FRAMING.get(relationship, "")
+    title_line = f" ({companion['passage_title']})" if companion["passage_title"] else ""
+
+    prompt = f"""You are contributing to a private morning contemplative dashboard for one person who has a long daily Tao Te Ching practice and is active in AA recovery.
+
+Today's Tao Te Ching chapter (Chapter {tao_num}, Legge translation):
+\"\"\"
+{tao_verse}
+\"\"\"
+
+Today's companion passage, from {label}{title_line}:
+\"\"\"
+{companion['passage_text']}
+\"\"\"
+
+{framing}
+
+Return ONLY a JSON object, no preamble, no markdown fences, with exactly these keys:
+
+{{
+  "interpretation": "A plain-language interpretation of what THIS companion passage is pointing at, on its own terms. 3-4 sentences. Clear, grounded, no jargon.",
+  "reflection": "A reflection reading this companion passage against contemporary life, in the same register as a Tao reflection -- contemplative, non-partisan, no political sides or named figures. 3-4 sentences.",
+  "connection": "One explicit closing line naming the SPECIFIC tension or convergence between today's Tao chapter and today's companion passage -- the actual mechanism, using concrete images from both texts, not a templated or generic sentence. 2-3 sentences."
+}}
+
+Write with warmth and depth but economy. This is for quiet morning reflection."""
+
+    msg = client.messages.create(
+        model=MODEL,
+        max_tokens=900,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    text = "".join(b.text for b in msg.content if hasattr(b, "text")).strip()
+    text = text.replace("```json", "").replace("```", "").strip()
+    return json.loads(text)
+
+
 def reflect(client, num, verse):
     prompt = f"""You are contributing to a private morning contemplative dashboard for one person who has a long daily Tao Te Ching practice and is active in AA recovery. Today's randomly selected chapter is Chapter {num}, in James Legge's 1891 translation:
 
@@ -130,7 +259,38 @@ def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
-def build_html(num, verse, refl):
+def build_companion_html(companion, comp_refl):
+    if not companion:
+        return ""
+    source = companion["source"]
+    verse_html = "".join(f"<p>{esc(p)}</p>" for p in companion["passage_text"].split("\n\n") if p.strip())
+    title_html = f'<div class="chno">{esc(companion["passage_title"])}</div>' if companion["passage_title"] else ""
+    return f"""
+  <div class="tao companion">
+    <div class="eyebrow">{esc(source['label'])} \u00b7 {esc(source['sublabel'])}</div>
+    {title_html}
+
+    <div class="verse">{verse_html}</div>
+
+    <div class="movement">
+      <h4>What it's pointing at</h4>
+      <p>{esc(comp_refl['interpretation'])}</p>
+    </div>
+
+    <div class="movement">
+      <h4>Read against today</h4>
+      <p>{esc(comp_refl['reflection'])}</p>
+    </div>
+
+    <div class="movement meditation">
+      <h4>The thread between them</h4>
+      <p>{esc(comp_refl['connection'])}</p>
+    </div>
+  </div>
+"""
+
+
+def build_html(num, verse, refl, companion=None, comp_refl=None):
     now = datetime.datetime.now(ZoneInfo("America/Chicago"))
     datestr = now.strftime("%A, %B %-d, %Y") if os.name != "nt" else now.strftime("%A, %B %d, %Y")
     verse_html = "".join(f"<p>{esc(p)}</p>" for p in verse.split("\n\n") if p.strip())
@@ -180,6 +340,7 @@ def build_html(num, verse, refl):
   .card-link:hover .go{{color:var(--brass)}}
 
   .tao{{margin-top:34px;border-top:1px solid var(--line-2);padding-top:40px}}
+  .tao.companion{{margin-top:40px}}
   .tao .eyebrow{{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}}
   .tao .chno{{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(26px,4vw,40px);color:var(--ink);margin-bottom:24px}}
   .verse{{border-left:2px solid var(--brass);padding:4px 0 4px 26px;margin:0 0 36px}}
@@ -269,7 +430,7 @@ def build_html(num, verse, refl):
       <p>{esc(refl['meditation'])}</p>
     </div>
   </div>
-
+{build_companion_html(companion, comp_refl)}
   <footer>
     Daily Discipline \u00b7 jdb-builds.com<br>
     Tao Te Ching, James Legge translation (1891, public domain) \u00b7 Reflection generated fresh each morning<br>
@@ -307,7 +468,19 @@ def main():
         log(f"Reflection generation failed: {e}")
         sys.exit(1)
 
-    html = build_html(num, verse, refl)
+    companion = pick_companion()
+    comp_refl = None
+    if companion:
+        log(f"Companion pick: {companion['source']['label']} \u2014 {companion['passage_id']}")
+        try:
+            comp_refl = reflect_companion(client, num, verse, companion)
+        except Exception as e:
+            log(f"Companion reflection failed (continuing without it): {e}")
+            companion = None
+    else:
+        log("No companion source files found yet -- skipping companion section.")
+
+    html = build_html(num, verse, refl, companion, comp_refl)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     log(f"Built dashboard -> {OUTPUT_FILE}")
