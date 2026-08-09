@@ -14,6 +14,7 @@
 # Windowed run gate (2-5 AM CT) handles GitHub Actions cron lag.
 
 import os
+import re
 import sys
 import json
 import random
@@ -125,33 +126,75 @@ def pick_chapter(tao):
 # ---------------------------------------------------------------------------
 def pick_companion():
     # Even-weight pick of which companion source pairs with today's Tao
-    # chapter, then a random passage from within that source. Missing/empty
-    # source files are skipped gracefully -- if you've only built one of
-    # the two sources.json files so far, this still works with just that one.
+    # chapter, then a random passage from within that source. If a source
+    # file is missing OR empty, we fall back to trying the other available
+    # source rather than silently skipping the companion section for the
+    # whole day.
     available = [s for s in COMPANION_SOURCES if s["file"].exists()]
-    if not available:
-        return None
-    source = random.choice(available)
-    with open(source["file"], "r", encoding="utf-8") as f:
-        passages = json.load(f)
-    if not passages:
-        return None
-    passage_id = random.choice(list(passages.keys()))
-    entry = passages[passage_id]
-    # Support both the {id: "text"} shape (Heraclitus) and the
-    # {id: {"title":..., "text":...}} shape (Chuang Tzu chapters).
-    if isinstance(entry, dict):
-        passage_text = entry.get("text", "")
-        passage_title = entry.get("title")
-    else:
-        passage_text = entry
-        passage_title = None
-    return {
-        "source": source,
-        "passage_id": passage_id,
-        "passage_title": passage_title,
-        "passage_text": passage_text,
-    }
+    random.shuffle(available)
+    for source in available:
+        with open(source["file"], "r", encoding="utf-8") as f:
+            passages = json.load(f)
+        if not passages:
+            log(f"Companion source '{source['id']}' is empty -- trying next available source.")
+            continue
+        passage_id = random.choice(list(passages.keys()))
+        entry = passages[passage_id]
+        # Support both the {id: "text"} shape (Heraclitus) and the
+        # {id: {"title":..., "text":...}} shape (Chuang Tzu chapters).
+        if isinstance(entry, dict):
+            passage_text = entry.get("text", "")
+            passage_title = entry.get("title")
+        else:
+            passage_text = entry
+            passage_title = None
+
+        # Strip stray footnote reference markers (e.g. "[441]") left over
+        # from the Gutenberg source's <sup> footnote links.
+        passage_text = re.sub(r"\[\d{1,3}\]", "", passage_text)
+        passage_text = re.sub(r"[ \t]{2,}", " ", passage_text)
+
+        passage_text, excerpted = trim_to_excerpt(passage_text)
+        if excerpted and passage_title:
+            passage_title = f"{passage_title} (excerpt)"
+
+        return {
+            "source": source,
+            "passage_id": passage_id,
+            "passage_title": passage_title,
+            "passage_text": passage_text,
+        }
+
+    return None  # every available source was missing or empty
+
+
+EXCERPT_TARGET_CHARS = 1100  # roughly comparable weight to a Tao chapter
+
+
+def trim_to_excerpt(text):
+    # Some source chapters (Chuang Tzu especially -- lengths vary from a
+    # short parable to a multi-thousand-word essay) are far too long to
+    # show whole. If a passage is long, pick a random contiguous run of
+    # paragraphs from within it instead of the whole thing, so every
+    # companion pull stays roughly comparable in weight to a Tao chapter.
+    if len(text) <= EXCERPT_TARGET_CHARS:
+        return text, False
+
+    paras = [p for p in text.split("\n\n") if p.strip()]
+    if len(paras) <= 1:
+        # No paragraph breaks to work with -- just take a leading slice.
+        cut = text[:EXCERPT_TARGET_CHARS].rsplit(" ", 1)[0]
+        return cut + "...", True
+
+    start = random.randrange(len(paras))
+    chunk = [paras[start]]
+    total = len(paras[start])
+    i = start + 1
+    while total < EXCERPT_TARGET_CHARS and i < len(paras):
+        chunk.append(paras[i])
+        total += len(paras[i])
+        i += 1
+    return "\n\n".join(chunk), True
 
 
 RELATIONSHIP_FRAMING = {
