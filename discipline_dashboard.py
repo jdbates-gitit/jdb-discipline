@@ -11,7 +11,7 @@
 #        today's world, and a short meditation to carry.
 #
 # Reads Legge text ONLY from local tao_te_ching_legge.json (no outside source).
-# Windowed run gate (2-5 AM CT) handles GitHub Actions cron lag.
+# The first scheduled run each day claims the date; later retries exit cleanly.
 
 import os
 import re
@@ -73,17 +73,14 @@ def log(msg):
 
 
 # ---------------------------------------------------------------------------
-# Windowed run gate (2-5 AM CT). Mirrors the proven jdb-dashboard pattern.
+# First-run-of-the-day gate. Scheduled runs may arrive late, so the date in
+# run_state.json -- not the wall clock -- decides whether work is needed.
 # ---------------------------------------------------------------------------
 def gate():
     if os.environ.get("RUN_NOW") == "1":
         return
     now = datetime.datetime.now(ZoneInfo("America/Chicago"))
     today = now.strftime("%Y-%m-%d")
-    hour = now.hour
-    if not (4 <= hour < 9):  # window 4:00-8:59 AM CT (absorbs GitHub cron lag)
-        log(f"Outside run window (CT hour={hour}). Exiting cleanly.")
-        sys.exit(0)
     state = {"date": today, "morning": False}
     try:
         with open(STATE_FILE, "r", encoding="utf-8") as f:
@@ -476,8 +473,9 @@ def build_html(num, verse, refl, companion=None, comp_refl=None):
 {build_companion_html(companion, comp_refl)}
   <footer>
     Daily Discipline \u00b7 jdb-builds.com<br>
-    Tao Te Ching, James Legge translation (1891, public domain) \u00b7 Reflection generated fresh each morning<br>
-    Reflection, Twenty-Four Hours, and Grapevine link to their sources \u2014 please support them
+    Tao Te Ching, James Legge translation (1891, public domain) \u00b7 Fresh reflection generated each morning<br>
+    Each morning pairs the Tao at random with Chuang Tzu \u2014 the same lineage told through story \u2014 or Heraclitus \u2014 an independent Greek tradition \u2014 then names the specific thread between them<br>
+    Daily Reflection, Twenty-Four Hours, and Grapevine link to their sources \u2014 please support them
   </footer>
 
 </div>

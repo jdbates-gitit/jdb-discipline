@@ -2,12 +2,9 @@ name: Daily Discipline
 
 on:
   schedule:
-    # Window target: 2-5 AM CT. GitHub cron is UTC and fires late, so we cast
-    # crons across the early-morning UTC hours that map into the CT window
-    # (and its CST/CDT shift), and the Python gate runs only the first one
-    # that lands in 2:00-5:59 AM CT.
-    # CDT (UTC-5): 2 AM CT = 07 UTC ... 5 AM CT = 10 UTC
-    # CST (UTC-6): 2 AM CT = 08 UTC ... 5 AM CT = 11 UTC
+    # Multiple early-morning attempts provide redundancy across CST/CDT and
+    # GitHub scheduling delays. The Python date gate lets the first run that
+    # actually starts each day proceed; later attempts exit cleanly.
     - cron: '0 7 * * *'
     - cron: '0 8 * * *'
     - cron: '0 9 * * *'
