@@ -41,6 +41,7 @@ MODEL = "claude-haiku-4-5-20251001"
 # pairing against the Tao chapter:
 #   complement  -- same lineage, different mode (e.g. story vs. aphorism)
 #   convergence -- independent tradition, same insight anyway
+#   counterweight -- practical agency set against acceptance and non-forcing
 #   opposite    -- opposite prescription, same underlying diagnosis
 COMPANION_SOURCES = [
     {
@@ -56,6 +57,13 @@ COMPANION_SOURCES = [
         "label": "Heraclitus",
         "sublabel": "no contact, same mountain",
         "relationship": "convergence",
+    },
+    {
+        "id": "epictetus",
+        "file": HERE / "sources" / "epictetus.json",
+        "label": "Epictetus",
+        "sublabel": "freedom at the boundary of choice",
+        "relationship": "counterweight",
     },
 ]
 
@@ -145,6 +153,7 @@ def passage_from_entry(source, passage_id, entry, excerpt_target=None):
     return {
         "source": source,
         "passage_id": str(passage_id),
+        "selection_key": f"{source['id']}:{passage_id}",
         "passage_title": passage_title,
         "passage_text": passage_text,
     }
@@ -155,15 +164,25 @@ def load_source(source):
         return json.load(f)
 
 
+def balanced_companion_sources(available, day=None):
+    # Each block of days contains every available companion exactly once, in
+    # a deterministic shuffled order. This prevents long random droughts for
+    # any voice while keeping the order from feeling like a fixed calendar.
+    if not available:
+        return []
+    day = day or datetime.datetime.now(ZoneInfo("America/Chicago")).date()
+    cycle, position = divmod(day.toordinal(), len(available))
+    shuffled = sorted(available, key=lambda source: source["id"])
+    random.Random(cycle).shuffle(shuffled)
+    return shuffled[position:] + shuffled[:position]
+
+
 def pick_companion():
-    # Even-weight pick of which companion source pairs with today's Tao
-    # chapter, then a random passage from within that source. If a source
-    # file is missing OR empty, we fall back to trying the other available
-    # source rather than silently skipping the companion section for the
-    # whole day.
+    # The source follows a balanced daily rotation; its passage remains a
+    # fresh random pull. If the scheduled source is empty, try the next voice
+    # in today's order rather than losing the whole companion section.
     available = [s for s in COMPANION_SOURCES if s["file"].exists()]
-    random.shuffle(available)
-    for source in available:
+    for source in balanced_companion_sources(available):
         passages = load_source(source)
         if not passages:
             log(f"Companion source '{source['id']}' is empty -- trying next available source.")
@@ -176,7 +195,7 @@ def pick_companion():
 
 EXCERPT_TARGET_CHARS = 1100  # roughly comparable weight to a Tao chapter
 ECHO_TARGET_CHARS = 520      # a counterpoint, not a second full companion
-ECHO_CANDIDATE_COUNT = {"heraclitus": 8, "chuangtzu": 4}
+ECHO_CANDIDATE_COUNT = {"heraclitus": 8, "chuangtzu": 4, "epictetus": 5}
 
 
 def trim_to_excerpt(text, target=EXCERPT_TARGET_CHARS):
@@ -209,30 +228,26 @@ def trim_to_excerpt(text, target=EXCERPT_TARGET_CHARS):
 
 
 def pick_echo_candidates(companion):
-    # The full companion alternates between Chuang Tzu and Heraclitus. The
-    # remaining author supplies a short echo. Claude chooses from a small
-    # random candidate set by thematic fit, so the echo is not merely another
-    # unrelated random quotation.
+    # The other two authors each offer a small candidate set. Claude chooses
+    # one passage by thematic fit or productive tension, so the echo is not
+    # merely another unrelated random quotation.
     remaining = [
         source for source in COMPANION_SOURCES
         if source["id"] != companion["source"]["id"] and source["file"].exists()
     ]
-    if not remaining:
-        return []
-
-    source = remaining[0]
-    passages = load_source(source)
-    if not passages:
-        return []
-
-    count = min(ECHO_CANDIDATE_COUNT.get(source["id"], 4), len(passages))
-    passage_ids = random.sample(list(passages.keys()), count)
-    return [
-        passage_from_entry(
-            source, passage_id, passages[passage_id], ECHO_TARGET_CHARS
-        )
-        for passage_id in passage_ids
-    ]
+    candidates = []
+    for source in remaining:
+        passages = load_source(source)
+        if not passages:
+            continue
+        count = min(ECHO_CANDIDATE_COUNT.get(source["id"], 4), len(passages))
+        for passage_id in random.sample(list(passages.keys()), count):
+            candidates.append(
+                passage_from_entry(
+                    source, passage_id, passages[passage_id], ECHO_TARGET_CHARS
+                )
+            )
+    return candidates
 
 
 RELATIONSHIP_FRAMING = {
@@ -240,7 +255,7 @@ RELATIONSHIP_FRAMING = {
         "This companion text (Chuang Tzu) comes from the SAME Taoist lineage "
         "as the Tao Te Ching, sharing its commitment to non-striving -- but "
         "taught through story, parable, and dream rather than compressed "
-        "aphorism. Your closing line should note how the same teaching is "
+        "aphorism. The Confluence should note how the same teaching is "
         "being carried by a different mode (story vs. aphorism), not a "
         "different claim. Be specific to what was actually pulled today, "
         "not a generic 'both are wise' statement."
@@ -250,10 +265,20 @@ RELATIONSHIP_FRAMING = {
         "tradition -- pre-Socratic Greek, no historical contact with "
         "Taoism whatsoever -- yet converges on strikingly similar "
         "conclusions about flux, the unity of opposites, and an underlying "
-        "order to things. Your closing line should make that independence "
+        "order to things. The Confluence should make that independence "
         "the point: these traditions never touched, and the insight showed "
         "up anyway. Be specific to what was actually pulled today, not a "
         "generic 'great minds think alike' statement."
+    ),
+    "counterweight": (
+        "This companion text (Epictetus) brings a DISTINCT Stoic emphasis: "
+        "freedom through the disciplined use of judgment, desire, and choice. "
+        "Let it create useful friction with Taoist non-forcing and acceptance "
+        "rather than translating it into Taoist language. Epictetus is direct "
+        "and practical, sometimes stern, but he is not advocating emotional "
+        "suppression, hustle culture, or indifference to other people. Preserve "
+        "the boundary he draws between what happens and the character of our "
+        "response. Be specific to today's actual passages."
     ),
     "opposite": (
         "This companion text comes from a tradition that reaches a similar "
@@ -269,12 +294,15 @@ def reflect_confluence(client, tao_num, tao_verse, companion, echo_candidates):
     label = source["label"]
     framing = RELATIONSHIP_FRAMING.get(source["relationship"], "")
     title_line = f" ({companion['passage_title']})" if companion["passage_title"] else ""
-    echo_source = echo_candidates[0]["source"]
+    echo_labels = ", ".join(dict.fromkeys(
+        candidate["source"]["label"] for candidate in echo_candidates
+    ))
     candidates = []
     for candidate in echo_candidates:
         candidate_title = f" — {candidate['passage_title']}" if candidate["passage_title"] else ""
         candidates.append(
-            f"ID {candidate['passage_id']}{candidate_title}:\n{candidate['passage_text']}"
+            f"KEY {candidate['selection_key']}{candidate_title}:\n"
+            f"{candidate['passage_text']}"
         )
     candidate_text = "\n\n---\n\n".join(candidates)
 
@@ -292,10 +320,14 @@ Today's FULL companion passage, from {label}{title_line}:
 
 {framing}
 
-Choose one SHORT echo from {echo_source['label']} from the candidates below.
+Choose one SHORT echo from the other available voices ({echo_labels}) below.
 Choose by genuine resonance or productive tension with BOTH the Tao anchor and
 the full companion. Do not force agreement. The echo author should remain a
 distinct third voice, not a source of decorative quotation.
+
+Whenever Epictetus appears, preserve his real emphasis on judgment, desire,
+choice, and responsibility. Do not flatten him into emotional suppression,
+internet Stoicism, hustle culture, or a generic version of the Serenity Prayer.
 
 {candidate_text}
 
@@ -304,7 +336,7 @@ Return ONLY a JSON object, no preamble, no markdown fences, with exactly these k
 {{
   "companion_interpretation": "A plain-language interpretation of what the FULL companion passage is pointing at, on its own terms. 3-4 sentences. Clear, grounded, no jargon.",
   "companion_reflection": "A reflection reading the full companion against contemporary life. Contemplative, non-partisan, no political sides or named figures. 3-4 sentences.",
-  "echo_id": "The exact ID of the one strongest echo candidate.",
+  "echo_key": "The exact source:passage KEY of the one strongest echo candidate.",
   "echo_note": "Why this short echo belongs in today's conversation. Name its specific image or claim and do not merely say that all three agree. 2-3 sentences.",
   "where_meet": "Where all three texts genuinely meet, using concrete language from today's actual passages. 2-3 sentences.",
   "where_differ": "Where their voices, methods, or claims meaningfully differ. Preserve the difference instead of smoothing it away. 2-3 sentences.",
@@ -312,8 +344,8 @@ Return ONLY a JSON object, no preamble, no markdown fences, with exactly these k
 }}
 
 The Tao Te Ching is always the anchor. {label} is today's full companion;
-{echo_source['label']} is the brief echo. Write with warmth and depth but
-economy. This is for quiet morning reflection."""
+one of the remaining voices is the brief echo. Write with warmth and depth
+but economy. This is for quiet morning reflection."""
 
     msg = client.messages.create(
         model=MODEL,
@@ -324,7 +356,7 @@ economy. This is for quiet morning reflection."""
     text = text.replace("```json", "").replace("```", "").strip()
     result = json.loads(text)
     required = {
-        "companion_interpretation", "companion_reflection", "echo_id",
+        "companion_interpretation", "companion_reflection", "echo_key",
         "echo_note", "where_meet", "where_differ", "practice",
     }
     missing = required.difference(result)
@@ -594,8 +626,9 @@ def build_html(num, verse, refl, companion=None, echo=None, confluence=None):
   <footer>
     Daily Discipline \u00b7 jdb-builds.com<br>
     Tao Te Ching, James Legge translation (1891, public domain) \u00b7 Fresh reflection generated each morning<br>
-    The Tao remains the daily anchor \u00b7 One full companion alternates between Chuang Tzu and Heraclitus<br>
-    The remaining voice offers a thematically chosen echo \u00b7 The Confluence names where all three meet, where they part, and what to carry<br>
+    Companion library: public-domain Chuang Tzu and Heraclitus texts \u00b7 Epictetus, George Long translation<br>
+    The Tao remains the daily anchor \u00b7 One full companion rotates among Chuang Tzu, Heraclitus, and Epictetus<br>
+    The other voices offer thematically chosen echoes \u00b7 The Confluence names where three meet, where they part, and what to carry<br>
     Daily Reflection, Twenty-Four Hours, and Grapevine link to their sources \u2014 please support them
   </footer>
 
@@ -640,8 +673,11 @@ def main():
             log("No echo candidates found -- skipping the companion dialogue.")
             companion = None
         else:
+            echo_sources = ", ".join(dict.fromkeys(
+                candidate["source"]["label"] for candidate in echo_candidates
+            ))
             log(
-                f"Selecting an echo from {echo_candidates[0]['source']['label']} "
+                f"Selecting an echo from {echo_sources} "
                 f"({len(echo_candidates)} candidates)..."
             )
         try:
@@ -649,10 +685,10 @@ def main():
                 confluence = reflect_confluence(
                     client, num, verse, companion, echo_candidates
                 )
-                echo_id = str(confluence["echo_id"])
+                echo_key = str(confluence["echo_key"])
                 echo = next(
                     candidate for candidate in echo_candidates
-                    if candidate["passage_id"] == echo_id
+                    if candidate["selection_key"] == echo_key
                 )
                 log(
                     f"Echo selected: {echo['source']['label']} \u2014 "
