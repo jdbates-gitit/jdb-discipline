@@ -365,6 +365,30 @@ but economy. This is for quiet morning reflection."""
     return result
 
 
+def resolve_echo_candidate(echo_candidates, echo_key):
+    """Match Claude's echo choice without accepting a different passage."""
+    raw_key = str(echo_key).strip()
+
+    def normalized(value):
+        value = str(value).strip().strip("`'\"")
+        value = re.sub(r"^key\s+", "", value, flags=re.IGNORECASE)
+        value = re.sub(r"\s+", "", value)
+        return value.rstrip(".,;").casefold()
+
+    wanted = normalized(raw_key)
+    matches = [
+        candidate for candidate in echo_candidates
+        if normalized(candidate["selection_key"]) == wanted
+    ]
+    if len(matches) == 1:
+        return matches[0]
+
+    allowed = ", ".join(candidate["selection_key"] for candidate in echo_candidates)
+    raise ValueError(
+        f"Unknown echo_key {raw_key!r}; expected one of: {allowed}"
+    )
+
+
 def reflect(client, num, verse):
     prompt = f"""You are contributing to a private morning contemplative dashboard for one person who has a long daily Tao Te Ching practice and is active in AA recovery. Today's randomly selected chapter is Chapter {num}, in James Legge's 1891 translation:
 
@@ -670,8 +694,8 @@ def main():
         log(f"Companion pick: {companion['source']['label']} \u2014 {companion['passage_id']}")
         echo_candidates = pick_echo_candidates(companion)
         if not echo_candidates:
-            log("No echo candidates found -- skipping the companion dialogue.")
-            companion = None
+            log("ERROR: No echo candidates found; keeping the last complete page.")
+            sys.exit(1)
         else:
             echo_sources = ", ".join(dict.fromkeys(
                 candidate["source"]["label"] for candidate in echo_candidates
@@ -685,22 +709,22 @@ def main():
                 confluence = reflect_confluence(
                     client, num, verse, companion, echo_candidates
                 )
-                echo_key = str(confluence["echo_key"])
-                echo = next(
-                    candidate for candidate in echo_candidates
-                    if candidate["selection_key"] == echo_key
+                echo = resolve_echo_candidate(
+                    echo_candidates, confluence["echo_key"]
                 )
                 log(
                     f"Echo selected: {echo['source']['label']} \u2014 "
                     f"{echo['passage_id']}"
                 )
         except Exception as e:
-            log(f"Confluence generation failed (continuing with Tao only): {e}")
-            companion = None
-            echo = None
-            confluence = None
+            log(
+                "ERROR: Confluence generation failed; "
+                f"keeping the last complete page. {e}"
+            )
+            sys.exit(1)
     else:
-        log("No companion source files found yet -- skipping companion section.")
+        log("ERROR: No companion source files found; keeping the last complete page.")
+        sys.exit(1)
 
     html = build_html(num, verse, refl, companion, echo, confluence)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
