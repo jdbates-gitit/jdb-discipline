@@ -15,6 +15,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: daily-discipline-main
+  cancel-in-progress: false
+
 jobs:
   build-discipline:
     runs-on: ubuntu-latest
@@ -40,5 +44,9 @@ jobs:
           git config --global user.name "jdbates-gitit"
           git add index.html
           if [ -f run_state.json ]; then git add run_state.json; fi
-          git diff --staged --quiet || git commit -m "auto-update daily discipline"
+          if git diff --staged --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git commit -m "auto-update daily discipline"
           git push

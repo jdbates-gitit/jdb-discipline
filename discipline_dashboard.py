@@ -369,6 +369,11 @@ def resolve_echo_candidate(echo_candidates, echo_key):
     """Match Claude's echo choice without accepting a different passage."""
     raw_key = str(echo_key).strip()
 
+    cleaned_key = raw_key.strip("`'\"").strip()
+    cleaned_key = re.sub(
+        r"^key\s+", "", cleaned_key, flags=re.IGNORECASE
+    ).strip()
+
     def normalized(value):
         value = str(value).strip().strip("`'\"")
         value = re.sub(r"^key\s+", "", value, flags=re.IGNORECASE)
@@ -380,6 +385,14 @@ def resolve_echo_candidate(echo_candidates, echo_key):
         candidate for candidate in echo_candidates
         if normalized(candidate["selection_key"]) == wanted
     ]
+    if not matches:
+        for candidate in echo_candidates:
+            candidate_key = str(candidate["selection_key"])
+            if not cleaned_key.casefold().startswith(candidate_key.casefold()):
+                continue
+            remainder = cleaned_key[len(candidate_key):].lstrip()
+            if remainder.startswith(("—", "–", "-", ":", "(")):
+                matches.append(candidate)
     if len(matches) == 1:
         return matches[0]
 
@@ -704,8 +717,8 @@ def main():
                 f"Selecting an echo from {echo_sources} "
                 f"({len(echo_candidates)} candidates)..."
             )
-        try:
-            if companion:
+        for attempt in range(1, 3):
+            try:
                 confluence = reflect_confluence(
                     client, num, verse, companion, echo_candidates
                 )
@@ -716,12 +729,16 @@ def main():
                     f"Echo selected: {echo['source']['label']} \u2014 "
                     f"{echo['passage_id']}"
                 )
-        except Exception as e:
-            log(
-                "ERROR: Confluence generation failed; "
-                f"keeping the last complete page. {e}"
-            )
-            sys.exit(1)
+                break
+            except Exception as e:
+                if attempt == 1:
+                    log(f"Confluence attempt 1 failed ({e}); retrying once.")
+                else:
+                    log(
+                        "ERROR: Confluence generation failed twice; "
+                        f"keeping the last complete page. Final error: {e}"
+                    )
+                    sys.exit(1)
     else:
         log("ERROR: No companion source files found; keeping the last complete page.")
         sys.exit(1)
