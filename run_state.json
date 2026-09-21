@@ -1,1 +1,12 @@
-{"date": "2026-09-20", "morning": true}
+{
+  "date": "2026-09-20",
+  "morning": true,
+  "history": [
+    {
+      "date": "2026-09-20",
+      "lead": "chuangtzu:19",
+      "companion": "heraclitus:23",
+      "echo": "brother_lawrence:letter_14"
+    }
+  ]
+}
