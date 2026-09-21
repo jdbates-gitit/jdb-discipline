@@ -1,73 +1,78 @@
 #!/usr/bin/env python3
-# discipline_dashboard.py
-# Daily Discipline — a morning contemplative dashboard.
-#
-# Four sections:
-#   1. Daily Reflection (AA)      -> launchpad card linking to aa.org
-#   2. Twenty-Four Hours a Day    -> launchpad card linking to Hazelden
-#   3. Grapevine Quote of the Day -> launchpad card linking to AA Grapevine
-#   4. Daily philosophical dialogue -> Tao Te Ching as the anchor, one full
-#        companion reading, a short thematically chosen echo from the other
-#        author, and a closing synthesis called The Confluence.
-#
-# Reads Legge text ONLY from local tao_te_ching_legge.json (no outside source).
-# The first scheduled run each day claims the date; later retries exit cleanly.
+"""Build the Daily Discipline morning reading.
 
+The daily human question is the foundation. Public-domain authors supply the
+readings; Claude selects and connects them without rewriting their words.
+"""
+
+import datetime
+import html
+import json
 import os
+import random
 import re
 import sys
-import json
-import random
-import datetime
-from zoneinfo import ZoneInfo
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import anthropic
 
-# ---------------------------------------------------------------------------
-# Config
-# ---------------------------------------------------------------------------
+
 HERE = Path(__file__).resolve().parent
-TAO_FILE = HERE / "tao_te_ching_legge.json"
 OUTPUT_FILE = HERE / "index.html"
 STATE_FILE = HERE / "run_state.json"
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 MODEL = "claude-haiku-4-5-20251001"
+MODEL_LABEL = "Claude Haiku 4.5"
+TIMEZONE = ZoneInfo("America/Chicago")
+EXCERPT_TARGET_CHARS = 1100
+ECHO_TARGET_CHARS = 520
+FRESHNESS_DAYS = 56
+MAX_HISTORY_ENTRIES = 180
 
-# ---------------------------------------------------------------------------
-# Companion-text sources. Pluggable: add a new dict here (id, file, label,
-# relationship) and it's picked up automatically -- no other code changes
-# needed. "relationship" controls how the Claude prompt frames the day's
-# pairing against the Tao chapter:
-#   complement  -- same lineage, different mode (e.g. story vs. aphorism)
-#   convergence -- independent tradition, same insight anyway
-#   counterweight -- practical agency set against acceptance and non-forcing
-#   opposite    -- opposite prescription, same underlying diagnosis
-COMPANION_SOURCES = [
+READING_SOURCES = [
     {
-        "id": "chuangtzu",
-        "file": HERE / "sources" / "chuangtzu.json",
-        "label": "Chuang Tzu",
-        "sublabel": "same root, different voice",
-        "relationship": "complement",
+        "id": "tao", "file": HERE / "tao_te_ching_legge.json",
+        "label": "Tao Te Ching", "sublabel": "home ground · one lead day in four",
+        "attribution": "James Legge translation · 1891 · public domain",
+        "title_prefix": "Chapter", "lead": True, "companion": True, "echo": True,
+        "lead_chars": 5000,
+        "voice": "Preserve non-forcing, humility, naturalness, paradox, and returning. Do not turn the Tao into passivity or generic calm.",
     },
     {
-        "id": "heraclitus",
-        "file": HERE / "sources" / "heraclitus.json",
-        "label": "Heraclitus",
-        "sublabel": "no contact, same mountain",
-        "relationship": "convergence",
+        "id": "chuangtzu", "file": HERE / "sources" / "chuangtzu.json",
+        "label": "Chuang Tzu", "sublabel": "parable, freedom, and surprise",
+        "attribution": "Herbert A. Giles translation · 1889 · public domain",
+        "lead": True, "companion": True, "echo": True,
+        "voice": "Preserve humor, story, reversal, and suspicion of rigid categories. Do not reduce Chuang Tzu to a restatement of the Tao Te Ching.",
     },
     {
-        "id": "epictetus",
-        "file": HERE / "sources" / "epictetus.json",
-        "label": "Epictetus",
-        "sublabel": "freedom at the boundary of choice",
-        "relationship": "counterweight",
+        "id": "epictetus", "file": HERE / "sources" / "epictetus.json",
+        "label": "Epictetus", "sublabel": "freedom at the boundary of choice",
+        "attribution": "George Long translation · public domain",
+        "lead": True, "companion": True, "echo": True,
+        "voice": "Preserve judgment, desire, responsibility, and chosen response. Do not turn Epictetus into emotional suppression, hustle culture, or a generic Serenity Prayer.",
+    },
+    {
+        "id": "brother_lawrence", "file": HERE / "sources" / "brother_lawrence.json",
+        "label": "Brother Lawrence", "sublabel": "presence in ordinary things",
+        "attribution": "The Practice of the Presence of God · 1895 edition · public domain",
+        "lead": True, "companion": True, "echo": True,
+        "voice": "Preserve explicitly Christian language of God, prayer, grace, love, and presence in ordinary work. Do not neutralize his faith into generic mindfulness.",
+    },
+    {
+        "id": "heraclitus", "file": HERE / "sources" / "heraclitus.json",
+        "label": "Heraclitus", "sublabel": "fire, tension, and hidden order",
+        "attribution": "Fragments · John Burnet translation · public domain",
+        "title_prefix": "Fragment", "lead": False, "companion": True, "echo": True,
+        "voice": "Preserve tension, flux, opposition, and hidden order. Do not make Heraclitus sound gently Taoist.",
     },
 ]
 
-# Launchpad sources (we link, never reproduce — these are copyrighted)
+ECHO_CANDIDATE_COUNT = {
+    "tao": 4, "chuangtzu": 4, "epictetus": 5,
+    "brother_lawrence": 4, "heraclitus": 8,
+}
 LINKS = {
     "aa_reflection": "https://www.aa.org/daily-reflections",
     "hazelden": "https://www.hazeldenbettyford.org/thought-for-the-day",
@@ -75,684 +80,407 @@ LINKS = {
 }
 
 
-def log(msg):
-    ts = datetime.datetime.now(ZoneInfo("America/Chicago")).strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{ts}  {msg}")
+def log(message):
+    timestamp = datetime.datetime.now(TIMEZONE).strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp}  {message}")
 
 
-# ---------------------------------------------------------------------------
-# First-run-of-the-day gate. Scheduled runs may arrive late, so the date in
-# run_state.json -- not the wall clock -- decides whether work is needed.
-# ---------------------------------------------------------------------------
-def gate():
-    if os.environ.get("RUN_NOW") == "1":
-        return
-    now = datetime.datetime.now(ZoneInfo("America/Chicago"))
-    today = now.strftime("%Y-%m-%d")
-    state = {"date": today, "morning": False}
+def load_state():
     try:
-        with open(STATE_FILE, "r", encoding="utf-8") as f:
-            loaded = json.load(f)
-        if loaded.get("date") == today:
-            state = loaded
+        with open(STATE_FILE, "r", encoding="utf-8") as handle:
+            state = json.load(handle)
+        if isinstance(state, dict):
+            state.setdefault("history", [])
+            return state
     except Exception:
         pass
-    if state.get("morning"):
+    return {"history": []}
+
+
+def save_state(state):
+    with open(STATE_FILE, "w", encoding="utf-8") as handle:
+        json.dump(state, handle, indent=2)
+        handle.write("\n")
+
+
+def gate():
+    now = datetime.datetime.now(TIMEZONE)
+    today = now.strftime("%Y-%m-%d")
+    manual = os.environ.get("RUN_NOW") == "1"
+    state = load_state()
+    if not manual and state.get("date") == today and state.get("morning"):
         log(f"Already ran today ({today}). Exiting cleanly.")
         sys.exit(0)
     state["date"] = today
     state["morning"] = True
-    try:
-        with open(STATE_FILE, "w", encoding="utf-8") as f:
-            json.dump(state, f)
-        log(f"Claimed today's slot ({today}); proceeding.")
-    except Exception as e:
-        log(f"Could not write run_state.json: {e}")
+    save_state(state)
+    log(f"Claimed today's slot ({today}, {'manual' if manual else 'scheduled'}); proceeding.")
+    return state
 
 
-# ---------------------------------------------------------------------------
-# Tao chapter selection + Claude reflection
-# ---------------------------------------------------------------------------
-def load_tao():
-    with open(TAO_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+def trim_to_excerpt(text, target=EXCERPT_TARGET_CHARS):
+    if len(text) <= target:
+        return text, False
+    paragraphs = [p for p in text.split("\n\n") if p.strip()]
+    if len(paragraphs) <= 1:
+        return text[:target].rsplit(" ", 1)[0] + "…", True
+    start = random.randrange(len(paragraphs))
+    chunk, total, index = [paragraphs[start]], len(paragraphs[start]), start + 1
+    while total < target and index < len(paragraphs):
+        chunk.append(paragraphs[index])
+        total += len(paragraphs[index])
+        index += 1
+    excerpt = "\n\n".join(chunk)
+    if len(excerpt) > target:
+        excerpt = excerpt[:target].rsplit(" ", 1)[0] + "…"
+    return excerpt, True
 
 
-def pick_chapter(tao):
-    # Pure random draw -- every run picks a fresh chapter. The windowed run gate
-    # ensures only one scheduled run does work per day; manual re-runs (RUN_NOW=1)
-    # intentionally draw a new chapter each time, for when you want more Tao.
-    num = str(random.randint(1, 81))
-    return num, tao[num]
+def load_source(source):
+    with open(source["file"], "r", encoding="utf-8") as handle:
+        return json.load(handle)
 
 
-# ---------------------------------------------------------------------------
-# Companion text selection + Claude reflection
-# ---------------------------------------------------------------------------
 def passage_from_entry(source, passage_id, entry, excerpt_target=None):
-    # Support both the {id: "text"} shape (Heraclitus) and the
-    # {id: {"title":..., "text":...}} shape (Chuang Tzu chapters).
     if isinstance(entry, dict):
-        passage_text = entry.get("text", "")
-        passage_title = entry.get("title")
+        passage_text, passage_title = entry.get("text", ""), entry.get("title")
     else:
-        passage_text = entry
-        passage_title = None
-
-    # Strip stray footnote reference markers (e.g. "[441]") left over
-    # from the Gutenberg source's <sup> footnote links.
-    passage_text = re.sub(r"\[\d{1,3}\]", "", passage_text)
-    passage_text = re.sub(r"[ \t]{2,}", " ", passage_text)
-
+        passage_text, passage_title = entry, None
+    passage_text = re.sub(r"\[\d{1,3}\]", "", str(passage_text))
+    passage_text = re.sub(r"[ \t]{2,}", " ", passage_text).strip()
     passage_text, excerpted = trim_to_excerpt(
         passage_text, excerpt_target or EXCERPT_TARGET_CHARS
     )
+    if not passage_title and source.get("title_prefix"):
+        passage_title = f"{source['title_prefix']} {passage_id}"
     if excerpted and passage_title:
-        passage_title = f"{passage_title} (excerpt)"
-
+        passage_title = f"{passage_title} · excerpt"
     return {
-        "source": source,
-        "passage_id": str(passage_id),
+        "source": source, "passage_id": str(passage_id),
         "selection_key": f"{source['id']}:{passage_id}",
-        "passage_title": passage_title,
+        "passage_title": passage_title or "Selected reading",
         "passage_text": passage_text,
     }
 
 
-def load_source(source):
-    with open(source["file"], "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def balanced_companion_sources(available, day=None):
-    # Each block of days contains every available companion exactly once, in
-    # a deterministic shuffled order. This prevents long random droughts for
-    # any voice while keeping the order from feeling like a fixed calendar.
+def balanced_source_order(available, day=None, salt="lead"):
     if not available:
         return []
-    day = day or datetime.datetime.now(ZoneInfo("America/Chicago")).date()
+    day = day or datetime.datetime.now(TIMEZONE).date()
     cycle, position = divmod(day.toordinal(), len(available))
-    shuffled = sorted(available, key=lambda source: source["id"])
-    random.Random(cycle).shuffle(shuffled)
-    return shuffled[position:] + shuffled[:position]
+    ordered = sorted(available, key=lambda source: source["id"])
+    random.Random(f"{salt}:{cycle}").shuffle(ordered)
+    return ordered[position:] + ordered[:position]
 
 
-def pick_companion():
-    # The source follows a balanced daily rotation; its passage remains a
-    # fresh random pull. If the scheduled source is empty, try the next voice
-    # in today's order rather than losing the whole companion section.
-    available = [s for s in COMPANION_SOURCES if s["file"].exists()]
-    for source in balanced_companion_sources(available):
-        passages = load_source(source)
-        if not passages:
-            log(f"Companion source '{source['id']}' is empty -- trying next available source.")
+def recent_passage_ids(state, source_id, day=None):
+    day = day or datetime.datetime.now(TIMEZONE).date()
+    cutoff = day - datetime.timedelta(days=FRESHNESS_DAYS)
+    recent = set()
+    for entry in state.get("history", []):
+        try:
+            entry_date = datetime.date.fromisoformat(entry["date"])
+        except (KeyError, TypeError, ValueError):
             continue
-        passage_id = random.choice(list(passages.keys()))
-        return passage_from_entry(source, passage_id, passages[passage_id])
-
-    return None  # every available source was missing or empty
-
-
-EXCERPT_TARGET_CHARS = 1100  # roughly comparable weight to a Tao chapter
-ECHO_TARGET_CHARS = 520      # a counterpoint, not a second full companion
-ECHO_CANDIDATE_COUNT = {"heraclitus": 8, "chuangtzu": 4, "epictetus": 5}
-
-
-def trim_to_excerpt(text, target=EXCERPT_TARGET_CHARS):
-    # Some source chapters (Chuang Tzu especially -- lengths vary from a
-    # short parable to a multi-thousand-word essay) are far too long to
-    # show whole. If a passage is long, pick a random contiguous run of
-    # paragraphs from within it instead of the whole thing, so every
-    # companion pull stays roughly comparable in weight to a Tao chapter.
-    if len(text) <= target:
-        return text, False
-
-    paras = [p for p in text.split("\n\n") if p.strip()]
-    if len(paras) <= 1:
-        # No paragraph breaks to work with -- just take a leading slice.
-        cut = text[:target].rsplit(" ", 1)[0]
-        return cut + "...", True
-
-    start = random.randrange(len(paras))
-    chunk = [paras[start]]
-    total = len(paras[start])
-    i = start + 1
-    while total < target and i < len(paras):
-        chunk.append(paras[i])
-        total += len(paras[i])
-        i += 1
-    excerpt = "\n\n".join(chunk)
-    if len(excerpt) > target:
-        excerpt = excerpt[:target].rsplit(" ", 1)[0] + "..."
-    return excerpt, True
+        if entry_date < cutoff:
+            continue
+        for role in ("lead", "companion", "echo"):
+            selection = str(entry.get(role, ""))
+            prefix = f"{source_id}:"
+            if selection.startswith(prefix):
+                recent.add(selection[len(prefix):])
+    return recent
 
 
-def pick_echo_candidates(companion):
-    # The other two authors each offer a small candidate set. Claude chooses
-    # one passage by thematic fit or productive tension, so the echo is not
-    # merely another unrelated random quotation.
-    remaining = [
-        source for source in COMPANION_SOURCES
-        if source["id"] != companion["source"]["id"] and source["file"].exists()
+def available_passage_ids(source, state, day=None):
+    passages = load_source(source)
+    all_ids = list(passages.keys())
+    recent = recent_passage_ids(state, source["id"], day)
+    fresh = [passage_id for passage_id in all_ids if str(passage_id) not in recent]
+    return passages, fresh or all_ids
+
+
+def pick_passage(source, state, excerpt_target=None, day=None):
+    passages, passage_ids = available_passage_ids(source, state, day)
+    if not passage_ids:
+        return None
+    passage_id = random.choice(passage_ids)
+    return passage_from_entry(source, passage_id, passages[passage_id], excerpt_target)
+
+
+def pick_lead(state, day=None):
+    sources = [s for s in READING_SOURCES if s["lead"] and s["file"].exists()]
+    for source in balanced_source_order(sources, day, "lead"):
+        reading = pick_passage(source, state, source.get("lead_chars"), day)
+        if reading:
+            return reading
+
+
+def pick_companion(lead, state, day=None):
+    sources = [
+        s for s in READING_SOURCES
+        if s["companion"] and s["id"] != lead["source"]["id"] and s["file"].exists()
     ]
+    for source in balanced_source_order(sources, day, "companion"):
+        reading = pick_passage(source, state, EXCERPT_TARGET_CHARS, day)
+        if reading:
+            return reading
+
+
+def pick_echo_candidates(lead, companion, state, day=None):
+    excluded = {lead["source"]["id"], companion["source"]["id"]}
     candidates = []
-    for source in remaining:
-        passages = load_source(source)
-        if not passages:
+    for source in READING_SOURCES:
+        if source["id"] in excluded or not source["echo"] or not source["file"].exists():
             continue
-        count = min(ECHO_CANDIDATE_COUNT.get(source["id"], 4), len(passages))
-        for passage_id in random.sample(list(passages.keys()), count):
-            candidates.append(
-                passage_from_entry(
-                    source, passage_id, passages[passage_id], ECHO_TARGET_CHARS
-                )
-            )
+        passages, passage_ids = available_passage_ids(source, state, day)
+        count = min(ECHO_CANDIDATE_COUNT.get(source["id"], 4), len(passage_ids))
+        for passage_id in random.sample(passage_ids, count):
+            candidates.append(passage_from_entry(
+                source, passage_id, passages[passage_id], ECHO_TARGET_CHARS
+            ))
     return candidates
 
 
-RELATIONSHIP_FRAMING = {
-    "complement": (
-        "This companion text (Chuang Tzu) comes from the SAME Taoist lineage "
-        "as the Tao Te Ching, sharing its commitment to non-striving -- but "
-        "taught through story, parable, and dream rather than compressed "
-        "aphorism. The Confluence should note how the same teaching is "
-        "being carried by a different mode (story vs. aphorism), not a "
-        "different claim. Be specific to what was actually pulled today, "
-        "not a generic 'both are wise' statement."
-    ),
-    "convergence": (
-        "This companion text (Heraclitus) comes from an INDEPENDENT "
-        "tradition -- pre-Socratic Greek, no historical contact with "
-        "Taoism whatsoever -- yet converges on strikingly similar "
-        "conclusions about flux, the unity of opposites, and an underlying "
-        "order to things. The Confluence should make that independence "
-        "the point: these traditions never touched, and the insight showed "
-        "up anyway. Be specific to what was actually pulled today, not a "
-        "generic 'great minds think alike' statement."
-    ),
-    "counterweight": (
-        "This companion text (Epictetus) brings a DISTINCT Stoic emphasis: "
-        "freedom through the disciplined use of judgment, desire, and choice. "
-        "Let it create useful friction with Taoist non-forcing and acceptance "
-        "rather than translating it into Taoist language. Epictetus is direct "
-        "and practical, sometimes stern, but he is not advocating emotional "
-        "suppression, hustle culture, or indifference to other people. Preserve "
-        "the boundary he draws between what happens and the character of our "
-        "response. Be specific to today's actual passages."
-    ),
-    "opposite": (
-        "This companion text comes from a tradition that reaches a similar "
-        "diagnosis but an OPPOSITE prescription. Name the actual mechanism "
-        "of that opposition plainly and specifically -- not a vague "
-        "'different perspectives' gesture."
-    ),
-}
+def resolve_echo_candidate(candidates, echo_key):
+    raw_key = str(echo_key).strip()
+    cleaned_key = re.sub(r"^key\s+", "", raw_key.strip("`'\""), flags=re.I).strip()
+
+    def normalized(value):
+        value = re.sub(r"^key\s+", "", str(value).strip().strip("`'\""), flags=re.I)
+        return re.sub(r"\s+", "", value).rstrip(".,;").casefold()
+
+    wanted = normalized(raw_key)
+    matches = [c for c in candidates if normalized(c["selection_key"]) == wanted]
+    if not matches:
+        for candidate in candidates:
+            key = candidate["selection_key"]
+            if cleaned_key.casefold().startswith(key.casefold()):
+                remainder = cleaned_key[len(key):].lstrip()
+                if remainder.startswith(("—", "–", "-", ":", "(")):
+                    matches.append(candidate)
+    if len(matches) == 1:
+        return matches[0]
+    allowed = ", ".join(c["selection_key"] for c in candidates)
+    raise ValueError(f"Unknown echo_key {raw_key!r}; expected one of: {allowed}")
 
 
-def reflect_confluence(client, tao_num, tao_verse, companion, echo_candidates):
-    source = companion["source"]
-    label = source["label"]
-    framing = RELATIONSHIP_FRAMING.get(source["relationship"], "")
-    title_line = f" ({companion['passage_title']})" if companion["passage_title"] else ""
-    echo_labels = ", ".join(dict.fromkeys(
-        candidate["source"]["label"] for candidate in echo_candidates
-    ))
-    candidates = []
-    for candidate in echo_candidates:
-        candidate_title = f" — {candidate['passage_title']}" if candidate["passage_title"] else ""
-        candidates.append(
-            f"KEY {candidate['selection_key']}{candidate_title}:\n"
-            f"{candidate['passage_text']}"
-        )
-    candidate_text = "\n\n---\n\n".join(candidates)
-
-    prompt = f"""You are contributing to a private morning contemplative dashboard for one person who has a long daily Tao Te Ching practice and is active in AA recovery.
-
-Today's Tao Te Ching chapter (Chapter {tao_num}, Legge translation):
-\"\"\"
-{tao_verse}
-\"\"\"
-
-Today's FULL companion passage, from {label}{title_line}:
-\"\"\"
-{companion['passage_text']}
-\"\"\"
-
-{framing}
-
-Choose one SHORT echo from the other available voices ({echo_labels}) below.
-Choose by genuine resonance or productive tension with BOTH the Tao anchor and
-the full companion. Do not force agreement. The echo author should remain a
-distinct third voice, not a source of decorative quotation.
-
-Whenever Epictetus appears, preserve his real emphasis on judgment, desire,
-choice, and responsibility. Do not flatten him into emotional suppression,
-internet Stoicism, hustle culture, or a generic version of the Serenity Prayer.
-
-{candidate_text}
-
-Return ONLY a JSON object, no preamble, no markdown fences, with exactly these keys:
-
-{{
-  "companion_interpretation": "A plain-language interpretation of what the FULL companion passage is pointing at, on its own terms. 3-4 sentences. Clear, grounded, no jargon.",
-  "companion_reflection": "A reflection reading the full companion against contemporary life. Contemplative, non-partisan, no political sides or named figures. 3-4 sentences.",
-  "echo_key": "The exact source:passage KEY of the one strongest echo candidate.",
-  "echo_note": "Why this short echo belongs in today's conversation. Name its specific image or claim and do not merely say that all three agree. 2-3 sentences.",
-  "where_meet": "Where all three texts genuinely meet, using concrete language from today's actual passages. 2-3 sentences.",
-  "where_differ": "Where their voices, methods, or claims meaningfully differ. Preserve the difference instead of smoothing it away. 2-3 sentences.",
-  "practice": "One quiet, specific practice or question to carry today, arising from the three-way conversation. 1-2 sentences, in second person."
-}}
-
-The Tao Te Ching is always the anchor. {label} is today's full companion;
-one of the remaining voices is the brief echo. Write with warmth and depth
-but economy. This is for quiet morning reflection."""
-
-    msg = client.messages.create(
-        model=MODEL,
-        max_tokens=1400,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    text = "".join(b.text for b in msg.content if hasattr(b, "text")).strip()
-    text = text.replace("```json", "").replace("```", "").strip()
-    result = json.loads(text)
+def validate_editorial(result, echo_candidates):
     required = {
-        "companion_interpretation", "companion_reflection", "echo_key",
-        "echo_note", "where_meet", "where_differ", "practice",
+        "daily_question", "lead_lens", "companion_note", "echo_key",
+        "echo_note", "confluence", "carry_question",
     }
     missing = required.difference(result)
     if missing:
-        raise ValueError(f"Confluence response missing keys: {', '.join(sorted(missing))}")
-    return result
+        raise ValueError(f"Editorial response missing keys: {', '.join(sorted(missing))}")
+    for key in required:
+        if not isinstance(result[key], str) or not result[key].strip():
+            raise ValueError(f"Editorial field {key!r} is empty or not text.")
+    for key in ("daily_question", "carry_question"):
+        words = result[key].split()
+        if not result[key].strip().endswith("?") or not 6 <= len(words) <= 40:
+            raise ValueError(f"Editorial field {key!r} must be a focused 6-40 word question.")
+    return result, resolve_echo_candidate(echo_candidates, result["echo_key"])
 
 
-def resolve_echo_candidate(echo_candidates, echo_key):
-    """Match Claude's echo choice without accepting a different passage."""
-    raw_key = str(echo_key).strip()
-
-    cleaned_key = raw_key.strip("`'\"").strip()
-    cleaned_key = re.sub(
-        r"^key\s+", "", cleaned_key, flags=re.IGNORECASE
-    ).strip()
-
-    def normalized(value):
-        value = str(value).strip().strip("`'\"")
-        value = re.sub(r"^key\s+", "", value, flags=re.IGNORECASE)
-        value = re.sub(r"\s+", "", value)
-        return value.rstrip(".,;").casefold()
-
-    wanted = normalized(raw_key)
-    matches = [
-        candidate for candidate in echo_candidates
-        if normalized(candidate["selection_key"]) == wanted
-    ]
-    if not matches:
-        for candidate in echo_candidates:
-            candidate_key = str(candidate["selection_key"])
-            if not cleaned_key.casefold().startswith(candidate_key.casefold()):
-                continue
-            remainder = cleaned_key[len(candidate_key):].lstrip()
-            if remainder.startswith(("—", "–", "-", ":", "(")):
-                matches.append(candidate)
-    if len(matches) == 1:
-        return matches[0]
-
-    allowed = ", ".join(candidate["selection_key"] for candidate in echo_candidates)
-    raise ValueError(
-        f"Unknown echo_key {raw_key!r}; expected one of: {allowed}"
+def create_editorial(client, lead, companion, echo_candidates):
+    candidates = "\n\n---\n\n".join(
+        f"KEY {c['selection_key']} — {c['source']['label']} — {c['passage_title']}:\n{c['passage_text']}"
+        for c in echo_candidates
     )
+    prompt = f"""You are the restrained editor of Daily Discipline, a private morning practice for one person active in AA recovery and interested in spiritual growth, love, kindness, courage, surrender, and living in conscious relationship with God and the unfolding universe.
 
+The public-domain readings below are the authors' voices. Do not rewrite them, imitate them, or make them agree. Your work is limited to selecting one bounded echo and writing brief connective editorial material.
 
-def reflect(client, num, verse):
-    prompt = f"""You are contributing to a private morning contemplative dashboard for one person who has a long daily Tao Te Ching practice and is active in AA recovery. Today's randomly selected chapter is Chapter {num}, in James Legge's 1891 translation:
+TODAY'S LEAD — {lead['source']['label']} ({lead['passage_title']}):
+[BEGIN LEAD READING]
+{lead['passage_text']}
+[END LEAD READING]
+Voice integrity: {lead['source']['voice']}
 
-\"\"\"
-{verse}
-\"\"\"
+TODAY'S FULL COMPANION — {companion['source']['label']} ({companion['passage_title']}):
+[BEGIN COMPANION READING]
+{companion['passage_text']}
+[END COMPANION READING]
+Voice integrity: {companion['source']['voice']}
 
-Write three short movements reflecting on THIS chapter. Return ONLY a JSON object, no preamble, no markdown fences, with exactly these keys:
+Choose one SHORT echo from these exact candidates. Choose genuine resonance or productive tension with both readings. The third voice must add something distinct, not decorative agreement.
 
+{candidates}
+
+Return ONLY a JSON object, without markdown fences, using exactly these keys:
 {{
-  "interpretation": "A plain-language interpretation of what this chapter is pointing at. 3-4 sentences. Clear, grounded, no jargon. Help the reader understand the chapter's core teaching.",
-  "reflection": "A reflection reading this chapter against the current state of the world as a backdrop -- contemporary American life: political division, war abroad, religious tension, the noise and grasping of modern culture. Stay contemplative and strictly non-partisan; do not take political sides or name parties/figures. Use the world's current condition as a mirror for the chapter's wisdom -- what does this 2500-year-old verse notice about how we are living now? 4-5 sentences.",
-  "meditation": "A short meditation or intention to carry for the rest of the day, drawn from this chapter. 2-3 sentences, gentle and practical, in second person ('today, notice...'). Something to hold, not a lecture."
+  "daily_question": "A challenging first-person question, 12-28 words, arising from the lead and carried into the day. Interrupt fear, worry, or anxious narrowing and invite movement toward presence, trust, sobriety, growth, love, kindness, service, courage, God, or openness to life's unfolding. Emphasize only what fits today; never list all values, shame, preach, promise fear will vanish, or use a motivational cliché.",
+  "lead_lens": "One 80-110 word paragraph opening the lead in plain language and bringing it into contemporary lived experience without replacing the source.",
+  "companion_note": "One 45-75 word paragraph explaining what the companion adds, corrects, or challenges on its own terms.",
+  "echo_key": "The exact source:passage KEY of the strongest echo candidate.",
+  "echo_note": "One or two concise sentences naming why this exact echo belongs and what tension or resonance it introduces.",
+  "confluence": "One 80-120 word paragraph naming both where the three voices meet and where they meaningfully differ. Do not flatten them into one philosophy.",
+  "carry_question": "A distinct first-person question, 10-24 words, for the next fearful, uncertain, or ordinary moment today. Invite one honest or loving action instead of more rumination."
 }}
 
-Write with warmth and depth but economy. This is for quiet morning reflection."""
-
-    msg = client.messages.create(
-        model=MODEL,
-        max_tokens=900,
+The question should open a door, not become another problem to solve before breakfast. Write with warmth, spiritual seriousness, and economy. Share, do not preach."""
+    message = client.messages.create(
+        model=MODEL, max_tokens=1400,
         messages=[{"role": "user", "content": prompt}],
     )
-    text = "".join(b.text for b in msg.content if hasattr(b, "text")).strip()
-    # Strip accidental fences
-    text = text.replace("```json", "").replace("```", "").strip()
-    return json.loads(text)
+    text = "".join(b.text for b in message.content if hasattr(b, "text")).strip()
+    return json.loads(text.replace("```json", "").replace("```", "").strip())
 
 
-# ---------------------------------------------------------------------------
-# HTML render (parchment/brass aesthetic, matches jdb-builds.com)
-# ---------------------------------------------------------------------------
-def esc(s):
-    return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+def esc(value):
+    return html.escape(str(value), quote=True)
 
 
-def build_companion_html(companion, confluence):
-    if not companion:
-        return ""
-    source = companion["source"]
-    verse_html = "".join(f"<p>{esc(p)}</p>" for p in companion["passage_text"].split("\n\n") if p.strip())
-    title_html = f'<div class="chno">{esc(companion["passage_title"])}</div>' if companion["passage_title"] else ""
-    return f"""
-  <div class="tao companion">
-    <div class="eyebrow">{esc(source['label'])} \u00b7 {esc(source['sublabel'])}</div>
-    {title_html}
-
-    <div class="verse">{verse_html}</div>
-
-    <div class="movement">
-      <h4>What it's pointing at</h4>
-      <p>{esc(confluence['companion_interpretation'])}</p>
-    </div>
-
-    <div class="movement">
-      <h4>Read against today</h4>
-      <p>{esc(confluence['companion_reflection'])}</p>
-    </div>
-  </div>
-"""
-
-
-def build_echo_html(echo, confluence):
-    if not echo:
-        return ""
-    source = echo["source"]
-    verse_html = "".join(
-        f"<p>{esc(p)}</p>" for p in echo["passage_text"].split("\n\n") if p.strip()
+def reading_paragraphs(reading):
+    return "".join(
+        f"<p>{esc(paragraph)}</p>"
+        for paragraph in reading["passage_text"].split("\n\n") if paragraph.strip()
     )
-    title_html = f'<div class="echo-title">{esc(echo["passage_title"])}</div>' if echo["passage_title"] else ""
+
+
+def build_reading_html(reading, number, role, note_label, note):
+    source = reading["source"]
     return f"""
-  <div class="echo">
-    <div class="eyebrow">The Echo · {esc(source['label'])}</div>
-    {title_html}
-    <div class="verse">{verse_html}</div>
-    <p class="echo-note">{esc(confluence['echo_note'])}</p>
-  </div>
-"""
+  <section class="reading" aria-labelledby="reading-{number}">
+    <div class="eyebrow">{number} · {esc(role)} · {esc(source['label'])}</div>
+    <h2 id="reading-{number}">{esc(reading['passage_title'])}</h2>
+    <div class="source-note">{esc(source['attribution'])}</div>
+    <div class="verse">{reading_paragraphs(reading)}</div>
+    <div class="movement"><h3>{esc(note_label)}</h3><p>{esc(note)}</p></div>
+  </section>"""
 
 
-def build_confluence_html(confluence):
-    if not confluence:
-        return ""
+def build_echo_html(echo, editorial):
+    source = echo["source"]
     return f"""
-  <div class="confluence">
-    <div class="eyebrow">The Confluence</div>
-    <div class="confluence-intro">Three voices, one morning — without making them say the same thing.</div>
-
-    <div class="movement">
-      <h4>Where they meet</h4>
-      <p>{esc(confluence['where_meet'])}</p>
-    </div>
-
-    <div class="movement">
-      <h4>Where they part</h4>
-      <p>{esc(confluence['where_differ'])}</p>
-    </div>
-
-    <div class="movement meditation">
-      <h4>To carry today</h4>
-      <p>{esc(confluence['practice'])}</p>
-    </div>
-  </div>
-"""
+  <section class="echo" aria-labelledby="echo-heading">
+    <div class="eyebrow">04 · The Echo · {esc(source['label'])}</div>
+    <h2 id="echo-heading">{esc(echo['passage_title'])}</h2>
+    <div class="source-note">{esc(source['attribution'])}</div>
+    <div class="verse">{reading_paragraphs(echo)}</div>
+    <p class="echo-note">{esc(editorial['echo_note'])}</p>
+  </section>"""
 
 
-def build_html(num, verse, refl, companion=None, echo=None, confluence=None):
-    now = datetime.datetime.now(ZoneInfo("America/Chicago"))
-    datestr = now.strftime("%A, %B %-d, %Y") if os.name != "nt" else now.strftime("%A, %B %d, %Y")
-    verse_html = "".join(f"<p>{esc(p)}</p>" for p in verse.split("\n\n") if p.strip())
-
+def build_html(lead, companion, echo, editorial):
+    now = datetime.datetime.now(TIMEZONE)
+    date_string = f"{now:%A, %B} {now.day}, {now:%Y}"
+    lead_html = build_reading_html(
+        lead, "02", "Today's lead", "A lens for today", editorial["lead_lens"]
+    )
+    companion_html = build_reading_html(
+        companion, "03", "The companion", "What this voice adds",
+        editorial["companion_note"],
+    )
+    echo_html = build_echo_html(echo, editorial)
     return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Discipline \u2014 {datestr}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Daily Discipline: recovery, spiritual reading, and one question to carry into the day.">
+<title>Daily Discipline — {date_string}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&amp;family=Inter+Tight:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
-  *{{box-sizing:border-box;margin:0;padding:0}}
-  :root{{
-    --paper:#100E17;--paper-2:#171421;--line-2:#332C3D;
-    --ink:#F0EDE8;--ink-dim:#B8B1C3;--brass:#C4956A;--brass-bright:#E0B47F;
-    --display:"Fraunces",Georgia,serif;--body:"Inter Tight",system-ui,sans-serif;
-    --mono:"JetBrains Mono",ui-monospace,monospace;
-  }}
-  body{{background:radial-gradient(circle at 84% 8%,rgba(196,149,106,.09),transparent 30rem),radial-gradient(circle at 10% 58%,rgba(122,158,138,.07),transparent 34rem),var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;
-    -webkit-font-smoothing:antialiased;padding:0 0 60px}}
-  a{{color:inherit;text-decoration:none}}
-  .wrap{{max-width:760px;margin:0 auto;padding:0 28px}}
-  .topnav{{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 0;border-bottom:1px solid var(--line-2)}}
-  .topnav .home{{font-family:var(--mono);font-size:12px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-dim);transition:color .2s}}
-  .topnav .home span{{color:var(--brass);font-weight:600}}
-  .topnav .home:hover{{color:var(--brass)}}
-  .topnav .here{{font-family:var(--display);font-style:italic;font-weight:300;
-    font-size:14px;color:var(--ink-dim)}}
-  .top{{padding:56px 0 28px;border-bottom:1px solid var(--line-2);margin-bottom:40px}}
-  .top .kicker{{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass);margin-bottom:14px}}
-  .top h1{{font-family:var(--display);font-weight:330;font-size:clamp(34px,5vw,52px);letter-spacing:-.02em;line-height:1.04}}
-  .top .date{{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--ink-dim);margin-top:14px;text-transform:uppercase}}
-
-  .section{{margin-bottom:18px}}
-  .card-link{{display:block;border:1px solid var(--line-2);border-radius:8px;padding:22px 24px;transition:.2s;background:rgba(255,255,255,.03)}}
-  .card-link:hover{{border-color:var(--brass);background:var(--paper-2);transform:translateY(-1px)}}
-  .card-link .row{{display:flex;align-items:center;justify-content:space-between;gap:16px}}
-  .card-link .label{{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:7px}}
-  .card-link h3{{font-family:var(--display);font-weight:400;font-size:21px;letter-spacing:-.01em}}
-  .card-link p{{font-size:14px;color:var(--ink-dim);margin-top:5px}}
-  .card-link .go{{font-family:var(--mono);font-size:12px;color:var(--ink-dim);white-space:nowrap}}
-  .card-link:hover .go{{color:var(--brass)}}
-
-  .tao{{margin-top:34px;border-top:1px solid var(--line-2);padding-top:40px}}
-  .tao.companion{{margin-top:40px}}
-  .eyebrow{{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}}
-  .tao .chno{{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(26px,4vw,40px);color:var(--ink);margin-bottom:24px}}
-  .verse{{border-left:2px solid var(--brass);padding:4px 0 4px 26px;margin:0 0 36px}}
-  .verse p{{font-family:var(--display);font-weight:300;font-size:18px;line-height:1.7;color:var(--ink);margin-bottom:1rem}}
-  .verse p:last-child{{margin-bottom:0}}
-  .movement{{margin-bottom:32px}}
-  .movement h4{{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:12px}}
-  .movement p{{font-size:16.5px;line-height:1.72;color:var(--ink)}}
-  .movement.meditation{{background:var(--paper-2);border-radius:8px;padding:24px 26px}}
-  .movement.meditation p{{font-family:var(--display);font-style:italic;font-weight:300;font-size:18px;color:var(--ink)}}
-
-  .echo{{margin-top:40px;padding:28px 30px;border:1px solid var(--line-2);border-radius:8px;background:linear-gradient(135deg,rgba(196,149,106,.07),rgba(255,255,255,.02))}}
-  .echo-title{{font-family:var(--display);font-style:italic;font-weight:300;font-size:21px;margin:0 0 18px}}
-  .echo .verse{{margin-bottom:20px;padding-left:22px}}
-  .echo .verse p{{font-size:20px;line-height:1.6}}
-  .echo-note{{font-size:15.5px;line-height:1.7;color:var(--ink-dim)}}
-
-  .confluence{{margin-top:40px;border-top:1px solid var(--brass);padding-top:40px}}
-  .confluence-intro{{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(24px,4vw,34px);line-height:1.25;margin:6px 0 32px;color:var(--ink)}}
-  .confluence .movement:not(.meditation){{padding-left:18px;border-left:1px solid var(--line-2)}}
-
-  footer{{margin-top:48px;padding-top:28px;border-top:1px solid var(--line-2);
-    font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-dim);text-align:center;line-height:1.8}}
-</style>
-</head>
-<body>
-<div class="wrap">
-
-  <div class="topnav">
-    <a class="home" href="https://jdb-builds.com"><span>JDB</span> · Home</a>
-    <span class="here">Daily Discipline</span>
-  </div>
-
-  <div class="top">
-    <div class="kicker">Daily Discipline</div>
-    <h1>Every 24 Hours,<br>Begin Again.</h1>
-    <div class="date">{datestr}</div>
-  </div>
-
-  <div class="section">
-    <a class="card-link" href="{LINKS['aa_reflection']}" target="_blank" rel="noopener">
-      <div class="row">
-        <div>
-          <div class="label">Alcoholics Anonymous</div>
-          <h3>Daily Reflection</h3>
-          <p>Today's reflection from the fellowship.</p>
-        </div>
-        <div class="go">Open \u2197</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="section">
-    <a class="card-link" href="{LINKS['hazelden']}" target="_blank" rel="noopener">
-      <div class="row">
-        <div>
-          <div class="label">Hazelden Betty Ford</div>
-          <h3>Twenty-Four Hours a Day</h3>
-          <p>Thought, meditation, and prayer for the day.</p>
-        </div>
-        <div class="go">Open \u2197</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="section">
-    <a class="card-link" href="{LINKS['grapevine']}" target="_blank" rel="noopener">
-      <div class="row">
-        <div>
-          <div class="label">AA Grapevine</div>
-          <h3>Quote of the Day</h3>
-          <p>A line from the meeting in print.</p>
-        </div>
-        <div class="go">Open \u2197</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="tao">
-    <div class="eyebrow">Tao Te Ching \u00b7 Legge translation</div>
-    <div class="chno">Chapter {num}</div>
-
-    <div class="verse">{verse_html}</div>
-
-    <div class="movement">
-      <h4>What it's pointing at</h4>
-      <p>{esc(refl['interpretation'])}</p>
-    </div>
-
-    <div class="movement">
-      <h4>Read against today</h4>
-      <p>{esc(refl['reflection'])}</p>
-    </div>
-
-    <div class="movement meditation">
-      <h4>To carry today</h4>
-      <p>{esc(refl['meditation'])}</p>
-    </div>
-  </div>
-{build_companion_html(companion, confluence)}
-{build_echo_html(echo, confluence)}
-{build_confluence_html(confluence)}
-  <footer>
-    Daily Discipline \u00b7 jdb-builds.com<br>
-    Tao Te Ching, James Legge translation (1891, public domain) \u00b7 Fresh reflection generated each morning<br>
-    Companion library: public-domain Chuang Tzu and Heraclitus texts \u00b7 Epictetus, George Long translation<br>
-    The Tao remains the daily anchor \u00b7 One full companion rotates among Chuang Tzu, Heraclitus, and Epictetus<br>
-    The other voices offer thematically chosen echoes \u00b7 The Confluence names where three meet, where they part, and what to carry<br>
-    Daily Reflection, Twenty-Four Hours, and Grapevine link to their sources \u2014 please support them
-  </footer>
-
-</div>
-</body>
-</html>
-"""
+*{{box-sizing:border-box;margin:0;padding:0}}:root{{--paper:#100E17;--paper2:#171421;--line:#332C3D;--ink:#F0EDE8;--dim:#B8B1C3;--faint:#81798E;--brass:#C4956A;--bright:#E0B47F;--display:"Fraunces",Georgia,serif;--body:"Inter Tight",system-ui,sans-serif;--mono:"JetBrains Mono",monospace}}
+body{{background:radial-gradient(circle at 84% 8%,rgba(196,149,106,.09),transparent 30rem),radial-gradient(circle at 10% 58%,rgba(122,158,138,.07),transparent 34rem),var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:60px}}a{{color:inherit;text-decoration:none}}.wrap{{max-width:820px;margin:auto;padding:0 28px}}
+.topnav{{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line)}}.home{{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}}.home span{{color:var(--brass);font-weight:600}}.here{{font-family:var(--display);font-style:italic;font-size:14px;color:var(--dim)}}
+.top{{padding:56px 0 28px;border-bottom:1px solid var(--line);margin-bottom:34px}}.kicker,.eyebrow,.movement h3,.question-card .label{{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}}.kicker{{margin-bottom:14px}}.top h1{{font-family:var(--display);font-weight:330;font-size:clamp(38px,6vw,58px);letter-spacing:-.03em;line-height:1.02}}.date{{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--dim);margin-top:14px;text-transform:uppercase}}
+.open-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:54px}}.card-link{{border:1px solid var(--line);padding:16px;transition:.2s;background:rgba(255,255,255,.025);min-height:92px}}.card-link:hover{{border-color:var(--brass);background:var(--paper2);transform:translateY(-1px)}}.card-link .label{{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:6px}}.card-link h2{{font-family:var(--display);font-weight:400;font-size:17px;line-height:1.2}}.go{{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:8px}}
+.question-card{{margin-bottom:72px;padding:34px 36px 36px;border-block:1px solid rgba(196,149,106,.45);background:linear-gradient(105deg,rgba(196,149,106,.08),transparent 65%)}}.question-card .label{{margin-bottom:13px}}.question-card h2{{font-family:var(--display);font-weight:350;font-size:clamp(31px,5vw,48px);letter-spacing:-.02em;line-height:1.18}}
+.reading{{margin-top:72px;padding-top:58px;border-top:1px solid var(--line)}}.eyebrow{{margin-bottom:10px}}.reading h2,.echo h2{{font-family:var(--display);font-weight:350;font-size:clamp(28px,4vw,42px);line-height:1.15;margin-bottom:8px}}.source-note{{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:24px}}.verse{{border-left:2px solid var(--brass);padding:4px 0 4px 26px;margin-bottom:30px}}.verse p{{font-family:var(--display);font-weight:300;font-size:19px;line-height:1.72;margin-bottom:1rem}}.verse p:last-child{{margin-bottom:0}}.movement{{padding:25px 27px;background:var(--paper2);border:1px solid var(--line)}}.movement h3{{margin-bottom:11px}}.movement p{{font-size:16.5px;line-height:1.72}}
+.echo{{margin-top:72px;padding:34px;border:1px solid rgba(196,149,106,.38);background:linear-gradient(135deg,rgba(196,149,106,.07),rgba(255,255,255,.02))}}.echo .verse{{margin-bottom:20px}}.echo .verse p{{font-size:21px}}.echo-note{{font-size:15.5px;line-height:1.7;color:var(--dim)}}.confluence{{margin-top:72px;padding-top:58px;border-top:1px solid var(--brass)}}.confluence h2{{font-family:var(--display);font-weight:350;font-size:clamp(34px,5vw,48px);line-height:1.1;margin-bottom:22px}}.confluence>p{{font-size:17px;line-height:1.75}}.carry{{margin-top:28px;padding:28px;background:var(--paper2);border:1px solid rgba(196,149,106,.35)}}.carry .label{{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:10px}}.carry p:last-child{{font-family:var(--display);font-style:italic;font-size:21px;line-height:1.55}}
+footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);line-height:1.75}}footer p{{margin-bottom:10px}}footer strong{{color:var(--bright);font-weight:500}}@media(max-width:680px){{.wrap{{padding:0 18px}}.open-grid{{grid-template-columns:1fr}}.card-link{{min-height:0}}.question-card{{padding:28px 22px 30px}}.reading{{margin-top:58px;padding-top:46px}}.verse{{padding-left:20px}}.echo{{padding:27px 22px}}}}
+</style></head><body><div class="wrap">
+<nav class="topnav" aria-label="Site navigation"><a class="home" href="https://jdb-builds.com"><span>JDB</span> · Home</a><span class="here">Daily Discipline</span></nav>
+<header class="top"><div class="kicker">One question · rotating voices · one day at a time</div><h1>Every 24 Hours,<br>Begin Again.</h1><div class="date">{date_string}</div></header>
+<nav class="open-grid" aria-label="Recovery readings">
+<a class="card-link" href="{LINKS['aa_reflection']}" target="_blank" rel="noopener"><div class="label">Alcoholics Anonymous</div><h2>Daily Reflection</h2><div class="go">Open ↗</div></a>
+<a class="card-link" href="{LINKS['hazelden']}" target="_blank" rel="noopener"><div class="label">Hazelden Betty Ford</div><h2>Twenty-Four Hours</h2><div class="go">Open ↗</div></a>
+<a class="card-link" href="{LINKS['grapevine']}" target="_blank" rel="noopener"><div class="label">AA Grapevine</div><h2>Quote of the Day</h2><div class="go">Open ↗</div></a></nav>
+<section class="question-card" aria-labelledby="daily-question"><div class="label">01 · The question</div><h2 id="daily-question">{esc(editorial['daily_question'])}</h2></section>
+{lead_html}
+{companion_html}
+{echo_html}
+<section class="confluence" aria-labelledby="confluence-heading"><div class="eyebrow">05 · The Confluence</div><h2 id="confluence-heading">Where they meet.<br>Where they part.</h2><p>{esc(editorial['confluence'])}</p><div class="carry"><div class="label">Take this into the day</div><p>{esc(editorial['carry_question'])}</p></div></section>
+<footer>
+<p><strong>What is pulled:</strong> three bounded readings from a local public-domain library: Tao Te Ching (James Legge, 1891), Chuang Tzu (Herbert A. Giles, 1889), Epictetus (George Long), Brother Lawrence's <em>The Practice of the Presence of God</em> (1895 edition), and Heraclitus fragments (John Burnet). Daily Reflection, Twenty-Four Hours, and Grapevine remain links to their publishers.</p>
+<p><strong>How the rotation works:</strong> the Tao leads 25% of days. Chuang Tzu, Epictetus, and Brother Lawrence share the other lead days equally. Heraclitus usually serves as a concise echo. Recent selections are excluded for 56 days when unused material remains.</p>
+<p><strong>How AI is used:</strong> Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives only today's bounded candidate readings. It selects the echo and writes the daily question, brief lens, companion note, Confluence, and carry question. AI does not write, paraphrase, or alter the source readings.</p>
+<p>Daily Discipline · jdb-builds.com · generated fresh each morning</p>
+</footer></div></body></html>"""
 
 
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
+def record_history(state, lead, companion, echo):
+    today = datetime.datetime.now(TIMEZONE).date()
+    history = list(state.get("history", []))
+    history.append({
+        "date": today.isoformat(), "lead": lead["selection_key"],
+        "companion": companion["selection_key"], "echo": echo["selection_key"],
+    })
+    cutoff = today - datetime.timedelta(days=MAX_HISTORY_ENTRIES)
+    retained = []
+    for entry in history:
+        try:
+            if datetime.date.fromisoformat(entry["date"]) >= cutoff:
+                retained.append(entry)
+        except (KeyError, TypeError, ValueError):
+            continue
+    state["history"] = retained[-MAX_HISTORY_ENTRIES:]
+    save_state(state)
+
+
 def main():
-    gate()
-    log("\u2500\u2500 Daily Discipline Generator \u2500\u2500")
+    state = gate()
+    log("── Daily Discipline Generator ──")
     if not API_KEY:
         log("ERROR: ANTHROPIC_API_KEY not set.")
         sys.exit(1)
-    if not TAO_FILE.exists():
-        log(f"ERROR: {TAO_FILE.name} not found. Run build_tao_data.py first.")
+    missing = [s["file"].name for s in READING_SOURCES if not s["file"].exists()]
+    if missing:
+        log(f"ERROR: Missing source files: {', '.join(missing)}")
         sys.exit(1)
 
-    tao = load_tao()
-    num, verse = pick_chapter(tao)
-    log(f"Today's chapter: {num}")
+    day = datetime.datetime.now(TIMEZONE).date()
+    lead = pick_lead(state, day)
+    if not lead:
+        log("ERROR: No lead reading available; keeping the last complete page.")
+        sys.exit(1)
+    log(f"Lead: {lead['source']['label']} — {lead['passage_id']}")
+
+    companion = pick_companion(lead, state, day)
+    if not companion:
+        log("ERROR: No companion reading available; keeping the last complete page.")
+        sys.exit(1)
+    log(f"Companion: {companion['source']['label']} — {companion['passage_id']}")
+
+    echo_candidates = pick_echo_candidates(lead, companion, state, day)
+    if not echo_candidates:
+        log("ERROR: No echo candidates available; keeping the last complete page.")
+        sys.exit(1)
 
     client = anthropic.Anthropic(api_key=API_KEY)
-    log("Generating reflection with Claude...")
-    try:
-        refl = reflect(client, num, verse)
-    except Exception as e:
-        log(f"Reflection generation failed: {e}")
-        sys.exit(1)
-
-    companion = pick_companion()
-    echo = None
-    confluence = None
-    if companion:
-        log(f"Companion pick: {companion['source']['label']} \u2014 {companion['passage_id']}")
-        echo_candidates = pick_echo_candidates(companion)
-        if not echo_candidates:
-            log("ERROR: No echo candidates found; keeping the last complete page.")
-            sys.exit(1)
-        else:
-            echo_sources = ", ".join(dict.fromkeys(
-                candidate["source"]["label"] for candidate in echo_candidates
-            ))
-            log(
-                f"Selecting an echo from {echo_sources} "
-                f"({len(echo_candidates)} candidates)..."
+    for attempt in range(1, 3):
+        try:
+            log(f"Creating bounded editorial with {MODEL_LABEL} (attempt {attempt})...")
+            editorial, echo = validate_editorial(
+                create_editorial(client, lead, companion, echo_candidates),
+                echo_candidates,
             )
-        for attempt in range(1, 3):
-            try:
-                confluence = reflect_confluence(
-                    client, num, verse, companion, echo_candidates
-                )
-                echo = resolve_echo_candidate(
-                    echo_candidates, confluence["echo_key"]
-                )
-                log(
-                    f"Echo selected: {echo['source']['label']} \u2014 "
-                    f"{echo['passage_id']}"
-                )
-                break
-            except Exception as e:
-                if attempt == 1:
-                    log(f"Confluence attempt 1 failed ({e}); retrying once.")
-                else:
-                    log(
-                        "ERROR: Confluence generation failed twice; "
-                        f"keeping the last complete page. Final error: {e}"
-                    )
-                    sys.exit(1)
-    else:
-        log("ERROR: No companion source files found; keeping the last complete page.")
-        sys.exit(1)
+            break
+        except Exception as error:
+            if attempt == 1:
+                log(f"Editorial attempt 1 failed ({error}); retrying once.")
+            else:
+                log(f"ERROR: Editorial generation failed twice; keeping the last complete page. Final error: {error}")
+                sys.exit(1)
 
-    html = build_html(num, verse, refl, companion, echo, confluence)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(html)
+    log(f"Echo: {echo['source']['label']} — {echo['passage_id']}")
+    temporary = OUTPUT_FILE.with_suffix(".html.tmp")
+    temporary.write_text(build_html(lead, companion, echo, editorial), encoding="utf-8")
+    temporary.replace(OUTPUT_FILE)
+    record_history(state, lead, companion, echo)
     log(f"Built dashboard -> {OUTPUT_FILE}")
-
-    # In GitHub Actions, the workflow handles the push.
-    if os.environ.get("GITHUB_ACTIONS") == "true":
-        log("Running in GitHub Actions; workflow handles push.")
-    else:
-        log("Local run complete. Commit and push when ready.")
+    log("Running in GitHub Actions; workflow handles push." if os.environ.get("GITHUB_ACTIONS") == "true" else "Local run complete. Commit and push when ready.")
     log("Done.")
 
 
