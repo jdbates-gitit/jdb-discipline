@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-20",
+  "date": "2026-09-21",
   "morning": true,
   "history": [
     {
@@ -7,6 +7,12 @@
       "lead": "chuangtzu:19",
       "companion": "heraclitus:23",
       "echo": "brother_lawrence:letter_14"
+    },
+    {
+      "date": "2026-09-21",
+      "lead": "chuangtzu:11",
+      "companion": "epictetus:XXXIV",
+      "echo": "heraclitus:83"
     }
   ]
 }
