@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-24",
+  "date": "2026-09-25",
   "morning": true,
   "history": [
     {
@@ -31,6 +31,12 @@
       "lead": "tao:38",
       "companion": "brother_lawrence:letter_4",
       "echo": "epictetus:I"
+    },
+    {
+      "date": "2026-09-25",
+      "lead": "chuangtzu:24",
+      "companion": "heraclitus:123",
+      "echo": "tao:67"
     }
   ]
 }
