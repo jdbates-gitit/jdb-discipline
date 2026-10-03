@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-02",
+  "date": "2026-10-03",
   "morning": true,
   "history": [
     {
@@ -79,6 +79,12 @@
       "lead": "chuangtzu:1",
       "companion": "brother_lawrence:letter_6",
       "echo": "tao:43"
+    },
+    {
+      "date": "2026-10-03",
+      "lead": "chuangtzu:2",
+      "companion": "psalms:132",
+      "echo": "heraclitus:36"
     }
   ]
 }
