@@ -29,6 +29,11 @@ EXCERPT_TARGET_CHARS = 1100
 ECHO_TARGET_CHARS = 520
 FRESHNESS_DAYS = 56
 MAX_HISTORY_ENTRIES = 180
+PRACTICE_DEFAULTS = {
+    "surrender_question": "What outcome can I entrust to God today while remaining available for the next honest action?",
+    "daily_action": "Before one difficult moment today, I will pause, entrust the outcome to God, and take one kind or honest step.",
+    "evening_question": "Where did I loosen my grip today, and what am I still willing to entrust to God?",
+}
 
 READING_SOURCES = [
     {
@@ -323,6 +328,19 @@ def validate_editorial(result, echo_candidates):
         words = result[key].split()
         if not result[key].strip().endswith("?") or not 6 <= len(words) <= 40:
             raise ValueError(f"Editorial field {key!r} must be a focused 6-40 word question.")
+    # These new short prompts must not invalidate an otherwise complete reading.
+    # Fixed editorial defaults keep the practice usable if a field is omitted,
+    # malformed, or too long; the existing reading validation stays strict.
+    for key, fallback in PRACTICE_DEFAULTS.items():
+        value = result.get(key)
+        valid = isinstance(value, str) and 6 <= len(value.split()) <= 40
+        if key.endswith("question"):
+            valid = valid and value.strip().endswith("?")
+        if not valid:
+            result[key] = fallback
+            log(f"Using fixed editorial default for {key}.")
+        else:
+            result[key] = value.strip()
     return result, resolve_echo_candidate(echo_candidates, result["echo_key"])
 
 
@@ -364,12 +382,17 @@ Return ONLY a JSON object, without markdown fences, using exactly these keys:
   "echo_key": "The exact source:passage KEY of the strongest echo candidate.",
   "echo_note": "One or two concise sentences naming why this exact echo belongs and what tension or resonance it introduces.",
   "confluence": "One 80-120 word paragraph naming both where the three voices meet and where they meaningfully differ. Do not flatten them into one philosophy.",
-  "carry_question": "A distinct first-person question, 10-24 words, for the next fearful, uncertain, or ordinary moment today. Invite one honest or loving action instead of more rumination."
+  "carry_question": "NOTICE: A distinct first-person question, 10-24 words, helping me recognize fear, grasping, avoidance, or a chance for love in an ordinary moment today. Keep it grounded in these readings.",
+  "surrender_question": "SURRENDER: One first-person question, 10-24 words, naming a particular outcome, demand for certainty, or urge to control I can entrust to God today while staying present and responsible. Preserve the readings' distinct beliefs; do not claim every author means God in the same way.",
+  "daily_action": "ACT: One concrete, modest first-person commitment, 12-28 words, I can carry out today in kindness, sobriety, courage, service, or honest attention. Make it specific enough to try in an ordinary encounter and connected to these readings.",
+  "evening_question": "One gentle but honest first-person question, 12-28 words, returning tonight to today's practice: where did I loosen my grip, act with love, or remain afraid, and what can I entrust to God now? Choose one or two threads, not a checklist or score."
 }}
 
-The question should open a door, not become another problem to solve before breakfast. Write with warmth, spiritual seriousness, and economy. Share, do not preach."""
+Surrender means releasing my demand to control outcomes while remaining willing to participate in life. Do not equate it with giving up, avoiding responsibility, accepting harm, dropping boundaries, or neglecting sobriety. Do not promise that prayer removes fear or guarantees an outcome. Let love, kindness, growth, and openness emerge where the reading supports them; do not force every theme into every field.
+
+The question should open a door, not become another problem to solve before breakfast. Write with warmth, spiritual seriousness, and economy. Share, do not preach. Use plain text only; no Markdown emphasis inside JSON strings."""
     message = client.messages.create(
-        model=MODEL, max_tokens=1400,
+        model=MODEL, max_tokens=1800,
         messages=[{"role": "user", "content": prompt}],
     )
     text = "".join(b.text for b in message.content if hasattr(b, "text")).strip()
@@ -411,9 +434,83 @@ def build_echo_html(echo, editorial):
   </section>"""
 
 
-def build_html(lead, companion, echo, editorial):
-    now = datetime.datetime.now(TIMEZONE)
-    date_string = f"{now:%A, %B} {now.day}, {now:%Y}"
+def history_entry(lead, companion, echo, editorial=None, day=None):
+    day = day or datetime.datetime.now(TIMEZONE).date()
+    entry = {"date": day.isoformat()}
+    for role, reading in (("lead", lead), ("companion", companion), ("echo", echo)):
+        entry[role] = reading["selection_key"]
+        entry[f"{role}_title"] = reading["passage_title"]
+    if editorial:
+        for key in ("daily_question", "carry_question", *PRACTICE_DEFAULTS):
+            entry[key] = editorial.get(key, PRACTICE_DEFAULTS.get(key, ""))
+    return entry
+
+
+def seven_day_trail(history, day=None):
+    day = day or datetime.datetime.now(TIMEZONE).date()
+    cutoff = day - datetime.timedelta(days=6)
+    dates = {}
+    for entry in history:
+        try:
+            entry_day = datetime.date.fromisoformat(entry["date"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if cutoff <= entry_day <= day:
+            dates[entry_day] = entry  # Manual reruns show only the latest entry for a date.
+    return [dates[entry_day] for entry_day in sorted(dates, reverse=True)]
+
+
+def build_evening_html(date, question, suffix="today"):
+    return f"""<div class="evening-entry" data-note-date="{esc(date)}">
+<p class="night-question">{esc(question)}</p>
+<div class="private-note" hidden>
+<label for="evening-note-{esc(suffix)}">A few words to return to (optional)</label>
+<textarea id="evening-note-{esc(suffix)}" rows="4" maxlength="4000" autocomplete="off" spellcheck="false" placeholder="What can I entrust to God tonight?"></textarea>
+<p class="note-privacy">Saved only in this browser on this device. No account or cloud sync. Clearing browser data removes saved notes.</p>
+<div class="note-actions"><button type="button" data-note-save>Save on this device</button><button type="button" data-note-clear>Clear this note</button></div>
+<p class="note-status" role="status" aria-live="polite"></p></div>
+<noscript><p class="note-privacy">You can reflect on this question here; saving a note requires JavaScript.</p></noscript>
+</div>"""
+
+
+def build_trail_html(entries, day):
+    sources = {source["id"]: source for source in READING_SOURCES}
+    rendered = []
+    for entry in seven_day_trail(entries, day):
+        date = entry["date"]
+        entry_day = datetime.date.fromisoformat(date)
+        voices = []
+        for role in ("lead", "companion", "echo"):
+            source_id, _, passage_id = str(entry.get(role, "")).partition(":")
+            source = sources.get(source_id)
+            if source:
+                title = entry.get(f"{role}_title") or f"Reading {passage_id}"
+                voices.append(f"{role.title()}: {source['label']} · {title}")
+        content = f'<p class="trail-voices">{esc(" / ".join(voices))}</p>'
+        if entry.get("daily_question"):
+            content += f'<p class="trail-question">{esc(entry["daily_question"])}</p>'
+            content += build_practice_html(entry, compact=True)
+            if entry.get("evening_question"):
+                content += build_evening_html(date, entry["evening_question"], date)
+        else:
+            content += '<p class="trail-empty">Reading selections are available. Practice prompts were not saved before this update.</p>'
+        rendered.append(f'<li><details><summary><time datetime="{esc(date)}">{entry_day:%A, %B} {entry_day.day}</time></summary><div class="trail-content">{content}</div></details></li>')
+    return '<ul class="trail-list">' + "".join(rendered) + '</ul>'
+
+
+def build_practice_html(editorial, compact=False):
+    steps = "".join(
+        f'<div><dt>{label}</dt><dd>{esc(editorial.get(key, PRACTICE_DEFAULTS.get(key, "")))}</dd></div>'
+        for label, key in (("Notice", "carry_question"), ("Surrender", "surrender_question"), ("Act", "daily_action"))
+    )
+    if compact:
+        return f'<dl class="practice-steps compact">{steps}</dl>'
+    return f'<section class="carry" aria-labelledby="practice-heading"><h3 id="practice-heading">Into the Day</h3><dl class="practice-steps">{steps}</dl></section>'
+
+
+def build_html(lead, companion, echo, editorial, state=None, day=None):
+    day = day or datetime.datetime.now(TIMEZONE).date()
+    date_string = f"{day:%A, %B} {day.day}, {day:%Y}"
     lead_html = build_reading_html(
         lead, "02", "Today's lead", "A lens for today", editorial["lead_lens"]
     )
@@ -422,6 +519,10 @@ def build_html(lead, companion, echo, editorial):
         editorial["companion_note"],
     )
     echo_html = build_echo_html(echo, editorial)
+    practice_html = build_practice_html(editorial)
+    evening_html = build_evening_html(day.isoformat(), editorial.get("evening_question", PRACTICE_DEFAULTS["evening_question"]))
+    entries = list((state or {}).get("history", [])) + [history_entry(lead, companion, echo, editorial, day)]
+    trail_html = build_trail_html(entries, day)
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="Daily Discipline: recovery, spiritual reading, and one question to carry into the day.">
@@ -437,7 +538,9 @@ body{{background:radial-gradient(circle at 84% 8%,rgba(196,149,106,.09),transpar
 .question-card{{margin-bottom:72px;padding:34px 36px 36px;border-block:1px solid rgba(196,149,106,.45);background:linear-gradient(105deg,rgba(196,149,106,.08),transparent 65%)}}.question-card .label{{margin-bottom:13px}}.question-card h2{{font-family:var(--display);font-weight:350;font-size:clamp(31px,5vw,48px);letter-spacing:-.02em;line-height:1.18}}
 .reading{{margin-top:72px;padding-top:58px;border-top:1px solid var(--line)}}.eyebrow{{margin-bottom:10px}}.reading h2,.echo h2{{font-family:var(--display);font-weight:350;font-size:clamp(28px,4vw,42px);line-height:1.15;margin-bottom:8px}}.source-note{{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:24px}}.verse{{border-left:2px solid var(--brass);padding:4px 0 4px 26px;margin-bottom:30px}}.verse p{{font-family:var(--display);font-weight:300;font-size:19px;line-height:1.72;margin-bottom:1rem}}.verse p:last-child{{margin-bottom:0}}.movement{{padding:25px 27px;background:var(--paper2);border:1px solid var(--line)}}.movement h3{{margin-bottom:11px}}.movement p{{font-size:16.5px;line-height:1.72}}
 .echo{{margin-top:72px;padding:34px;border:1px solid rgba(196,149,106,.38);background:linear-gradient(135deg,rgba(196,149,106,.07),rgba(255,255,255,.02))}}.echo .verse{{margin-bottom:20px}}.echo .verse p{{font-size:21px}}.echo-note{{font-size:15.5px;line-height:1.7;color:var(--dim)}}.confluence{{margin-top:72px;padding-top:58px;border-top:1px solid var(--brass)}}.confluence h2{{font-family:var(--display);font-weight:350;font-size:clamp(34px,5vw,48px);line-height:1.1;margin-bottom:22px}}.confluence>p{{font-size:17px;line-height:1.75}}.carry{{margin-top:28px;padding:28px;background:var(--paper2);border:1px solid rgba(196,149,106,.35)}}.carry .label{{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:10px}}.carry p:last-child{{font-family:var(--display);font-style:italic;font-size:21px;line-height:1.55}}
-footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);line-height:1.75}}footer p{{margin-bottom:10px}}footer strong{{color:var(--bright);font-weight:500}}@media(max-width:680px){{.wrap{{padding:0 18px}}.open-grid{{grid-template-columns:1fr}}.card-link{{min-height:0}}.question-card{{padding:28px 22px 30px}}.reading{{margin-top:58px;padding-top:46px}}.verse{{padding-left:20px}}.echo{{padding:27px 22px}}}}
+.carry h3{{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:22px}}.practice-steps{{display:grid;gap:20px}}.practice-steps>div{{display:grid;grid-template-columns:100px 1fr;gap:16px}}.practice-steps dt{{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bright);padding-top:6px}}.practice-steps dd{{font-family:var(--display);font-size:21px;line-height:1.5;overflow-wrap:anywhere}}.practice-steps.compact{{margin:20px 0}}.practice-steps.compact dd{{font-size:18px}}
+.return,.trail{{margin-top:26px;border-block:1px solid var(--line)}}summary{{padding:22px 0;cursor:pointer;color:var(--bright);font-family:var(--display);font-size:23px;line-height:1.3}}summary::marker{{color:var(--brass)}}summary small{{display:block;color:var(--dim);font-family:var(--body);font-size:14px;font-weight:400;line-height:1.5;margin:8px 0 0 20px}}.evening-entry{{padding:0 0 24px}}.night-question{{font-family:var(--display);font-size:22px;line-height:1.5;margin-bottom:22px}}.private-note label{{display:block;font-size:15px;margin-bottom:10px}}textarea{{width:100%;resize:vertical;background:var(--paper2);border:1px solid var(--line);color:var(--ink);font:16px/1.6 var(--body);padding:16px;min-height:120px;border-radius:2px}}.note-privacy,.note-status,.trail-empty{{font-size:13px;color:var(--dim);line-height:1.6;margin-top:10px}}.note-actions{{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}}.note-actions button{{min-height:44px;padding:10px 15px;background:var(--paper2);border:1px solid var(--line);border-radius:2px;color:var(--ink);font:14px var(--body);cursor:pointer}}.note-actions button:hover{{border-color:var(--brass)}}:focus-visible{{outline:2px solid var(--bright);outline-offset:4px}}.trail-intro{{font-size:14px;color:var(--dim);margin-bottom:16px}}.trail-list{{list-style:none}}.trail-list>li{{border-top:1px solid var(--line)}}.trail-list summary{{font:16px/1.5 var(--body);padding:17px 0}}.trail-content{{padding-bottom:22px}}.trail-voices{{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--dim);overflow-wrap:anywhere}}.trail-question{{font-family:var(--display);font-size:22px;line-height:1.5;margin-top:16px}}[hidden]{{display:none!important}}
+footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);line-height:1.75}}footer p{{margin-bottom:10px}}footer strong{{color:var(--bright);font-weight:500}}@media(max-width:680px){{.wrap{{padding:0 18px}}.open-grid{{grid-template-columns:1fr}}.card-link{{min-height:0}}.question-card{{padding:28px 22px 30px}}.reading{{margin-top:58px;padding-top:46px}}.verse{{padding-left:20px}}.echo{{padding:27px 22px}}.carry{{padding:24px 22px}}.practice-steps>div{{grid-template-columns:1fr;gap:5px}}.practice-steps dt{{padding-top:0}}}}
 </style></head><body><div class="wrap">
 <nav class="topnav" aria-label="Site navigation"><a class="home" href="https://jdb-builds.com"><span>JDB</span> · Home</a><span class="here">Daily Discipline</span></nav>
 <header class="top"><div class="kicker">One question · rotating voices · one day at a time</div><h1>Every 24 Hours,<br>Begin Again.</h1><div class="date">{date_string}</div></header>
@@ -449,22 +552,22 @@ footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-f
 {lead_html}
 {companion_html}
 {echo_html}
-<section class="confluence" aria-labelledby="confluence-heading"><div class="eyebrow">05 · The Confluence</div><h2 id="confluence-heading">Where they meet.<br>Where they part.</h2><p>{esc(editorial['confluence'])}</p><div class="carry"><div class="label">Take this into the day</div><p>{esc(editorial['carry_question'])}</p></div></section>
+<section class="confluence" aria-labelledby="confluence-heading"><div class="eyebrow">05 · The Confluence</div><h2 id="confluence-heading">Where they meet.<br>Where they part.</h2><p>{esc(editorial['confluence'])}</p></section>
+{practice_html}
+<details class="return"><summary>Return Tonight<small>A moment to notice, give thanks, and surrender what remains.</small></summary>{evening_html}</details>
+<details class="trail"><summary>Seven-Day Trail<small>Return to a question, a voice, or a small act of willingness.</small></summary><p class="trail-intro">The past seven calendar days, newest first. Each day holds its latest generated reading; new practice prompts collect from this update onward.</p>{trail_html}</details>
 <footer>
 <p><strong>What is pulled:</strong> three bounded readings from a local public-domain library: Tao Te Ching (James Legge, 1891), Chuang Tzu (Herbert A. Giles, 1889), Epictetus (George Long), Brother Lawrence's <em>The Practice of the Presence of God</em> (1895 edition), <a href="https://www.gutenberg.org/ebooks/10">Psalms (King James Version, public domain in the USA)</a>, and Heraclitus fragments (John Burnet). Psalms draws from all 150 prayers and songs; longer readings use contiguous, complete verses with the range shown. Daily Reflection, Twenty-Four Hours, and Grapevine remain links to their publishers.</p>
 <p><strong>How the rotation works:</strong> the Tao leads 25% of days. Chuang Tzu, Epictetus, and Brother Lawrence share the other lead days equally. Psalms is the companion every other day and is available as an Echo on the remaining days. Heraclitus can appear as a companion or Echo. Recent selections are excluded for 56 days when unused material remains; selecting any excerpt of a Psalm counts as selecting that whole Psalm.</p>
-<p><strong>How AI is used:</strong> Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives only today's bounded candidate readings. It selects the echo and writes the daily question, brief lens, companion note, Confluence, and carry question. AI does not write, paraphrase, or alter the source readings.</p>
+<p><strong>How AI is used:</strong> Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives only today's bounded candidate readings. It selects the echo and writes the daily question, brief lens, companion note, Confluence, Notice question, Surrender question, daily action, and evening reflection. Brief practice prompts may use fixed editorial defaults when needed. AI does not write, paraphrase, or alter the source readings. Your evening notes stay in this browser and are never sent to the generator or AI.</p>
 <p>Daily Discipline · jdb-builds.com · generated fresh each morning</p>
-</footer></div></body></html>"""
+</footer></div><script src="practice.js" defer></script></body></html>"""
 
 
-def record_history(state, lead, companion, echo):
-    today = datetime.datetime.now(TIMEZONE).date()
+def record_history(state, lead, companion, echo, editorial=None, day=None):
+    today = day or datetime.datetime.now(TIMEZONE).date()
     history = list(state.get("history", []))
-    history.append({
-        "date": today.isoformat(), "lead": lead["selection_key"],
-        "companion": companion["selection_key"], "echo": echo["selection_key"],
-    })
+    history.append(history_entry(lead, companion, echo, editorial, today))
     cutoff = today - datetime.timedelta(days=MAX_HISTORY_ENTRIES)
     retained = []
     for entry in history:
@@ -524,9 +627,9 @@ def main():
 
     log(f"Echo: {echo['source']['label']} — {echo['passage_id']}")
     temporary = OUTPUT_FILE.with_suffix(".html.tmp")
-    temporary.write_text(build_html(lead, companion, echo, editorial), encoding="utf-8")
+    temporary.write_text(build_html(lead, companion, echo, editorial, state, day), encoding="utf-8")
     temporary.replace(OUTPUT_FILE)
-    record_history(state, lead, companion, echo)
+    record_history(state, lead, companion, echo, editorial, day)
     log(f"Built dashboard -> {OUTPUT_FILE}")
     log("Running in GitHub Actions; workflow handles push." if os.environ.get("GITHUB_ACTIONS") == "true" else "Local run complete. Commit and push when ready.")
     log("Done.")
