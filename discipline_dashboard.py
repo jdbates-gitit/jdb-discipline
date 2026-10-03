@@ -61,6 +61,13 @@ READING_SOURCES = [
         "voice": "Preserve explicitly Christian language of God, prayer, grace, love, and presence in ordinary work. Do not neutralize his faith into generic mindfulness.",
     },
     {
+        "id": "psalms", "file": HERE / "sources" / "psalms.json",
+        "label": "Psalms", "sublabel": "prayer, lament, gratitude, and trust",
+        "attribution": "King James Version · public domain in the USA",
+        "lead": False, "companion": True, "echo": True,
+        "voice": "Preserve the Psalms as ancient Israel's prayers and songs, received in Jewish and Christian traditions: direct address to God, lament, praise, fear, gratitude, anger, and trust. Allow unresolved grief and difficult language about judgment or enemies. Do not turn prayer into generic mindfulness, equate God with the Tao, prescribe retaliation, or promise safety or success.",
+    },
+    {
         "id": "heraclitus", "file": HERE / "sources" / "heraclitus.json",
         "label": "Heraclitus", "sublabel": "fire, tension, and hidden order",
         "attribution": "Fragments · John Burnet translation · public domain",
@@ -71,7 +78,7 @@ READING_SOURCES = [
 
 ECHO_CANDIDATE_COUNT = {
     "tao": 4, "chuangtzu": 4, "epictetus": 5,
-    "brother_lawrence": 4, "heraclitus": 8,
+    "brother_lawrence": 4, "psalms": 8, "heraclitus": 8,
 }
 LINKS = {
     "aa_reflection": "https://www.aa.org/daily-reflections",
@@ -141,7 +148,35 @@ def load_source(source):
         return json.load(handle)
 
 
+def psalm_excerpt(entry, target):
+    """Choose a contiguous verse group; never cut a prayer mid-verse."""
+    groups, current, length = [], [], 0
+    for verse in entry["verses"]:
+        verse_length = len(verse["text"])
+        if current and length + 2 + verse_length > target:
+            groups.append(current)
+            current, length = [], 0
+        current.append(verse)
+        length += verse_length + (2 if len(current) > 1 else 0)
+    if current:
+        groups.append(current)
+    selected = random.choice(groups)
+    title = entry["title"]
+    if len(groups) > 1:
+        first, last = selected[0]["number"], selected[-1]["number"]
+        verse_range = str(first) if first == last else f"{first}–{last}"
+        title += f":{verse_range} · excerpt"
+    return "\n\n".join(verse["text"] for verse in selected), title
+
+
 def passage_from_entry(source, passage_id, entry, excerpt_target=None):
+    if source["id"] == "psalms":
+        passage_text, passage_title = psalm_excerpt(entry, excerpt_target or EXCERPT_TARGET_CHARS)
+        return {
+            "source": source, "passage_id": str(passage_id),
+            "selection_key": f"{source['id']}:{passage_id}",
+            "passage_title": passage_title, "passage_text": passage_text,
+        }
     if isinstance(entry, dict):
         passage_text, passage_title = entry.get("text", ""), entry.get("title")
     else:
@@ -217,11 +252,19 @@ def pick_lead(state, day=None):
 
 
 def pick_companion(lead, state, day=None):
+    day = day or datetime.datetime.now(TIMEZONE).date()
     sources = [
         s for s in READING_SOURCES
         if s["companion"] and s["id"] != lead["source"]["id"] and s["file"].exists()
     ]
-    for source in balanced_source_order(sources, day, "companion"):
+    psalms = [source for source in sources if source["id"] == "psalms"]
+    others = [source for source in sources if source["id"] != "psalms"]
+    # Half of calendar days guarantee a Psalms companion. On the other days
+    # it remains available to the editor as an Echo, alongside other voices.
+    ordered = balanced_source_order(others, day, "companion")
+    if day.toordinal() % 2 == 0:
+        ordered = psalms + ordered
+    for source in ordered:
         reading = pick_passage(source, state, EXCERPT_TARGET_CHARS, day)
         if reading:
             return reading
@@ -288,6 +331,8 @@ def create_editorial(client, lead, companion, echo_candidates):
         f"KEY {c['selection_key']} — {c['source']['label']} — {c['passage_title']}:\n{c['passage_text']}"
         for c in echo_candidates
     )
+    echo_sources = {candidate["source"]["id"]: candidate["source"] for candidate in echo_candidates}
+    echo_voices = "\n".join(f"{source['label']}: {source['voice']}" for source in echo_sources.values())
     prompt = f"""You are the restrained editor of Daily Discipline, a private morning practice for one person active in AA recovery and interested in spiritual growth, love, kindness, courage, surrender, and living in conscious relationship with God and the unfolding universe.
 
 The public-domain readings below are the authors' voices. Do not rewrite them, imitate them, or make them agree. Your work is limited to selecting one bounded echo and writing brief connective editorial material.
@@ -305,6 +350,9 @@ TODAY'S FULL COMPANION — {companion['source']['label']} ({companion['passage_t
 Voice integrity: {companion['source']['voice']}
 
 Choose one SHORT echo from these exact candidates. Choose genuine resonance or productive tension with both readings. The third voice must add something distinct, not decorative agreement.
+
+Echo voice integrity:
+{echo_voices}
 
 {candidates}
 
@@ -403,8 +451,8 @@ footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-f
 {echo_html}
 <section class="confluence" aria-labelledby="confluence-heading"><div class="eyebrow">05 · The Confluence</div><h2 id="confluence-heading">Where they meet.<br>Where they part.</h2><p>{esc(editorial['confluence'])}</p><div class="carry"><div class="label">Take this into the day</div><p>{esc(editorial['carry_question'])}</p></div></section>
 <footer>
-<p><strong>What is pulled:</strong> three bounded readings from a local public-domain library: Tao Te Ching (James Legge, 1891), Chuang Tzu (Herbert A. Giles, 1889), Epictetus (George Long), Brother Lawrence's <em>The Practice of the Presence of God</em> (1895 edition), and Heraclitus fragments (John Burnet). Daily Reflection, Twenty-Four Hours, and Grapevine remain links to their publishers.</p>
-<p><strong>How the rotation works:</strong> the Tao leads 25% of days. Chuang Tzu, Epictetus, and Brother Lawrence share the other lead days equally. Heraclitus usually serves as a concise echo. Recent selections are excluded for 56 days when unused material remains.</p>
+<p><strong>What is pulled:</strong> three bounded readings from a local public-domain library: Tao Te Ching (James Legge, 1891), Chuang Tzu (Herbert A. Giles, 1889), Epictetus (George Long), Brother Lawrence's <em>The Practice of the Presence of God</em> (1895 edition), <a href="https://www.gutenberg.org/ebooks/10">Psalms (King James Version, public domain in the USA)</a>, and Heraclitus fragments (John Burnet). Psalms draws from all 150 prayers and songs; longer readings use contiguous, complete verses with the range shown. Daily Reflection, Twenty-Four Hours, and Grapevine remain links to their publishers.</p>
+<p><strong>How the rotation works:</strong> the Tao leads 25% of days. Chuang Tzu, Epictetus, and Brother Lawrence share the other lead days equally. Psalms is the companion every other day and is available as an Echo on the remaining days. Heraclitus can appear as a companion or Echo. Recent selections are excluded for 56 days when unused material remains; selecting any excerpt of a Psalm counts as selecting that whole Psalm.</p>
 <p><strong>How AI is used:</strong> Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives only today's bounded candidate readings. It selects the echo and writes the daily question, brief lens, companion note, Confluence, and carry question. AI does not write, paraphrase, or alter the source readings.</p>
 <p>Daily Discipline · jdb-builds.com · generated fresh each morning</p>
 </footer></div></body></html>"""
