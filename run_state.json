@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-03",
+  "date": "2026-10-04",
   "morning": true,
   "history": [
     {
@@ -99,6 +99,20 @@
       "surrender_question": "What false success am I defending as though it were mine to earn, rather than entrusting to God's ordering?",
       "daily_action": "Today, when I notice envy or the urge to imitate, I will pause and ask: What is alive in me that wants expression? Then I will act from that, however small or unpolished, rather than perform.",
       "evening_question": "Did I try to be beautiful or right, or did I simply show up as myself and let God work? What did I learn from the difference?"
+    },
+    {
+      "date": "2026-10-04",
+      "lead": "epictetus:XLVII",
+      "lead_title": "Encheiridion XLVII",
+      "companion": "heraclitus:81",
+      "companion_title": "Fragment 81",
+      "echo": "brother_lawrence:letter_2",
+      "echo_title": "Second Letter \u00b7 excerpt",
+      "daily_question": "Where am I still performing frugality or hardship for an audience, and what might honest simplicity look like just for me today?",
+      "carry_question": "When I feel tempted to mention my sobriety, my discipline, or my efforts today, can I notice the urge and let it pass without performing?",
+      "surrender_question": "What outcome or proof of my growth am I still grasping for, and can I entrust my becoming to God's presence instead of my own monitoring?",
+      "daily_action": "Today, I will do one ordinary task\u2014wash a dish, make a call, listen to someone\u2014with full attention and no internal audience, simply because it is before me and it matters.",
+      "evening_question": "Where did I act without needing to see myself act, and where did I slip back into proving something? What can I hand over to God's keeping tonight?"
     }
   ]
 }
