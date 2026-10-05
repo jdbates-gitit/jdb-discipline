@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-04",
+  "date": "2026-10-05",
   "morning": true,
   "history": [
     {
@@ -113,6 +113,20 @@
       "surrender_question": "What outcome or proof of my growth am I still grasping for, and can I entrust my becoming to God's presence instead of my own monitoring?",
       "daily_action": "Today, I will do one ordinary task\u2014wash a dish, make a call, listen to someone\u2014with full attention and no internal audience, simply because it is before me and it matters.",
       "evening_question": "Where did I act without needing to see myself act, and where did I slip back into proving something? What can I hand over to God's keeping tonight?"
+    },
+    {
+      "date": "2026-10-05",
+      "lead": "brother_lawrence:letter_3",
+      "lead_title": "Third Letter \u00b7 excerpt",
+      "companion": "psalms:67",
+      "companion_title": "Psalm 67",
+      "echo": "epictetus:X",
+      "echo_title": "Encheiridion X",
+      "daily_question": "When I am tempted to grasp for certainty or push ahead of God's timing today, can I instead lift my heart briefly and trust His care?",
+      "carry_question": "Where today might I mistake delay or difficulty for abandonment rather than an invitation to remember God's presence?",
+      "surrender_question": "What outcome or assurance am I trying to manufacture this morning that I can instead entrust to God's timing and care?",
+      "daily_action": "Today, when I face a small obstacle or delay, I will pause and name one virtue available in it\u2014courage, patience, honesty\u2014and choose one small action that exercises it.",
+      "evening_question": "Did I notice God's presence in any ordinary moment today, or did I spend the day braced against what might go wrong?"
     }
   ]
 }
