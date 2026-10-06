@@ -15,7 +15,11 @@ import sys
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import anthropic
+try:
+    import anthropic
+except ModuleNotFoundError:
+    anthropic = None  # Source-only reading remains possible without the AI SDK.
+from freshness import manifest_script, validate_page
 
 
 HERE = Path(__file__).resolve().parent
@@ -110,23 +114,32 @@ def load_state():
 
 
 def save_state(state):
-    with open(STATE_FILE, "w", encoding="utf-8") as handle:
+    temporary = STATE_FILE.with_suffix(".json.tmp")
+    with open(temporary, "w", encoding="utf-8") as handle:
         json.dump(state, handle, indent=2)
         handle.write("\n")
+    temporary.replace(STATE_FILE)
 
 
-def gate():
-    now = datetime.datetime.now(TIMEZONE)
+def gate(now=None):
+    now = now or datetime.datetime.now(TIMEZONE)
     today = now.strftime("%Y-%m-%d")
+    requested = os.environ.get("EXPECTED_DATE", "")
+    if requested and requested != today:
+        log("Expired requested date; not generating a different day's page.")
+        sys.exit(0)
     manual = os.environ.get("RUN_NOW") == "1"
     state = load_state()
-    if not manual and state.get("date") == today and state.get("morning"):
-        log(f"Already ran today ({today}). Exiting cleanly.")
-        sys.exit(0)
-    state["date"] = today
-    state["morning"] = True
-    save_state(state)
-    log(f"Claimed today's slot ({today}, {'manual' if manual else 'scheduled'}); proceeding.")
+    if not manual and OUTPUT_FILE.exists():
+        try:
+            validate_page(OUTPUT_FILE.read_text(encoding="utf-8"), now.date())
+        except (ValueError, TypeError, KeyError):
+            pass
+        else:
+            log(f"Complete page already built today ({today}). Exiting cleanly.")
+            sys.exit(0)
+    # Claim success only after complete output is validated and written.
+    log(f"Building today's page ({today}, {'manual' if manual else 'automatic'}).")
     return state
 
 
@@ -399,6 +412,51 @@ The question should open a door, not become another problem to solve before brea
     return json.loads(text.replace("```json", "").replace("```", "").strip())
 
 
+def fixed_editorial(lead, companion, echo_candidates, day):
+    """Fresh source selections with honest, fixed prompts; never invented analysis."""
+    questions = (
+        "Where can I choose one honest action today instead of waiting for my fear to disappear?",
+        "What am I trying to control today that I could entrust to God while still showing up?",
+        "Who might receive a small kindness from me today if I loosen my grip on being right?",
+        "Where can I practice willingness today without demanding to know how everything will turn out?",
+        "What ordinary moment today could become a place of prayer, attention, or useful service?",
+        "What would protecting my sobriety and meeting this day with love look like in one real encounter?",
+        "Where am I holding back from life, and what small responsible step could I take toward it today?",
+    )
+    echo = random.choice(echo_candidates)
+    result = {
+        "daily_question": questions[day.toordinal() % len(questions)],
+        "lead_lens": "Fixed reading prompt: What word, image, or challenge in this reading stays with me? I can return to the author's words before deciding what they mean for my day.",
+        "companion_note": "Fixed reading prompt: What does this voice ask me to notice that the lead did not? I can let the difference remain rather than making the readings agree.",
+        "echo_key": echo["selection_key"],
+        "echo_note": "This Echo was selected from today's unused candidates without AI matching. What does it open or challenge for me?",
+        "confluence": f"Fixed reflection prompt, not AI analysis: Today's voices are {lead['source']['label']}, {companion['source']['label']}, and {echo['source']['label']}. Where do I hear a genuine connection, and where do their beliefs or demands differ? I do not need to settle the difference before carrying one honest question into the day.",
+        "carry_question": "Where do I notice fear narrowing my attention, and what person or possibility is still here with me?",
+        **PRACTICE_DEFAULTS,
+    }
+    return validate_editorial(result, echo_candidates)
+
+
+def generate_editorial(lead, companion, echo_candidates, day):
+    if API_KEY and anthropic is not None:
+        for attempt in range(1, 3):
+            try:
+                # Bound individual network waits; our two explicit attempts own retries.
+                client = anthropic.Anthropic(api_key=API_KEY, timeout=45.0, max_retries=0)
+                editorial, echo = validate_editorial(
+                    create_editorial(client, lead, companion, echo_candidates), echo_candidates,
+                )
+                return editorial, echo, "ai"
+            except Exception as error:
+                # Log category only; provider error bodies may contain sensitive data.
+                log(f"Editorial attempt {attempt} failed ({type(error).__name__}).")
+    else:
+        log("AI key or SDK unavailable; using fresh readings with fixed prompts.")
+    editorial, echo = fixed_editorial(lead, companion, echo_candidates, day)
+    log("Using clearly labelled fixed prompts; source readings remain fresh.")
+    return editorial, echo, "fixed"
+
+
 def esc(value):
     return html.escape(str(value), quote=True)
 
@@ -413,7 +471,7 @@ def reading_paragraphs(reading):
 def build_reading_html(reading, number, role, note_label, note):
     source = reading["source"]
     return f"""
-  <section class="reading" aria-labelledby="reading-{number}">
+  <section class="reading" aria-labelledby="reading-{number}" data-reading-role="{'lead' if number == '02' else 'companion'}" data-selection-key="{esc(reading['selection_key'])}">
     <div class="eyebrow">{number} · {esc(role)} · {esc(source['label'])}</div>
     <h2 id="reading-{number}">{esc(reading['passage_title'])}</h2>
     <div class="source-note">{esc(source['attribution'])}</div>
@@ -425,7 +483,7 @@ def build_reading_html(reading, number, role, note_label, note):
 def build_echo_html(echo, editorial):
     source = echo["source"]
     return f"""
-  <section class="echo" aria-labelledby="echo-heading">
+  <section class="echo" aria-labelledby="echo-heading" data-reading-role="echo" data-selection-key="{esc(echo['selection_key'])}">
     <div class="eyebrow">04 · The Echo · {esc(source['label'])}</div>
     <h2 id="echo-heading">{esc(echo['passage_title'])}</h2>
     <div class="source-note">{esc(source['attribution'])}</div>
@@ -434,13 +492,14 @@ def build_echo_html(echo, editorial):
   </section>"""
 
 
-def history_entry(lead, companion, echo, editorial=None, day=None):
+def history_entry(lead, companion, echo, editorial=None, day=None, mode="ai"):
     day = day or datetime.datetime.now(TIMEZONE).date()
     entry = {"date": day.isoformat()}
     for role, reading in (("lead", lead), ("companion", companion), ("echo", echo)):
         entry[role] = reading["selection_key"]
         entry[f"{role}_title"] = reading["passage_title"]
     if editorial:
+        entry["editorial_mode"] = mode
         for key in ("daily_question", "carry_question", *PRACTICE_DEFAULTS):
             entry[key] = editorial.get(key, PRACTICE_DEFAULTS.get(key, ""))
     return entry
@@ -487,6 +546,8 @@ def build_trail_html(entries, day):
                 title = entry.get(f"{role}_title") or f"Reading {passage_id}"
                 voices.append(f"{role.title()}: {source['label']} · {title}")
         content = f'<p class="trail-voices">{esc(" / ".join(voices))}</p>'
+        if entry.get("editorial_mode") == "fixed":
+            content += '<p class="note-privacy">Fixed reflection prompts on this date; not AI analysis.</p>'
         if entry.get("daily_question"):
             content += f'<p class="trail-question">{esc(entry["daily_question"])}</p>'
             content += build_practice_html(entry, compact=True)
@@ -508,7 +569,7 @@ def build_practice_html(editorial, compact=False):
     return f'<section class="carry" aria-labelledby="practice-heading"><h3 id="practice-heading">Into the Day</h3><dl class="practice-steps">{steps}</dl></section>'
 
 
-def build_html(lead, companion, echo, editorial, state=None, day=None):
+def build_html(lead, companion, echo, editorial, state=None, day=None, mode="ai"):
     day = day or datetime.datetime.now(TIMEZONE).date()
     date_string = f"{day:%A, %B} {day.day}, {day:%Y}"
     lead_html = build_reading_html(
@@ -521,12 +582,15 @@ def build_html(lead, companion, echo, editorial, state=None, day=None):
     echo_html = build_echo_html(echo, editorial)
     practice_html = build_practice_html(editorial)
     evening_html = build_evening_html(day.isoformat(), editorial.get("evening_question", PRACTICE_DEFAULTS["evening_question"]))
-    entries = list((state or {}).get("history", [])) + [history_entry(lead, companion, echo, editorial, day)]
+    entries = list((state or {}).get("history", [])) + [history_entry(lead, companion, echo, editorial, day, mode)]
     trail_html = build_trail_html(entries, day)
     site_navigation = (HERE / "jdb-site-navigation.html").read_text(encoding="utf-8")
+    manifest = manifest_script((lead, companion, echo), day, mode)
+    fallback_notice = '<p class="note-privacy" id="editorial-status">Fresh readings · fixed reflection prompts today. AI editorial was unavailable; these prompts are not AI analysis, and the Echo was not thematically matched.</p>' if mode == "fixed" else ""
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="Daily Discipline: recovery, spiritual reading, and one question to carry into the day.">
+{manifest}
 <title>Daily Discipline — {date_string}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&amp;family=Inter+Tight:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -545,7 +609,7 @@ footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-f
 </style><link rel="stylesheet" href="/jdb-site-navigation.css"><script src="/jdb-site-navigation.js" defer></script></head><body>
 {site_navigation}
 <div class="wrap">
-<header class="top"><div class="kicker">One question · rotating voices · one day at a time</div><h1>Every 24 Hours,<br>Begin Again.</h1><div class="date">{date_string}</div></header>
+<header class="top" data-discipline-date="{day.isoformat()}"><div class="kicker">One question · rotating voices · one day at a time</div><h1>Every 24 Hours,<br>Begin Again.</h1><div class="date">{date_string}</div>{fallback_notice}</header>
 <nav class="open-grid" aria-label="Recovery readings">
 <a class="card-link" href="{LINKS['aa_reflection']}" target="_blank" rel="noopener"><div class="label">Alcoholics Anonymous</div><h2>Daily Reflection</h2><div class="go">Open ↗</div></a>
 <a class="card-link" href="{LINKS['hazelden']}" target="_blank" rel="noopener"><div class="label">Hazelden Betty Ford</div><h2>Twenty-Four Hours</h2><div class="go">Open ↗</div></a>
@@ -562,15 +626,15 @@ footer{{margin-top:70px;padding-top:30px;border-top:1px solid var(--line);font-f
 <p><strong>What you read:</strong> each day brings three source selections—a lead reading, a companion, and a short Echo—from six public-domain works: Tao Te Ching (James Legge, 1891), Chuang Tzu (Herbert A. Giles, 1889), Epictetus (George Long), Brother Lawrence's <em>The Practice of the Presence of God</em> (1895 edition), <a href="https://www.gutenberg.org/ebooks/10">Psalms (King James Version, public domain in the USA)</a>, and Heraclitus fragments (John Burnet). The Psalms library includes all 150 prayers and songs; longer readings use complete, consecutive verses with the range shown. Daily Reflection, Twenty-Four Hours, and Grapevine link to their publishers.</p>
 <p><strong>How the rotation works:</strong> the Tao leads 25% of days. Chuang Tzu, Epictetus, and Brother Lawrence share the other lead days equally. Psalms is the companion every other day and is available as an Echo on the remaining days. Heraclitus can appear as a companion or Echo. Recent selections are excluded for 56 days when unused material remains; selecting any excerpt of a Psalm counts as selecting that whole Psalm.</p>
 <p><strong>How the practice unfolds:</strong> one question opens the morning. The Confluence explores where the three voices meet and differ; Into the Day carries them into Notice, Surrender, and Act. Surrender invites entrusting outcomes to God while staying willing to take the next honest or loving step. Return Tonight offers an evening question and an optional note. The Seven-Day Trail keeps the past week's available reading selections, questions, and practices; older entries show only what was recorded at the time.</p>
-<p><strong>How AI is used:</strong> the daily generator chooses the lead and companion readings. Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives the selected readings and a limited set of Echo candidates. It selects the Echo and writes the daily question, brief lens, companion note, Confluence, Notice question, Surrender question, daily action, and evening reflection. Brief practice prompts may use fixed editorial defaults when needed. AI does not write, paraphrase, or alter the source readings. Evening notes save only in the browser and device you use; they do not sync and are never sent to the generator or AI.</p>
+<p><strong>How AI is used:</strong> the daily generator chooses the lead and companion readings. Anthropic {MODEL_LABEL} (<code>{MODEL}</code>) receives the selected readings and a limited set of Echo candidates. It selects the Echo and writes the daily question, brief lens, companion note, Confluence, Notice question, Surrender question, daily action, and evening reflection. Brief practice prompts may use fixed editorial defaults when needed. If AI editorial is unavailable, the page keeps fresh source readings with clearly labelled fixed prompts and an Echo selected without thematic matching. AI does not write, paraphrase, or alter the source readings. Evening notes save only in the browser and device you use; they do not sync and are never sent to the generator or AI.</p>
 <p>Daily Discipline · jdb-builds.com · generated fresh each morning</p>
 </footer></div><script src="practice.js" defer></script></body></html>"""
 
 
-def record_history(state, lead, companion, echo, editorial=None, day=None):
+def record_history(state, lead, companion, echo, editorial=None, day=None, mode="ai"):
     today = day or datetime.datetime.now(TIMEZONE).date()
     history = list(state.get("history", []))
-    history.append(history_entry(lead, companion, echo, editorial, today))
+    history.append(history_entry(lead, companion, echo, editorial, today, mode))
     cutoff = today - datetime.timedelta(days=MAX_HISTORY_ENTRIES)
     retained = []
     for entry in history:
@@ -580,21 +644,21 @@ def record_history(state, lead, companion, echo, editorial=None, day=None):
         except (KeyError, TypeError, ValueError):
             continue
     state["history"] = retained[-MAX_HISTORY_ENTRIES:]
+    state["date"] = today.isoformat()
+    state["morning"] = True
     save_state(state)
 
 
 def main():
-    state = gate()
+    now = datetime.datetime.now(TIMEZONE)
+    state = gate(now)
     log("── Daily Discipline Generator ──")
-    if not API_KEY:
-        log("ERROR: ANTHROPIC_API_KEY not set.")
-        sys.exit(1)
     missing = [s["file"].name for s in READING_SOURCES if not s["file"].exists()]
     if missing:
         log(f"ERROR: Missing source files: {', '.join(missing)}")
         sys.exit(1)
 
-    day = datetime.datetime.now(TIMEZONE).date()
+    day = now.date()
     lead = pick_lead(state, day)
     if not lead:
         log("ERROR: No lead reading available; keeping the last complete page.")
@@ -612,27 +676,15 @@ def main():
         log("ERROR: No echo candidates available; keeping the last complete page.")
         sys.exit(1)
 
-    client = anthropic.Anthropic(api_key=API_KEY)
-    for attempt in range(1, 3):
-        try:
-            log(f"Creating bounded editorial with {MODEL_LABEL} (attempt {attempt})...")
-            editorial, echo = validate_editorial(
-                create_editorial(client, lead, companion, echo_candidates),
-                echo_candidates,
-            )
-            break
-        except Exception as error:
-            if attempt == 1:
-                log(f"Editorial attempt 1 failed ({error}); retrying once.")
-            else:
-                log(f"ERROR: Editorial generation failed twice; keeping the last complete page. Final error: {error}")
-                sys.exit(1)
+    editorial, echo, mode = generate_editorial(lead, companion, echo_candidates, day)
 
     log(f"Echo: {echo['source']['label']} — {echo['passage_id']}")
     temporary = OUTPUT_FILE.with_suffix(".html.tmp")
-    temporary.write_text(build_html(lead, companion, echo, editorial, state, day), encoding="utf-8")
+    page = build_html(lead, companion, echo, editorial, state, day, mode)
+    validate_page(page, day)
+    temporary.write_text(page, encoding="utf-8")
     temporary.replace(OUTPUT_FILE)
-    record_history(state, lead, companion, echo, editorial, day)
+    record_history(state, lead, companion, echo, editorial, day, mode)
     log(f"Built dashboard -> {OUTPUT_FILE}")
     log("Running in GitHub Actions; workflow handles push." if os.environ.get("GITHUB_ACTIONS") == "true" else "Local run complete. Commit and push when ready.")
     log("Done.")

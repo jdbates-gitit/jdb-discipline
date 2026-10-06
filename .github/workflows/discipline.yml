@@ -1,4 +1,5 @@
 name: Daily Discipline
+run-name: Daily Discipline · ${{ github.event_name }} · ${{ inputs.mode || 'scheduled' }} · ${{ inputs.expected_date || 'current day' }}
 
 on:
   schedule:
@@ -11,6 +12,16 @@ on:
     - cron: '0 10 * * *'
     - cron: '0 11 * * *'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Refresh manually, or safely ensure today is complete'
+        type: choice
+        options: [force_refresh, ensure_fresh]
+        default: force_refresh
+      expected_date:
+        description: 'Scheduler date in Houston (YYYY-MM-DD); leave blank for manual runs'
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -22,6 +33,7 @@ concurrency:
 jobs:
   build-discipline:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -36,7 +48,8 @@ jobs:
       - name: Run discipline script
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          RUN_NOW: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+          RUN_NOW: ${{ github.event_name == 'workflow_dispatch' && inputs.mode != 'ensure_fresh' && '1' || '0' }}
+          EXPECTED_DATE: ${{ inputs.expected_date || '' }}
         run: python discipline_dashboard.py
       - name: Commit and push updated dashboard
         run: |
