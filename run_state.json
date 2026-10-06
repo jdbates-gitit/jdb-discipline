@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-05",
+  "date": "2026-10-06",
   "morning": true,
   "history": [
     {
@@ -127,6 +127,20 @@
       "surrender_question": "What outcome or assurance am I trying to manufacture this morning that I can instead entrust to God's timing and care?",
       "daily_action": "Today, when I face a small obstacle or delay, I will pause and name one virtue available in it\u2014courage, patience, honesty\u2014and choose one small action that exercises it.",
       "evening_question": "Did I notice God's presence in any ordinary moment today, or did I spend the day braced against what might go wrong?"
+    },
+    {
+      "date": "2026-10-06",
+      "lead": "tao:65",
+      "lead_title": "Chapter 65",
+      "companion": "chuangtzu:10",
+      "companion_title": "Opening Trunks \u00b7 excerpt",
+      "echo": "epictetus:XLV",
+      "echo_title": "Encheiridion XLV",
+      "daily_question": "Where am I still trying to think my way into clarity instead of letting life show me what I need to know?",
+      "carry_question": "When I'm tempted to explain, convince, or fix someone today, can I pause and notice what I actually see?",
+      "surrender_question": "What outcome am I rehearsing in my mind that I could set down and let God hold while I stay present to what's actually in front of me?",
+      "daily_action": "Today, when someone tells me about a problem or choice, I will resist the urge to offer advice or judgment. I will ask one honest question and listen to the answer without planning my reply.",
+      "evening_question": "Did I trust my own seeing today, or did I let fear whisper interpretations? What might I learn if I let one thing remain uncertain and unresolved?"
     }
   ]
 }
