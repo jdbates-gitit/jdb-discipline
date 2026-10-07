@@ -1,16 +1,19 @@
 // Cron-only controller. No public trigger, AI key, Pages token, or DNS access.
-const REPO = "https://api.github.com/repos/jdbates-gitit/jdb-discipline";
+export const REPO = "https://api.github.com/repos/jdbates-gitit/jdb-discipline";
 export const SITE = "https://discipline.jdb-builds.com/";
-const WORKFLOW = `${REPO}/actions/workflows/discipline.yml`;
+export const WORKFLOW = `${REPO}/actions/workflows/discipline.yml`;
 const BODY_LIMIT = 512 * 1024;
 const MAX_ATTEMPTS = 3;
 const RETRY_GAP_MS = 45 * 60 * 1000;
+// Immutable formatter, not request state. Reuse it to avoid repeatedly paying
+// Intl construction CPU cost while inspecting a morning's run history.
+const CHICAGO_FORMATTER = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+});
 
 export function chicagoClock(now) {
-  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit",
-    hour: "2-digit", minute: "2-digit", hourCycle: "h23",
-  }).formatToParts(now).map(part => [part.type, part.value]));
+  const parts = Object.fromEntries(CHICAGO_FORMATTER.formatToParts(now).map(part => [part.type, part.value]));
   return { date: `${parts.year}-${parts.month}-${parts.day}`, minutes: Number(parts.hour) * 60 + Number(parts.minute) };
 }
 
@@ -78,8 +81,10 @@ export async function boundedText(response, limit = BODY_LIMIT) {
   }
 }
 
-async function request(fetcher, url, init = {}) {
-  const response = await fetcher(url, { ...init, redirect: "error", signal: AbortSignal.timeout(12000) });
+export async function request(fetcher, url, init = {}) {
+  // Workers does not implement redirect:"error". Manual plus the !ok gate
+  // below rejects 3xx without forwarding credentials to a redirect target.
+  const response = await fetcher(url, { ...init, redirect: "manual", signal: AbortSignal.timeout(12000) });
   if (!response.ok) {
     await response.body?.cancel();
     throw new Error(`http_${response.status}`);
@@ -87,7 +92,7 @@ async function request(fetcher, url, init = {}) {
   return response;
 }
 
-function githubHeaders(token, accept = "application/vnd.github+json") {
+export function githubHeaders(token, accept = "application/vnd.github+json") {
   return { Accept: accept, Authorization: `Bearer ${token}`, "User-Agent": "daily-discipline-scheduler", "X-GitHub-Api-Version": "2026-03-10" };
 }
 
@@ -149,6 +154,20 @@ export async function checkAndDispatch(env, now = new Date(), fetcher = fetch) {
   return { status: "dispatched", date: clock.date };
 }
 
+export async function sendEmailAlert(env, date, status, test = false) {
+  if (!env.ALERT_EMAIL) throw new Error("email_binding_missing");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^[a-z_]+$/.test(status)) throw new Error("invalid_alert_metadata");
+  const text = test
+    ? `This is the Daily Discipline scheduler setup test. No stale-page failure is being reported. Date: ${date}. Site: ${SITE}`
+    : `Daily Discipline has not been verified fresh by 6:30 a.m. Houston time. Date: ${date}. Status: ${status}. Site: ${SITE}`;
+  await env.ALERT_EMAIL.send({
+    from: { email: "discipline-alerts@jdb-builds.com", name: "Daily Discipline" },
+    to: "jdbates@gmail.com",
+    subject: test ? "Daily Discipline - scheduler alert test" : `Daily Discipline needs attention - ${date}`,
+    text, html: `<p>${text}</p>`,
+  });
+}
+
 export async function tick(env, now = new Date(), fetcher = fetch, logger = console) {
   let result;
   try { result = await checkAndDispatch(env, now, fetcher); }
@@ -158,6 +177,10 @@ export async function tick(env, now = new Date(), fetcher = fetch, logger = cons
   if (deadline && result.status !== "fresh") {
     logger.error(JSON.stringify({ event: "freshness_deadline_missed", ...result }));
     // Recipient/service must be selected and approved before activation.
+    if (env.ALERT_EMAIL) {
+      await sendEmailAlert(env, clock.date, result.status);
+      return result;
+    }
     if (!env.ALERT_WEBHOOK_URL) throw new Error("deadline_missed_alert_not_configured");
     const url = new URL(env.ALERT_WEBHOOK_URL);
     if (url.protocol !== "https:" || url.username || url.password) throw new Error("invalid_alert_destination");

@@ -3,14 +3,10 @@ run-name: Daily Discipline · ${{ github.event_name }} · ${{ inputs.mode || 'sc
 
 on:
   schedule:
-    # Multiple early-morning attempts provide redundancy across CST/CDT and
-    # GitHub scheduling delays. The Python date gate lets the first run that
-    # actually starts each day proceed; later attempts exit cleanly.
-    - cron: '0 7 * * *'
-    - cron: '0 8 * * *'
-    - cron: '0 9 * * *'
-    - cron: '0 10 * * *'
-    - cron: '0 11 * * *'
+    # One independent backup after the Cloudflare controller's 1:15 a.m.
+    # primary attempt. A complete current page makes this a clean no-op.
+    - cron: '45 4 * * *'
+      timezone: 'America/Chicago'
   workflow_dispatch:
     inputs:
       mode:

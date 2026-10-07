@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import worker, { chicagoClock, inspectPage, retryDecision, boundedText, checkAndDispatch, tick } from "../worker.mjs";
+import worker, { chicagoClock, inspectPage, retryDecision, boundedText, checkAndDispatch, tick, request, sendEmailAlert } from "../worker.mjs";
 
 const DATE = "2026-10-06";
 const NOW = new Date("2026-10-06T06:15:00Z"); // 1:15 a.m. CDT
@@ -73,7 +73,7 @@ test("fresh live AI or fallback page needs no GitHub calls", async () => {
     assert.equal((await checkAndDispatch(ENV, NOW, net.fetcher)).status, "fresh");
     assert.equal(net.calls.length, 1);
     assert.equal(net.calls[0].init.headers.Authorization, undefined);
-    assert.equal(net.calls[0].init.redirect, "error");
+    assert.equal(net.calls[0].init.redirect, "manual");
   }
 });
 
@@ -108,7 +108,7 @@ test("stale evidence dispatches only ensure_fresh on main with explicit date", a
   const last = net.calls.at(-1);
   assert.deepEqual(JSON.parse(last.init.body), { ref: "main", inputs: { mode: "ensure_fresh", expected_date: DATE } });
   assert.equal(last.init.headers.Authorization, `Bearer ${ENV.GITHUB_TOKEN}`);
-  assert.equal(last.init.redirect, "error");
+  assert.equal(last.init.redirect, "manual");
 });
 
 test("dispatch supports both 204 and current 200 responses", async () => {
@@ -187,4 +187,35 @@ test("response buffering has hard limits even without Content-Length", async () 
 
 test("there is no public HTTP trigger", async () => {
   assert.equal((await worker.fetch(new Request("https://example.test/__scheduled"))).status, 404);
+});
+
+test("Workers-compatible manual redirects reject 3xx without following credentials", async () => {
+  let calls = 0;
+  await assert.rejects(request(async (url, init) => {
+    calls++;
+    assert.equal(init.redirect, "manual");
+    return new Response(null, { status: 302, headers: { Location: "https://untrusted.example.test/" } });
+  }, "https://api.github.com/test", { headers: { Authorization: "test-only" } }), /http_302/);
+  assert.equal(calls, 1);
+});
+
+test("native email alerts use the approved fixed recipient and never include credentials", async () => {
+  const sent = [];
+  const env = { ...ENV, ALERT_EMAIL: { async send(message) { sent.push(message); } } };
+  const net = network({ repo: page() });
+  await tick(env, new Date("2026-10-06T11:30:00Z"), net.fetcher, LOG);
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0].to, "jdbates@gmail.com");
+  assert.equal(sent[0].from.email, "discipline-alerts@jdb-builds.com");
+  assert.equal(JSON.stringify(sent).includes(ENV.GITHUB_TOKEN), false);
+  await sendEmailAlert(env, DATE, "setup_test", true);
+  assert.match(sent[1].subject, /test/);
+  assert.match(sent[1].text, /No stale-page failure/);
+  await assert.rejects(sendEmailAlert(env, DATE, "unsafe\r\nmetadata"), /invalid_alert_metadata/);
+});
+
+test("a failed email send fails visibly instead of pretending the alert delivered", async () => {
+  const env = { ...ENV, ALERT_EMAIL: { async send() { throw new Error("test_smtp_failure"); } } };
+  const net = network({ repo: page() });
+  await assert.rejects(tick(env, new Date("2026-10-06T11:30:00Z"), net.fetcher, LOG), /test_smtp_failure/);
 });

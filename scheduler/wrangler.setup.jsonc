@@ -1,4 +1,5 @@
 {
+  // Safe credential setup only. No automatic runs or public endpoints.
   "name": "daily-discipline-scheduler",
   "account_id": "bd1e3813aaeee0835c68317d24873bc2",
   "main": "entrypoint.mjs",
@@ -7,8 +8,8 @@
   "workers_dev": false,
   "preview_urls": false,
   "routes": [],
-  "vars": { "SETUP_CHECKS": "false" },
+  "vars": { "SETUP_CHECKS": "true" },
   "send_email": [{ "name": "ALERT_EMAIL", "allowed_destination_addresses": ["jdbates@gmail.com"], "allowed_sender_addresses": ["discipline-alerts@jdb-builds.com"] }],
   "observability": { "enabled": true },
-  "triggers": { "crons": ["*/15 6-12 * * *"] }
+  "triggers": { "crons": [] }
 }

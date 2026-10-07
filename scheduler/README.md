@@ -1,6 +1,21 @@
-# Daily Discipline morning freshness controller — LOCAL DRAFT
+# Daily Discipline morning freshness controller
 
-Not deployed. No credentials or notification provider have been configured.
+October 6, 2026 acceptance: encrypted `GITHUB_TOKEN` stored by the owner;
+private Cloudflare RPC authenticated to GitHub and validated the live full
+edition; guarded `ensure_fresh` run 37568899207 succeeded without changing the
+edition. The email test arrived in the approved Gmail inbox with SPF and DKIM
+passing. No DNS, billing plan, or Pages configuration changed.
+
+`wrangler.jsonc` is the active controller configuration. `wrangler.setup.jsonc`
+is the no-cron setup configuration: deploying it pauses scheduling and enables
+same-account, private setup RPC. Setup RPC is disabled in the active config.
+`wrangler.probe.jsonc` / `probe-local.mjs` are localhost-only test tools, never
+deployment targets. The credential remains in Cloudflare, not in the probe.
+
+The GitHub backup is one daily attempt at **4:45 a.m. America/Chicago**.
+Normal operation means one early generator job plus one no-op backup job, not
+five scheduled backup jobs. Morning punctuality still needs observation;
+acceptance tests do not establish a before-7 service-level guarantee.
 
 ## What it does
 
@@ -21,7 +36,7 @@ for daylight saving. It acts only from **1:15 through 6:45 a.m. Houston time**.
    at most three visible controller attempts per date, at least 45 minutes apart.
    Earliest attempt slots are **1:15, 3:15, and 5:15 a.m.**; later slots are
    reserved so a brief overnight outage does not exhaust every attempt early.
-7. At 6:30 a.m., send a stale-page alert through the approved webhook if needed.
+7. At 6:30 a.m., send a stale-page email to the approved inbox if needed.
 
 No public HTTP trigger: all requests return 404, workers.dev/preview URLs are
 disabled, and no routes or custom domains are attached. This does not run AI
@@ -45,14 +60,14 @@ A repo-fresh/live-stale result needs deployment or domain investigation, not
 repeated content generation. A stuck active run is not cancelled automatically.
 The 10-minute workflow timeout bounds running jobs, not time spent queued.
 Provider outages and build failures can still miss 7 a.m.; this is a reliability
-target, not a service-level guarantee. Existing GitHub cron attempts remain backup.
+target, not a service-level guarantee. One GitHub cron remains an independent backup.
 
 The seven fixed opening questions repeat weekly ONLY when AI is unavailable.
 Source-reading selection and the existing 56-day exclusion still run normally.
 Fallback Confluence is explicitly a reflection prompt, not invented interpretation.
 Missing/corrupt local source files remain hard failures; never fabricate scripture.
 
-## Permissions and approval needed before activation
+## Credentials and alerts
 
 - A new, expiring fine-grained GitHub token restricted to `jdb-discipline`, with
   **Actions: write** and automatically required metadata access. This permission
@@ -62,20 +77,21 @@ Missing/corrupt local source files remain hard failures; never fabricate scriptu
 - Store it as the Cloudflare Worker secret `GITHUB_TOKEN`, never in source,
   Wrangler vars, chat, or logs. Public content reads are unauthenticated and do
   not require a Contents permission. Review token expiration/rotation.
-- Choose the actual notification service and recipient, approve it, and store
-  its HTTPS JSON webhook destination as secret `ALERT_WEBHOOK_URL`. The payload
-  contains only the public site URL, date, and status — no readings or notes.
-- Confirm that the provider accepts the documented JSON payload. A generic
-  webhook is not automatically an email/text integration. A missing webhook
-  raises a logged failure at the deadline; **logs alone are not a user alert**.
+- `ALERT_EMAIL` is a native binding restricted to `jdbates@gmail.com`, sent
+  from `discipline-alerts@jdb-builds.com`. It uses existing ready Email Routing
+  and the verified destination; no paid Email Sending onboarding is needed.
+  Alert content is only the public site URL, date, and status, never readings,
+  personal notes, or the GitHub credential. There is no alert when fresh.
 - Alerts are attempted on stale checks from 6:30 through 6:45, including late
-  delivery. The payload carries a per-day Idempotency-Key header; the selected
-  provider must support it for once-per-day delivery. Otherwise two checks or
-  duplicate Cron events can send duplicate alerts. Review Cron punctuality
-  during acceptance. No outbound provider writes have been performed locally.
-- Review the Cloudflare account/plan and costs before deploying the Worker.
-- Approve publication of generator/workflow changes and the Worker separately.
-  No DNS or Pages project changes are expected.
+  delivery. Persistent failure may produce two emails (or duplicates after
+  duplicate Cron delivery); no durable exactly-once email outbox is claimed.
+  The optional webhook path retains its per-day Idempotency-Key header, but
+  the native email path does not claim that header as a deduplication guarantee.
+- Owner-selected token expiration is October 6, 2027; renew before expiry.
+- Cloudflare runtime testing caught unsupported `redirect: "error"`. Requests
+  now use `manual` and reject all non-2xx responses, including redirects, without
+  following or forwarding credentials. Dependency-free Node tests alone did
+  not reveal this runtime incompatibility.
 
 ## Local checks (no installs, secrets, AI calls, or deployments)
 
@@ -103,10 +119,11 @@ achieved before-7 service level on the public card before observing it.
 - [GitHub dispatch and permissions](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event)
 - [Public content reads](https://docs.github.com/en/rest/repos/contents#get-repository-content)
 
-Worker API types inspected: `@cloudflare/workers-types` 5.20261006.1;
+Worker API types inspected: `@cloudflare/workers-types` 5.20261007.1;
 Wrangler configuration fields checked against its current published JSON schema.
 The GitHub run response is bounded to 2 MiB (100 actual run records can exceed
 1 MiB); HTML responses are bounded to 512 KiB. Check CPU usage on the actual
 account plan during the runtime trial rather than assume the free-plan budget.
-Worker runtime integration testing remains an activation prerequisite; these
-dependency-free Node tests cover logic and Web APIs, not the deployed runtime.
+Private Cloudflare runtime setup checks passed; first scheduled execution and
+multi-morning punctuality remain to be observed. Dependency-free Node tests
+cover logic and Web APIs, not the deployed runtime by themselves.
