@@ -12,10 +12,16 @@ same-account, private setup RPC. Setup RPC is disabled in the active config.
 `wrangler.probe.jsonc` / `probe-local.mjs` are localhost-only test tools, never
 deployment targets. The credential remains in Cloudflare, not in the probe.
 
-The GitHub backup is one daily attempt at **4:45 a.m. America/Chicago**.
-Normal operation means one early generator job plus one no-op backup job, not
-five scheduled backup jobs. Morning punctuality still needs observation;
-acceptance tests do not establish a before-7 service-level guarantee.
+The GitHub backups are daily attempts at **4:45 and 5:45 a.m. America/Chicago**.
+The 5:45 attempt is a temporary second backup approved October 7 while Cloudflare
+timer delivery is investigated. Both use the complete-page gate; an already
+fresh edition is left unchanged, with no additional AI generation. Review removal
+of the temporary backup after real scheduled executions have been verified.
+The October 7 controlled real-cron test produced no observed execution after
+nearly 17 minutes; its temporary test trigger was removed. The guarded recovery
+published the complete October 7 edition, but did not establish timer reliability.
+Morning punctuality still needs observation; acceptance tests do not establish
+a before-7 service-level guarantee.
 
 ## What it does
 
@@ -60,7 +66,9 @@ A repo-fresh/live-stale result needs deployment or domain investigation, not
 repeated content generation. A stuck active run is not cancelled automatically.
 The 10-minute workflow timeout bounds running jobs, not time spent queued.
 Provider outages and build failures can still miss 7 a.m.; this is a reliability
-target, not a service-level guarantee. One GitHub cron remains an independent backup.
+target, not a service-level guarantee. Two GitHub cron slots provide backup
+attempts while the Cloudflare timer issue remains unresolved, not independent
+protection against a GitHub-wide outage.
 
 The seven fixed opening questions repeat weekly ONLY when AI is unavailable.
 Source-reading selection and the existing 56-day exclusion still run normally.

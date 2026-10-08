@@ -131,6 +131,22 @@ class FreshnessTests(unittest.TestCase):
         self.assertEqual(expired.exception.code, 0)
         save.assert_not_called()
 
+    def test_both_morning_backups_skip_a_complete_page(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output, state = Path(directory) / "index.html", Path(directory) / "state.json"
+            output.write_text(self.page, encoding="utf-8")
+            state.write_text('{"history": []}', encoding="utf-8")
+            before = output.read_bytes(), state.read_bytes()
+            with patch.object(discipline, "OUTPUT_FILE", output), patch.object(discipline, "STATE_FILE", state), \
+                    patch.dict(os.environ, {"RUN_NOW": "0", "EXPECTED_DATE": ""}), \
+                    patch.object(discipline, "generate_editorial") as provider:
+                for hour in (4, 5):
+                    with self.subTest(hour=hour), self.assertRaises(SystemExit) as skipped:
+                        discipline.gate(datetime.datetime(2026, 10, 6, hour, 45, tzinfo=discipline.TIMEZONE))
+                    self.assertEqual(skipped.exception.code, 0)
+                    self.assertEqual(before, (output.read_bytes(), state.read_bytes()))
+                provider.assert_not_called()
+
     def test_gate_never_claims_success_before_rendering(self):
         with patch.dict(os.environ, {"EXPECTED_DATE": "", "RUN_NOW": "1"}), \
                 patch.object(discipline, "save_state") as save:
