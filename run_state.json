@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-07",
+  "date": "2026-10-08",
   "morning": true,
   "history": [
     {
@@ -171,6 +171,21 @@
       "surrender_question": "What outcome am I gripping so hard that I cannot feel God's presence, and can I name it to Him without trying to fix it first?",
       "daily_action": "In one conversation today\u2014at work, at home, with someone I'm struggling with\u2014I will speak or listen as if God is present in the room. I will not perform piety. I will attend.",
       "evening_question": "Did I slip into trifles today, or did I catch myself and return to what actually matters? What am I still holding too tight?"
+    },
+    {
+      "date": "2026-10-08",
+      "lead": "epictetus:XXVI",
+      "lead_title": "Encheiridion XXVI",
+      "companion": "tao:80",
+      "companion_title": "Chapter 80",
+      "echo": "heraclitus:105",
+      "echo_title": "Fragment 105",
+      "editorial_mode": "ai",
+      "daily_question": "When my child fails, my cup breaks, my plans scatter\u2014can I meet it with the same steady gaze I turn on others' sorrow, or do I still believe my life should be exempt?",
+      "carry_question": "What small loss or change have I already accepted today in someone else's life\u2014and am I still resisting it in my own?",
+      "surrender_question": "Can I release my demand that my sorrow be less than my neighbor's, and trust that God meets both of us in loss, without protecting me from its truth?",
+      "daily_action": "Before one difficult moment today, I will pause, entrust the outcome to God, and take one kind or honest step.",
+      "evening_question": "Where did I fight my heart's desire today, or cling to keeping something I could not keep\u2014and can I lay that struggle down tonight and ask God what I am learning instead?"
     }
   ]
 }
