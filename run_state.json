@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-06",
+  "date": "2026-10-07",
   "morning": true,
   "history": [
     {
@@ -156,6 +156,21 @@
       "surrender_question": "What outcome am I holding so tight that it has stopped me from moving? Can I name it to God and stay willing to act anyway, without the guarantee?",
       "daily_action": "When someone frustrates or disappoints me today, I will pause and ask: What is mine to do here, and what belongs to them or to time? Then I will act once, without force, and let the rest go.",
       "evening_question": "Where did I force something today and feel the strain, and where did I let go and find I was still moving forward? What can I trust a little more tomorrow?"
+    },
+    {
+      "date": "2026-10-07",
+      "lead": "brother_lawrence:conversation_1",
+      "lead_title": "First Conversation \u00b7 excerpt",
+      "companion": "psalms:59",
+      "companion_title": "Psalm 59:12\u201317 \u00b7 excerpt",
+      "echo": "heraclitus:101",
+      "echo_title": "Fragment 101",
+      "editorial_mode": "ai",
+      "daily_question": "Can I tend to God's presence in this ordinary day the way I tend a fire\u2014constantly, without shame, letting it warm everything I touch?",
+      "carry_question": "Where today might I quit God's presence to chase something easier\u2014and what would it cost to stay?",
+      "surrender_question": "What outcome am I gripping so hard that I cannot feel God's presence, and can I name it to Him without trying to fix it first?",
+      "daily_action": "In one conversation today\u2014at work, at home, with someone I'm struggling with\u2014I will speak or listen as if God is present in the room. I will not perform piety. I will attend.",
+      "evening_question": "Did I slip into trifles today, or did I catch myself and return to what actually matters? What am I still holding too tight?"
     }
   ]
 }
