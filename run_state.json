@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-08",
+  "date": "2026-10-09",
   "morning": true,
   "history": [
     {
@@ -186,6 +186,21 @@
       "surrender_question": "Can I release my demand that my sorrow be less than my neighbor's, and trust that God meets both of us in loss, without protecting me from its truth?",
       "daily_action": "Before one difficult moment today, I will pause, entrust the outcome to God, and take one kind or honest step.",
       "evening_question": "Where did I fight my heart's desire today, or cling to keeping something I could not keep\u2014and can I lay that struggle down tonight and ask God what I am learning instead?"
+    },
+    {
+      "date": "2026-10-09",
+      "lead": "tao:19",
+      "lead_title": "Chapter 19",
+      "companion": "psalms:137",
+      "companion_title": "Psalm 137",
+      "echo": "heraclitus:62",
+      "echo_title": "Fragment 62",
+      "editorial_mode": "ai",
+      "daily_question": "What am I still trying to fix or improve in myself or others that might soften if I simply stepped back and allowed things to find their own way?",
+      "carry_question": "When I rush to manage someone else's choices or character today, can I notice it and pause?",
+      "surrender_question": "What outcome am I demanding\u2014about myself, another person, or how this day should unfold\u2014that I can name to God and then simply tend to what is mine to do?",
+      "daily_action": "In one conversation today, I will listen without offering advice or judgment, and afterward I will notice what it felt like to simply receive what the other person said.",
+      "evening_question": "Where did I try too hard to control something today, and where did I find I could trust the moment more than my worry allowed?"
     }
   ]
 }
