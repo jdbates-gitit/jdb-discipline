@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-09",
+  "date": "2026-10-10",
   "morning": true,
   "history": [
     {
@@ -201,6 +201,21 @@
       "surrender_question": "What outcome am I demanding\u2014about myself, another person, or how this day should unfold\u2014that I can name to God and then simply tend to what is mine to do?",
       "daily_action": "In one conversation today, I will listen without offering advice or judgment, and afterward I will notice what it felt like to simply receive what the other person said.",
       "evening_question": "Where did I try too hard to control something today, and where did I find I could trust the moment more than my worry allowed?"
+    },
+    {
+      "date": "2026-10-10",
+      "lead": "chuangtzu:7",
+      "lead_title": "How to Govern \u00b7 excerpt",
+      "companion": "epictetus:XXV",
+      "companion_title": "Encheiridion XXV \u00b7 excerpt",
+      "echo": "brother_lawrence:conversation_3",
+      "echo_title": "Third Conversation \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "What if the thing I cannot answer is exactly where wisdom begins, not where I have failed?",
+      "carry_question": "When I feel the urge to explain or defend myself today, can I pause and ask what I am really protecting?",
+      "surrender_question": "What outcome am I gripping today\u2014approval, understanding, being right\u2014that I can release to God while still showing up and doing my part?",
+      "daily_action": "In one conversation today, I will listen more than I speak and notice what I learn by not rushing to answer or advise.",
+      "evening_question": "Where did I pretend to know when I could have admitted confusion, and where did I act with an honest heart instead?"
     }
   ]
 }
