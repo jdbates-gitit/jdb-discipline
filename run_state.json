@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-10",
+  "date": "2026-10-11",
   "morning": true,
   "history": [
     {
@@ -216,6 +216,21 @@
       "surrender_question": "What outcome am I gripping today\u2014approval, understanding, being right\u2014that I can release to God while still showing up and doing my part?",
       "daily_action": "In one conversation today, I will listen more than I speak and notice what I learn by not rushing to answer or advise.",
       "evening_question": "Where did I pretend to know when I could have admitted confusion, and where did I act with an honest heart instead?"
+    },
+    {
+      "date": "2026-10-11",
+      "lead": "tao:55",
+      "lead_title": "Chapter 55",
+      "companion": "psalms:122",
+      "companion_title": "Psalm 122",
+      "echo": "chuangtzu:8",
+      "echo_title": "Joined Toes \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "What strength in me today comes from holding lightly, and what am I still trying to grip as if my life depends on forcing it?",
+      "carry_question": "When I reach for approval or certainty today, can I notice it and set it down like the infant does\u2014without shame, without forcing?",
+      "surrender_question": "What outcome am I still trying to guarantee or defend today, and what if I brought my honest effort and then let God\u2014or the unfolding itself\u2014carry what I cannot?",
+      "daily_action": "Today, I will speak one honest thing I usually hide, or listen to one person without planning my reply, staying present to their actual voice rather than my version of them.",
+      "evening_question": "Where did I tighten or perform today, and where did I manage to stay a little simpler, truer, or kinder than my fear wanted me to be?"
     }
   ]
 }
