@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11",
+  "date": "2026-10-12",
   "morning": true,
   "history": [
     {
@@ -231,6 +231,21 @@
       "surrender_question": "What outcome am I still trying to guarantee or defend today, and what if I brought my honest effort and then let God\u2014or the unfolding itself\u2014carry what I cannot?",
       "daily_action": "Today, I will speak one honest thing I usually hide, or listen to one person without planning my reply, staying present to their actual voice rather than my version of them.",
       "evening_question": "Where did I tighten or perform today, and where did I manage to stay a little simpler, truer, or kinder than my fear wanted me to be?"
+    },
+    {
+      "date": "2026-10-12",
+      "lead": "epictetus:XV",
+      "lead_title": "Encheiridion XV",
+      "companion": "chuangtzu:28",
+      "companion_title": "On Declining Power \u00b7 excerpt",
+      "echo": "brother_lawrence:conversation_2",
+      "echo_title": "Second Conversation \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When something I want passes by or hasn't arrived yet, can I notice the difference between wise waiting and the small, tight fist of desire?",
+      "carry_question": "Today, when I'm offered something or waiting for something, can I feel the difference between desire and dread?",
+      "surrender_question": "What outcome or opinion about myself am I gripping, and can I leave it with God while still showing up honestly in my responsibilities?",
+      "daily_action": "When I face a choice about taking or refusing something today\u2014food, help, praise, rest\u2014I will pause and ask whether I am choosing with my own judgment or reacting from fear of judgment or obligation.",
+      "evening_question": "Where did I act from my own clear judgment today, and where did I grip tighter because I was afraid? What can I give to God about that?"
     }
   ]
 }
