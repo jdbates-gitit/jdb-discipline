@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-12",
+  "date": "2026-10-13",
   "morning": true,
   "history": [
     {
@@ -246,6 +246,21 @@
       "surrender_question": "What outcome or opinion about myself am I gripping, and can I leave it with God while still showing up honestly in my responsibilities?",
       "daily_action": "When I face a choice about taking or refusing something today\u2014food, help, praise, rest\u2014I will pause and ask whether I am choosing with my own judgment or reacting from fear of judgment or obligation.",
       "evening_question": "Where did I act from my own clear judgment today, and where did I grip tighter because I was afraid? What can I give to God about that?"
+    },
+    {
+      "date": "2026-10-13",
+      "lead": "brother_lawrence:letter_5",
+      "lead_title": "Fifth Letter \u00b7 excerpt",
+      "companion": "psalms:36",
+      "companion_title": "Psalm 36:1\u201310 \u00b7 excerpt",
+      "echo": "tao:77",
+      "echo_title": "Chapter 77 \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "What ordinary work lies before me today\u2014and am I willing to set about it heartily, trusting that God moves through my small, faithful efforts?",
+      "carry_question": "When I feel the urge to control or hurry today, can I pause and ask: What work is actually mine, and what am I trying to do that belongs to God?",
+      "surrender_question": "What outcome am I holding too tightly\u2014and can I offer it to God today while staying present and responsible for the next right action?",
+      "daily_action": "Today, I will choose one small task\u2014a conversation, a kindness, a step in my recovery\u2014and do it with full attention, as prayer, trusting that my faithfulness is enough.",
+      "evening_question": "Where did I catch myself trying to earn or prove something today, and where did I instead simply show up and do the work? What can I leave with God tonight?"
     }
   ]
 }
