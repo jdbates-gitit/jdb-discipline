@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-13",
+  "date": "2026-10-14",
   "morning": true,
   "history": [
     {
@@ -261,6 +261,21 @@
       "surrender_question": "What outcome am I holding too tightly\u2014and can I offer it to God today while staying present and responsible for the next right action?",
       "daily_action": "Today, I will choose one small task\u2014a conversation, a kindness, a step in my recovery\u2014and do it with full attention, as prayer, trusting that my faithfulness is enough.",
       "evening_question": "Where did I catch myself trying to earn or prove something today, and where did I instead simply show up and do the work? What can I leave with God tonight?"
+    },
+    {
+      "date": "2026-10-14",
+      "lead": "chuangtzu:29",
+      "lead_title": "Robber Che \u00b7 excerpt",
+      "companion": "heraclitus:52",
+      "companion_title": "Fragment 52",
+      "echo": "epictetus:V",
+      "echo_title": "Encheiridion V \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I meet someone whose views anger or unsettle me, can I stay curious about what I don't yet see instead of defending my rightness?",
+      "carry_question": "What belief about myself or another person am I defending today instead of questioning?",
+      "surrender_question": "Can I release my certainty that I understand someone else's motives, and trust God to show me what I'm missing?",
+      "daily_action": "Today, when I disagree with someone, I will listen for one true thing they are saying before I explain why they are wrong.",
+      "evening_question": "Did I defend my view, or did I stay open long enough to learn something? What one thing surprised me about someone today?"
     }
   ]
 }
