@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-14",
+  "date": "2026-10-15",
   "morning": true,
   "history": [
     {
@@ -276,6 +276,21 @@
       "surrender_question": "Can I release my certainty that I understand someone else's motives, and trust God to show me what I'm missing?",
       "daily_action": "Today, when I disagree with someone, I will listen for one true thing they are saying before I explain why they are wrong.",
       "evening_question": "Did I defend my view, or did I stay open long enough to learn something? What one thing surprised me about someone today?"
+    },
+    {
+      "date": "2026-10-15",
+      "lead": "brother_lawrence:letter_10",
+      "lead_title": "Tenth Letter \u00b7 excerpt",
+      "companion": "psalms:97",
+      "companion_title": "Psalm 97",
+      "echo": "epictetus:LII",
+      "echo_title": "Encheiridion LII",
+      "editorial_mode": "ai",
+      "daily_question": "If God is always near and I am prone to leave Him alone, what small act of remembrance can I choose in the next hour, without performance or strain?",
+      "carry_question": "When I rush through a task without naming God's presence, what am I refusing to see or know?",
+      "surrender_question": "What outcome\u2014approval, control, safety, certainty\u2014am I demanding today that I can practice releasing into God's hands while still showing up and acting with care?",
+      "daily_action": "In one ordinary moment today\u2014eating, walking, listening to someone\u2014I will pause and remember that I am not alone, naming God's presence silently and continuing the task without performance, as Brother Lawrence did in the kitchen.",
+      "evening_question": "Where did I remember God today, and where did I forget? What small remembrance felt easiest, and what kept me distant, and can I bring both to God now without judgment?"
     }
   ]
 }
