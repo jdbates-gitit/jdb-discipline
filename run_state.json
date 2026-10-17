@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-16",
+  "date": "2026-10-17",
   "morning": true,
   "history": [
     {
@@ -306,6 +306,21 @@
       "surrender_question": "What outcome am I still gripping\u2014and can I return it to God's hands while staying awake and honest about my small, real responsibility?",
       "daily_action": "Today I will speak one truth that costs me something, to one person, without explaining or justifying it\u2014and notice what happens when I let the word go.",
       "evening_question": "Where did I act without needing to be right, and where did I cling? What did the difference feel like in my body and heart?"
+    },
+    {
+      "date": "2026-10-17",
+      "lead": "tao:4",
+      "lead_title": "Chapter 4",
+      "companion": "psalms:44",
+      "companion_title": "Psalm 44:11\u201322 \u00b7 excerpt",
+      "echo": "heraclitus:61",
+      "echo_title": "Fragment 61",
+      "editorial_mode": "ai",
+      "daily_question": "Where am I forcing clarity or control today when the deepest truth might live in what I cannot see or name?",
+      "carry_question": "When I meet confusion or resistance today, can I notice where I'm gripping for control instead of listening?",
+      "surrender_question": "What outcome am I demanding certainty about that I can lay down today, trusting God even if I never see how it unfolds?",
+      "daily_action": "Today, I will speak one truth simply and without embellishment, then release the result. I will not rehearse or defend it.",
+      "evening_question": "Where did I insist on understanding before acting, and where did I move forward with partial sight? What can I thank God for tonight?"
     }
   ]
 }
