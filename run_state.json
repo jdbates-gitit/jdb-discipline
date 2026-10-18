@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-17",
+  "date": "2026-10-18",
   "morning": true,
   "history": [
     {
@@ -339,6 +339,24 @@
       "surrender_question": "Am I willing today to disappoint one expectation I've been carrying about how I should appear, just to feel what actual ease might be?",
       "daily_action": "Once today, when I catch myself adjusting my stance, tone, or offering for approval, I'll pause and name it silently\u2014not to shame myself, but to mark the moment and move on.",
       "evening_question": "Did I notice any moment when I relaxed the arrangement of myself, and what was different about how I moved or spoke?"
+    },
+    {
+      "date": "2026-10-18",
+      "lead": "epictetus:XXXVIII",
+      "lead_title": "Encheiridion XXXVIII",
+      "companion": "chuangtzu:6",
+      "companion_title": "The Great Supreme \u00b7 excerpt",
+      "echo": "heraclitus:10",
+      "echo_title": "Fragment 10",
+      "editorial_mode": "ai",
+      "daily_question": "When I move through today's ordinary tasks, am I tending my own judgment\u2014or have I already surrendered it to someone else's urgency?",
+      "carry_question": "In this hour, where am I tending something carefully, and where might I actually be gripping?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "What small decision today have I already made without noticing, and what would it cost to reclaim it?",
+      "daily_action": "Before you say yes to something\u2014a request, a worry, a plan\u2014pause and notice: am I choosing this, or am I already following someone else's track?",
+      "evening_question": "What did I tend today that mattered, and what was I defending that I could have left alone?"
     }
   ]
 }
