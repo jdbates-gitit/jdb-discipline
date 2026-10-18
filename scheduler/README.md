@@ -70,10 +70,33 @@ target, not a service-level guarantee. Two GitHub cron slots provide backup
 attempts while the Cloudflare timer issue remains unresolved, not independent
 protection against a GitHub-wide outage.
 
-The seven fixed opening questions repeat weekly ONLY when AI is unavailable.
+The October 17 reading refresh replaces active Brother Lawrence and Psalms
+selection with Dhammapada and Whitman. The owner reviewed the local examples
+and approved publication, including the matching landing card and footer notes.
+Release uses the existing GitHub-to-Pages path and one deliberate manual refresh;
+it does not change cron configuration or erase previous reading history.
+
+The question foundation has 40 lenses in ten families, plus an open
+reading-led discovery option. Randomized lens menus are built AFTER reading
+selection, never used to narrow passages. Theme/history metadata reduces recent
+repetition; agreement between sources is not required. The no-AI path now draws
+from that broader authored prompt bank, not a weekly seven-question loop.
 Source-reading selection and the existing 56-day exclusion still run normally.
 Fallback Confluence is explicitly a reflection prompt, not invented interpretation.
 Missing/corrupt local source files remain hard failures; never fabricate scripture.
+
+The new libraries are built locally with `build_new_readings.py`, not fetched by
+the daily workflow. Dhammapada uses Acharya Buddharakkhita's copyrighted BPS
+translation under its conditional free-redistribution license; it is not public
+domain. The full license travels in the JSON archive and every rendered page.
+Whitman uses selected complete poems/numbered sections from Gutenberg 1322.
+New excerpts retain complete consecutive verses or stanzas. Retired source files
+and historical labels are retained so old trail entries remain honest.
+
+`scheduler/build_reading_refresh_preview.py --output-dir <new-directory>` renders
+three labelled sample editorials plus the theme summary. These are review examples,
+NOT Claude API acceptance tests. `scheduler/build_preview.py --output <new.html>`
+exercises the actual no-AI path. Neither may change production HTML or run state.
 
 ## Credentials and alerts
 

@@ -1,0 +1,62 @@
+{
+  "dhammapada": {
+    "translator": "Acharya Buddharakkhita",
+    "edition": "Buddhist Publication Society, 1985; Access to Insight transcription",
+    "source_url": "https://accesstoinsight.org/tipitaka/kn/dhp/dhp.intro.budd.html",
+    "rights": "Copyrighted; conditional free redistribution, not public domain",
+    "license": "©1985 Buddhist Publication Society. You may copy, reformat, reprint, republish, and redistribute this work in any medium whatsoever, provided that: (1) you only make such copies, etc. available free of charge and, in the case of reprinting, only in quantities of no more than 50 copies; (2) you clearly indicate that any derivatives of this work (including translations) are derived from this source document; and (3) you include the full text of this license in any copies or derivatives of this work. Otherwise, all rights reserved.",
+    "chapters_sha256": [
+      "dd5f06600252c2e05f2c4f4858f564c71773b9f8e681e5548164a806e99746d2",
+      "3df4766126a74d965f11f044775679694bb18a17bfbe69b34624962a2268cf53",
+      "6b33bf57f9d809dc0f538545774b7f82fd5f80e4f8a70ec16c1b517f889ca691",
+      "47616e1263af149136c3e371bcf14568e96182ed09ef30591c03d0f36f79310e",
+      "7f7e489b20dd6184e559b5264a6d676b6244188cae4565acd90bd33d235089cc",
+      "e00b0180bf6c9696ba4cc78093b613ab1ec2ac877b56fe64a9372a36bfd9982e",
+      "985a8e5e8ec5268dab5ea400d643402ca59fabe06ecb89bbd0aa3606f5b40cdd",
+      "3f2f165cea24f42df102bf437eaf755c1b4c9a3c69fa5bf5379891018b49239b",
+      "c764af8dc972762907c136fba5af08c5385bc32c819e3618a5f0df60eaaec20c",
+      "326563bc314faac8101d6387805e36f9b04e4237c0da05ec95fbfdcda1e2e33e",
+      "f866f8343de5a75cab6341a78a99c495141968dfbecf25d98d97e3b69582b1da",
+      "b9f34372d1be71e596e460e82f0d260516169aaf5e0f527a2c4831d4aa085ae0",
+      "62b18c69202faea4a7327265b736f97758621bdea0e5ae4f6a2c95bc6c46ba51",
+      "b84bea335de4323fc6f5757eb95e54d5ae840618bb2d2045c6b554c89d63c8ce",
+      "432331f2efb1440455068f8ae7e3794e27e7ee4df4e30414fe71c17f7f56de7a",
+      "0458bb1c110003d8c26e5ba8a9f223919e7e415b7a271e07c31dc5783b6a4001",
+      "608b3c795fbe648819e27083951d65ea2eeaf98cf551d01c0dd29297b2afb7fa",
+      "edd9697c272c83588cbd9930130be5c07c952e2ea5fc690ab349a67b32b04084",
+      "e5b486c9622beb24883a0e4c4f9918a45020b56968c82d39173a4c75b4584fce",
+      "c7999de6fb109a25244c947ecd9fe73e1dd278713bfb6c1edb883bc995217771",
+      "564af606dfc3675a77ded92dcd6607029ce3421d26b84877d9ff30f5876cf3da",
+      "4f3fa59230c5fa8e4dc0afd0f7c58b5d53fcf4a2edea7da00cdcaabe5590fa25",
+      "3da0f222f90bc6cec44b59df60843c76715916af074b079e64c1e4c38ede16e4",
+      "066716233a9e2b28b841db28180b35969ab76ad424e8ebd288733460bc3c0933",
+      "bc76188f60801b2d03cf9edd099d87cc03df2b5b1c6554df5371dd183bd5d185",
+      "3dcc867c722147eb2aa5d7c75addaee43a4ba009c4d9dbeedc91c972e711db7f"
+    ],
+    "reading_count": 147,
+    "verse_count": 423
+  },
+  "whitman": {
+    "author": "Walt Whitman",
+    "edition": "Leaves of Grass, Project Gutenberg eBook 1322",
+    "source_url": "https://www.gutenberg.org/files/1322/1322-h/1322-h.htm",
+    "rights": "Public domain in the USA",
+    "sha256": "5be188617bdf46907becc88b751a688bbd2ee567ad1236fdef1bc6f586fff1c3",
+    "reading_count": 53,
+    "poems": [
+      "Song of the Open Road",
+      "Song of Myself",
+      "Crossing Brooklyn Ferry",
+      "A Song of the Rolling Earth",
+      "Miracles",
+      "O Me! O Life!",
+      "When I Heard the Learn’d Astronomer",
+      "On the Beach at Night Alone",
+      "A Noiseless Patient Spider",
+      "A Clear Midnight",
+      "The Untold Want",
+      "This Moment Yearning and Thoughtful"
+    ],
+    "curation": "Selected complete poems and numbered sections. Song of the Open Road section 10 omitted for its exclusionary health/alcohol language. Text within included selections is not rewritten."
+  }
+}

@@ -101,6 +101,7 @@ class FreshnessTests(unittest.TestCase):
         self.assertEqual(mode, "fixed")
 
     def test_valid_ai_editorial_keeps_ai_mode(self):
+        self.editorial["question_theme"] = "open_reading"
         with patch.object(discipline, "API_KEY", "test-only"), \
                 patch.object(discipline.anthropic, "Anthropic", create=True), \
                 patch.object(discipline, "create_editorial", return_value=dict(self.editorial)) as provider:

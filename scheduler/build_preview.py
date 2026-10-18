@@ -23,9 +23,11 @@ def main():
     lead = discipline.pick_lead(state, day)
     companion = discipline.pick_companion(lead, state, day)
     candidates = discipline.pick_echo_candidates(lead, companion, state, day)
-    editorial, echo = discipline.fixed_editorial(lead, companion, candidates, day)
+    plan = discipline.question_plan(state, day)
+    editorial, echo = discipline.fixed_editorial(lead, companion, candidates, day, plan)
     page = discipline.build_html(lead, companion, echo, editorial, state, day, "fixed")
     validate_page(page, day)
+    page = page.replace('<div class="wrap">', '<div class="wrap"><p class="note-privacy">LOCAL PREVIEW — actual no-AI fallback path. No provider call, production write, or publication.</p>', 1)
     # Make linked assets portable in a file:// preview; production template stays unchanged.
     for name in ("practice.js", "jdb-site-navigation.js", "jdb-site-navigation.css"):
         page = page.replace(f'"/{name}"', f'"{(discipline.HERE / name).as_uri()}"')

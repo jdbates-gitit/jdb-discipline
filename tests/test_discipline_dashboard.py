@@ -23,7 +23,7 @@ class DisciplineGeneratorTests(unittest.TestCase):
             for day in days
         ]
         self.assertEqual(
-            set(selected), {"tao", "chuangtzu", "epictetus", "brother_lawrence"}
+            set(selected), {"tao", "chuangtzu", "epictetus", "dhammapada"}
         )
 
     def test_recent_reading_is_excluded_when_unused_options_exist(self):
@@ -38,17 +38,14 @@ class DisciplineGeneratorTests(unittest.TestCase):
         self.assertNotIn("1", available)
 
     def test_brother_lawrence_library_has_all_conversations_and_letters(self):
-        source = next(
-            source for source in discipline.READING_SOURCES
-            if source["id"] == "brother_lawrence"
-        )
+        source = {"id": "brother_lawrence", "file": discipline.HERE / "sources/brother_lawrence.json"}
         readings = json.loads(source["file"].read_text(encoding="utf-8"))
         self.assertEqual(len(readings), 19)
         self.assertIn("conversation_4", readings)
         self.assertIn("letter_15", readings)
 
     def test_psalms_library_is_complete_and_preserves_known_reading(self):
-        source = next(source for source in discipline.READING_SOURCES if source["id"] == "psalms")
+        source = {"id": "psalms", "file": discipline.HERE / "sources/psalms.json"}
         readings = discipline.load_source(source)
         self.assertEqual(set(readings), {str(number) for number in range(1, 151)})
         self.assertEqual(sum(len(entry["verses"]) for entry in readings.values()), 2461)
@@ -57,28 +54,28 @@ class DisciplineGeneratorTests(unittest.TestCase):
         self.assertEqual(len(readings["23"]["verses"]), 6)
         self.assertNotIn("Project Gutenberg", readings["150"]["text"])
 
-    def test_psalms_companion_on_half_of_days_without_repeating_recent_psalms(self):
+    def test_new_rotation_has_tao_quarter_and_no_retired_sources(self):
         start = datetime.date(2026, 10, 3)
         state = {"history": []}
-        leads, psalms = [], []
+        leads, companions = [], []
         for offset in range(56):
             day = start + datetime.timedelta(days=offset)
             lead = discipline.pick_lead(state, day)
             companion = discipline.pick_companion(lead, state, day)
             leads.append(lead["source"]["id"])
             self.assertNotEqual(lead["source"]["id"], companion["source"]["id"])
-            if companion["source"]["id"] == "psalms":
-                self.assertNotIn(companion["passage_id"], psalms)
-                psalms.append(companion["passage_id"])
-            else:
-                candidates = discipline.pick_echo_candidates(lead, companion, state, day)
-                self.assertEqual(sum(c["source"]["id"] == "psalms" for c in candidates), 8)
+            companions.append(companion["source"]["id"])
+            candidates = discipline.pick_echo_candidates(lead, companion, state, day)
+            for reading in (lead, companion, *candidates):
+                self.assertNotIn(reading["source"]["id"], {"psalms", "brother_lawrence"})
+            self.assertTrue(all(c["source"]["id"] not in {lead["source"]["id"], companion["source"]["id"]} for c in candidates))
             state["history"].append({"date": day.isoformat(), "lead": lead["selection_key"], "companion": companion["selection_key"]})
-        self.assertEqual(len(psalms), 28)
         self.assertEqual(leads.count("tao"), 14)
+        self.assertEqual(set(companions), {source["id"] for source in discipline.READING_SOURCES})
+        self.assertLess(max(companions.count(source) for source in set(companions)), 28)
 
     def test_psalms_excerpts_preserve_complete_consecutive_verses(self):
-        source = next(source for source in discipline.READING_SOURCES if source["id"] == "psalms")
+        source = {"id": "psalms", "file": discipline.HERE / "sources/psalms.json"}
         readings = discipline.load_source(source)
         for target in (discipline.EXCERPT_TARGET_CHARS, discipline.ECHO_TARGET_CHARS):
             for entry in readings.values():
@@ -169,8 +166,12 @@ class DisciplineGeneratorTests(unittest.TestCase):
         }
         rendered = discipline.build_html(reading, reading, reading, editorial)
         self.assertIn("the Tao leads 25% of days", rendered)
-        self.assertIn("Psalms is the companion every other day", rendered)
-        self.assertIn("King James Version, public domain in the USA", rendered)
+        self.assertNotIn("Psalms is the companion every other day", rendered)
+        self.assertIn("Dhammapada", rendered)
+        self.assertIn("Walt Whitman", rendered)
+        self.assertIn("40 lenses", rendered)
+        self.assertIn("conditionally licensed", rendered)
+        self.assertIn("©1985 Buddhist Publication Society", rendered)
         self.assertIn("Anthropic Claude Haiku 4.5", rendered)
         self.assertIn("AI does not write, paraphrase, or alter the source readings", rendered)
         self.assertIn("Into the Day", rendered)
@@ -178,7 +179,7 @@ class DisciplineGeneratorTests(unittest.TestCase):
         self.assertIn("Seven-Day Trail", rendered)
         self.assertIn("Surrender", rendered)
         self.assertIn('src="practice.js"', rendered)
-        self.assertIn("never sent to the generator or AI", rendered)
+        self.assertIn("they never enter the generator or AI", rendered)
 
         class IdParser(HTMLParser):
             def __init__(self):
