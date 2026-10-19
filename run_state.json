@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-18",
+  "date": "2026-10-19",
   "morning": true,
   "history": [
     {
@@ -357,6 +357,24 @@
       "surrender_question": "What small decision today have I already made without noticing, and what would it cost to reclaim it?",
       "daily_action": "Before you say yes to something\u2014a request, a worry, a plan\u2014pause and notice: am I choosing this, or am I already following someone else's track?",
       "evening_question": "What did I tend today that mattered, and what was I defending that I could have left alone?"
+    },
+    {
+      "date": "2026-10-19",
+      "lead": "dhammapada:v256_258",
+      "lead_title": "The Just \u00b7 verses 256\u2013258",
+      "companion": "whitman:myself_51",
+      "companion_title": "Song of Myself \u00b7 section 51",
+      "echo": "epictetus:III",
+      "echo_title": "Encheiridion III",
+      "editorial_mode": "ai",
+      "daily_question": "When I judge someone today, can I notice what I already assume is true before I investigate what actually is?",
+      "carry_question": "Before I react to what someone did or said, what am I assuming I already know about them?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "Can I let go of needing to be right about this person today, just for the next hour?",
+      "daily_action": "In one conversation today, pause and ask one genuine question before you speak your assessment\u2014not to change their mind, but to find out what you don't yet see.",
+      "evening_question": "Did I investigate or assume? What did I learn by asking instead of deciding?"
     }
   ]
 }
