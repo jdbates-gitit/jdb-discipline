@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-19",
+  "date": "2026-10-20",
   "morning": true,
   "history": [
     {
@@ -375,6 +375,24 @@
       "surrender_question": "Can I let go of needing to be right about this person today, just for the next hour?",
       "daily_action": "In one conversation today, pause and ask one genuine question before you speak your assessment\u2014not to change their mind, but to find out what you don't yet see.",
       "evening_question": "Did I investigate or assume? What did I learn by asking instead of deciding?"
+    },
+    {
+      "date": "2026-10-20",
+      "lead": "chuangtzu:16",
+      "lead_title": "Exercise of Faculties \u00b7 excerpt",
+      "companion": "whitman:ferry_1",
+      "companion_title": "Crossing Brooklyn Ferry \u00b7 section 1",
+      "echo": "tao:66",
+      "echo_title": "Chapter 66 \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I cross paths with someone today\u2014on transit, at work, in line\u2014can I notice them the way Whitman notices the ferry crowd: as curious, particular, and mysteriously worth my actual attention?",
+      "carry_question": "What is actually curious or particular about someone I encounter today that I might miss if I stay in my own thought?",
+      "question_theme": "attention",
+      "question_family": "attention",
+      "question_style": "notice",
+      "surrender_question": "What story am I already telling about someone before I actually look at them or listen to what they say?",
+      "daily_action": "During one ordinary interaction today, notice one detail about the other person\u2014a gesture, a word choice, an expression\u2014without narrating it. Just register it.",
+      "evening_question": "When I genuinely noticed someone today without judgment, what changed in how I felt in my own body or thought?"
     }
   ]
 }
