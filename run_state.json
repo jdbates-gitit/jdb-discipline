@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-20",
+  "date": "2026-10-21",
   "morning": true,
   "history": [
     {
@@ -393,6 +393,24 @@
       "surrender_question": "What story am I already telling about someone before I actually look at them or listen to what they say?",
       "daily_action": "During one ordinary interaction today, notice one detail about the other person\u2014a gesture, a word choice, an expression\u2014without narrating it. Just register it.",
       "evening_question": "When I genuinely noticed someone today without judgment, what changed in how I felt in my own body or thought?"
+    },
+    {
+      "date": "2026-10-21",
+      "lead": "epictetus:XL",
+      "lead_title": "Encheiridion XL",
+      "companion": "dhammapada:v30_32",
+      "companion_title": "Heedfulness \u00b7 verses 30\u201332",
+      "echo": "whitman:myself_14",
+      "echo_title": "Song of Myself \u00b7 section 14 \u00b7 excerpt, stanza 5",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself valued only for how I appear, can I distinguish between genuine care for dignity and the small, tight performance that erases what else I am?",
+      "carry_question": "Today, when someone notices me, can I feel whether I'm performing or simply present?",
+      "question_theme": "boundaries",
+      "question_family": "agency",
+      "question_style": "experiment",
+      "surrender_question": "What assumption about being valued or seen am I willing to notice without immediately defending or fixing it?",
+      "daily_action": "Choose one moment today\u2014a conversation, a task, a mirror\u2014and notice the muscular effort of performing versus the ease of simply being; nothing to change, only to see.",
+      "evening_question": "What did I notice about the difference between being valued for my appearance and being met as I actually was today?"
     }
   ]
 }
