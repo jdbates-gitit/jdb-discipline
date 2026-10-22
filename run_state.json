@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "morning": true,
   "history": [
     {
@@ -411,6 +411,24 @@
       "surrender_question": "What assumption about being valued or seen am I willing to notice without immediately defending or fixing it?",
       "daily_action": "Choose one moment today\u2014a conversation, a task, a mirror\u2014and notice the muscular effort of performing versus the ease of simply being; nothing to change, only to see.",
       "evening_question": "What did I notice about the difference between being valued for my appearance and being met as I actually was today?"
+    },
+    {
+      "date": "2026-10-22",
+      "lead": "tao:30",
+      "lead_title": "Chapter 30",
+      "companion": "epictetus:VIII",
+      "companion_title": "Encheiridion VIII",
+      "echo": "whitman:rolling_earth_3",
+      "echo_title": "A Song of the Rolling Earth \u00b7 section 3 \u00b7 excerpt, stanza 5\u20136",
+      "editorial_mode": "ai",
+      "daily_question": "When I strike at something today\u2014a decision, a confrontation, a project\u2014how will I know if I've stopped at the right moment rather than pushed past it?",
+      "carry_question": "When I finish something today, can I notice whether I'm pushing past its natural stopping point?",
+      "question_theme": "uncertainty",
+      "question_family": "perspective",
+      "question_style": "notice",
+      "surrender_question": "What am I still trying to complete or explain that might be wiser left as it is?",
+      "daily_action": "Today, after one deliberate action, I will notice the impulse to follow it with another\u2014and choose to pause and wait, even briefly, before deciding whether the next move belongs.",
+      "evening_question": "What did I finish today, what did I leave unfinished, and did either one feel right\u2014or did I discover the difference only in hindsight?"
     }
   ]
 }
