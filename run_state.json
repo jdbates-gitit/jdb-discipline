@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "morning": true,
   "history": [
     {
@@ -429,6 +429,24 @@
       "surrender_question": "What am I still trying to complete or explain that might be wiser left as it is?",
       "daily_action": "Today, after one deliberate action, I will notice the impulse to follow it with another\u2014and choose to pause and wait, even briefly, before deciding whether the next move belongs.",
       "evening_question": "What did I finish today, what did I leave unfinished, and did either one feel right\u2014or did I discover the difference only in hindsight?"
+    },
+    {
+      "date": "2026-10-23",
+      "lead": "chuangtzu:31",
+      "lead_title": "The Old Fisherman \u00b7 excerpt",
+      "companion": "heraclitus:127",
+      "companion_title": "Fragment 127",
+      "echo": "epictetus:XLVI",
+      "echo_title": "Encheiridion XLVI \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I catch myself performing agreement to smooth things over today, can I notice what truth I'm actually swallowing in that moment?",
+      "carry_question": "Today, when someone asks my view or needs my support, what will I actually say instead of what I think they want?",
+      "question_theme": "integrity",
+      "question_family": "meaning",
+      "question_style": "encounter",
+      "surrender_question": "Am I willing to disappoint someone's expectation of me rather than abandon what I actually think is true?",
+      "daily_action": "In one conversation today, state your honest view plainly\u2014without apology, without overexplaining, without checking their face for approval.",
+      "evening_question": "Where did I perform agreement today, and what was I protecting\u2014their comfort, or my own safety in their eyes?"
     }
   ]
 }
