@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-23",
+  "date": "2026-10-24",
   "morning": true,
   "history": [
     {
@@ -447,6 +447,24 @@
       "surrender_question": "Am I willing to disappoint someone's expectation of me rather than abandon what I actually think is true?",
       "daily_action": "In one conversation today, state your honest view plainly\u2014without apology, without overexplaining, without checking their face for approval.",
       "evening_question": "Where did I perform agreement today, and what was I protecting\u2014their comfort, or my own safety in their eyes?"
+    },
+    {
+      "date": "2026-10-24",
+      "lead": "tao:68",
+      "lead_title": "Chapter 68",
+      "companion": "chuangtzu:4",
+      "companion_title": "Man among Men \u00b7 excerpt",
+      "echo": "epictetus:XXIV",
+      "echo_title": "Encheiridion XXIV \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I move through someone else's urgency today, can I notice what I actually want before I agree to want what they want?",
+      "carry_question": "Whose urgency am I carrying right now, and is it actually mine?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "Can I notice one place today where I am trying to earn something I neither need nor actually want?",
+      "daily_action": "In one moment of decision or compliance today, pause and ask: Is this coming from me, or am I borrowing someone else's script? Then choose openly.",
+      "evening_question": "What did I notice about the difference between moving with genuine agreement and moving to avoid conflict today?"
     }
   ]
 }
