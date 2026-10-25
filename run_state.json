@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-24",
+  "date": "2026-10-25",
   "morning": true,
   "history": [
     {
@@ -465,6 +465,24 @@
       "surrender_question": "Can I notice one place today where I am trying to earn something I neither need nor actually want?",
       "daily_action": "In one moment of decision or compliance today, pause and ask: Is this coming from me, or am I borrowing someone else's script? Then choose openly.",
       "evening_question": "What did I notice about the difference between moving with genuine agreement and moving to avoid conflict today?"
+    },
+    {
+      "date": "2026-10-25",
+      "lead": "dhammapada:v16_18",
+      "lead_title": "Pairs \u00b7 verses 16\u201318",
+      "companion": "epictetus:XXX",
+      "companion_title": "Encheiridion XXX",
+      "echo": "whitman:open_road_13",
+      "echo_title": "Song of the Open Road \u00b7 section 13 \u00b7 excerpt, stanza 8",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself delighting in a good action, am I actually free\u2014or am I still caught in the pleasure of self-approval?",
+      "carry_question": "When I do something good today, can I notice what I'm actually feeling beneath the satisfaction?",
+      "question_theme": "paradox",
+      "question_family": "perspective",
+      "question_style": "honesty",
+      "surrender_question": "What if the pleasure I take in my own goodness is not the problem, but a clue that something else wants to be seen?",
+      "daily_action": "Do one ordinary good thing today without narrating it to yourself as good; notice what happens to the delight when you stop watching yourself.",
+      "evening_question": "Did I catch myself performing approval today, and if so, what was the truth I was swallowing instead of speaking?"
     }
   ]
 }
