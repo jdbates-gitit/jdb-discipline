@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-25",
+  "date": "2026-10-26",
   "morning": true,
   "history": [
     {
@@ -483,6 +483,24 @@
       "surrender_question": "What if the pleasure I take in my own goodness is not the problem, but a clue that something else wants to be seen?",
       "daily_action": "Do one ordinary good thing today without narrating it to yourself as good; notice what happens to the delight when you stop watching yourself.",
       "evening_question": "Did I catch myself performing approval today, and if so, what was the truth I was swallowing instead of speaking?"
+    },
+    {
+      "date": "2026-10-26",
+      "lead": "epictetus:XLVIII",
+      "lead_title": "Encheiridion XLVIII",
+      "companion": "whitman:open_road_3",
+      "companion_title": "Song of the Open Road \u00b7 section 3",
+      "echo": "tao:27",
+      "echo_title": "Chapter 27 \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself watching my own actions today\u2014censuring or approving\u2014whose standard am I actually measuring against?",
+      "carry_question": "When I encounter someone today, am I watching them as Epictetus watches himself, or receiving them as Whitman receives the ferry crowd?",
+      "question_theme": "judgment",
+      "question_family": "agency",
+      "question_style": "encounter",
+      "surrender_question": "Am I willing to notice that my judgment might be doing work I do not see\u2014and let that curiosity interrupt the habit?",
+      "daily_action": "Pick one moment today where you catch yourself evaluating\u2014your action, your word, someone else's\u2014and pause. Do not erase the judgment; notice where it came from and what it is protecting or proving.",
+      "evening_question": "What did I notice about how I watched myself or others today, and was there a moment when I could have simply acted or received instead?"
     }
   ]
 }
