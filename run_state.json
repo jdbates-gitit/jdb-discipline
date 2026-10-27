@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "morning": true,
   "history": [
     {
@@ -501,6 +501,24 @@
       "surrender_question": "Am I willing to notice that my judgment might be doing work I do not see\u2014and let that curiosity interrupt the habit?",
       "daily_action": "Pick one moment today where you catch yourself evaluating\u2014your action, your word, someone else's\u2014and pause. Do not erase the judgment; notice where it came from and what it is protecting or proving.",
       "evening_question": "What did I notice about how I watched myself or others today, and was there a moment when I could have simply acted or received instead?"
+    },
+    {
+      "date": "2026-10-27",
+      "lead": "dhammapada:v401_403",
+      "lead_title": "The Holy Man \u00b7 verses 401\u2013403",
+      "companion": "chuangtzu:17",
+      "companion_title": "Autumn Floods \u00b7 excerpt",
+      "echo": "epictetus:XXIX",
+      "echo_title": "Encheiridion XXIX \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When Confucius kept playing his guitar while surrounded, what was he actually attending to\u2014and what might I stop attending to today?",
+      "carry_question": "What am I gripping for today\u2014and what happens if I notice it before I act on it?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "Where am I still insisting the outcome arrive on my timeline, and what if I released just that demand today?",
+      "daily_action": "Pause once before a choice today and ask: what comes after this? Then decide whether you still want it, knowing what it costs.",
+      "evening_question": "Did I catch myself gripping something today? What was I actually afraid would happen if I let it move?"
     }
   ]
 }
