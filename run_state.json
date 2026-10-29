@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-28",
+  "date": "2026-10-29",
   "morning": true,
   "history": [
     {
@@ -537,6 +537,24 @@
       "surrender_question": "What small effort am I still making to guarantee that today's good moments will stay, or that tomorrow's difficult ones won't arrive?",
       "daily_action": "Notice one small pleasure today\u2014a taste, a sight, a kind word\u2014without immediately reaching for it or pushing it away. Let it be exactly what it is, for as long as it is.",
       "evening_question": "Did I meet joy or sorrow today as a visitor, or did I treat it as something I should have arranged or prevented?"
+    },
+    {
+      "date": "2026-10-29",
+      "lead": "tao:61",
+      "lead_title": "Chapter 61",
+      "companion": "dhammapada:v259_261",
+      "companion_title": "The Just \u00b7 verses 259\u2013261",
+      "echo": "epictetus:XXIII",
+      "echo_title": "Encheiridion XXIII",
+      "editorial_mode": "ai",
+      "daily_question": "When the Tao says a great state must learn to abase itself, and the Dhammapada warns that speaking much does not make one versed in truth, what am I actually doing when I explain myself?",
+      "carry_question": "When I speak today, am I explaining or am I listening to what actually needs to be said?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "tension",
+      "surrender_question": "What if my urge to clarify or justify is itself the thing I could set down for one hour today?",
+      "daily_action": "In one conversation today, I will speak half as much as I normally would and notice what becomes visible in the space I leave.",
+      "evening_question": "What did I notice or try today, and what remains honestly unresolved for me?"
     }
   ]
 }
