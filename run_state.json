@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-29",
+  "date": "2026-10-30",
   "morning": true,
   "history": [
     {
@@ -555,6 +555,24 @@
       "surrender_question": "What if my urge to clarify or justify is itself the thing I could set down for one hour today?",
       "daily_action": "In one conversation today, I will speak half as much as I normally would and notice what becomes visible in the space I leave.",
       "evening_question": "What did I notice or try today, and what remains honestly unresolved for me?"
+    },
+    {
+      "date": "2026-10-30",
+      "lead": "chuangtzu:33",
+      "lead_title": "The Empire \u00b7 excerpt",
+      "companion": "dhammapada:v85_88",
+      "companion_title": "The Wise Man \u00b7 verses 85\u201388",
+      "echo": "epictetus:VI",
+      "echo_title": "Encheiridion VI",
+      "editorial_mode": "ai",
+      "daily_question": "When Hui Tzu says fire is not hot\u2014the man feels it hot\u2014am I confusing what is actually happening with who I am in relation to it?",
+      "carry_question": "When I react to something today, can I notice whether I am reacting to what is or to what I am calling it?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "honesty",
+      "surrender_question": "Can I release the need to resolve this question cleanly before I move into my day?",
+      "daily_action": "Name one assumption about something you encounter today\u2014a person, a task, a feeling\u2014and hold it lightly enough to notice what else might be true.",
+      "evening_question": "When I named something today, did that naming help me see it more clearly, or did it flatten something real into a familiar category?"
     }
   ]
 }
