@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-30",
+  "date": "2026-10-31",
   "morning": true,
   "history": [
     {
@@ -573,6 +573,24 @@
       "surrender_question": "Can I release the need to resolve this question cleanly before I move into my day?",
       "daily_action": "Name one assumption about something you encounter today\u2014a person, a task, a feeling\u2014and hold it lightly enough to notice what else might be true.",
       "evening_question": "When I named something today, did that naming help me see it more clearly, or did it flatten something real into a familiar category?"
+    },
+    {
+      "date": "2026-10-31",
+      "lead": "chuangtzu:15",
+      "lead_title": "Self-Conceit \u00b7 excerpt",
+      "companion": "epictetus:XVII",
+      "companion_title": "Encheiridion XVII",
+      "echo": "whitman:open_road_9",
+      "echo_title": "Song of the Open Road \u00b7 section 9 \u00b7 excerpt, stanza 3",
+      "editorial_mode": "ai",
+      "daily_question": "When Chuang Tzu warns that a mind employed without ceasing becomes wearied and loses its power, what am I actually doing when I keep reaching for the next thing?",
+      "carry_question": "When I move through today, can I notice where I am reaching without pause and where I might let my attention recover?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "What if the weariness I feel is not a sign I am failing, but a sign I am trying to direct a play that is not mine to direct?",
+      "daily_action": "Today, notice one place where you stop reaching or performing\u2014a moment when you actually rest or step back\u2014and let yourself feel what that interruption costs and offers.",
+      "evening_question": "Where did I feel weariness today, and did I notice whether it came from constant doing, from resisting my actual role, or from refusing to move?"
     }
   ]
 }
