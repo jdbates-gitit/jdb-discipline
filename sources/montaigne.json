@@ -1,0 +1,1195 @@
+{
+  "_metadata": {
+    "author": "Michel de Montaigne",
+    "translator": "Charles Cotton",
+    "editor": "William Carew Hazlitt",
+    "edition": "Essays, 1877; Project Gutenberg eBook 3600",
+    "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm",
+    "rights": "Public domain in the USA",
+    "sha256": "cdbb8f8e615411ba08f17350faa589a490feb329aa64da59a46fef8872242380",
+    "reading_count": 43,
+    "curation": "Selected prose paragraphs, excerpted only in consecutive complete sentence groups. Spacing normalized; source wording and embedded editorial notes retained. Titles, paragraph/sentence numbers and theme tags are editorial metadata, not Montaigne's words."
+  },
+  "readings": {
+    "b2_of_books_p2": {
+      "title": "Of Books · Book 2 · paragraph 2",
+      "book": 2,
+      "essay": "OF BOOKS",
+      "paragraph": 2,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0067",
+      "units": [
+        {
+          "label": "1",
+          "text": "I seek, in the reading of books, only to please myself by an honest diversion; or, if I study, ‘tis for no other science than what treats of the knowledge of myself, and instructs me how to die and how to live well."
+        }
+      ],
+      "text": "I seek, in the reading of books, only to please myself by an honest diversion; or, if I study, ‘tis for no other science than what treats of the knowledge of myself, and instructs me how to die and how to live well.",
+      "themes": [
+        "joy",
+        "humility",
+        "mortality"
+      ]
+    },
+    "b2_of_books_p3": {
+      "title": "Of Books · Book 2 · paragraph 3",
+      "book": 2,
+      "essay": "OF BOOKS",
+      "paragraph": 3,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0067",
+      "units": [
+        {
+          "label": "1",
+          "text": "I do not bite my nails about the difficulties I meet with in my reading; after a charge or two, I give them over."
+        },
+        {
+          "label": "2",
+          "text": "Should I insist upon them, I should both lose myself and time; for I have an impatient understanding, that must be satisfied at first: what I do not discern at once is by persistence rendered more obscure."
+        },
+        {
+          "label": "3",
+          "text": "I do nothing without gaiety; continuation and a too obstinate endeavour, darkens, stupefies, and tires my judgment."
+        },
+        {
+          "label": "4",
+          "text": "My sight is confounded and dissipated with poring; I must withdraw it, and refer my discovery to new attempts; just as, to judge rightly of the lustre of scarlet, we are taught to pass the eye lightly over it, and again to run it over at several sudden and reiterated glances."
+        },
+        {
+          "label": "5",
+          "text": "If one book do not please me, I take another; and I never meddle with any, but at such times as I am weary of doing nothing."
+        },
+        {
+          "label": "6",
+          "text": "I care not much for new ones, because the old seem fuller and stronger; neither do I converse much with Greek authors, because my judgment cannot do its work with imperfect intelligence of the material."
+        }
+      ],
+      "text": "I do not bite my nails about the difficulties I meet with in my reading; after a charge or two, I give them over. Should I insist upon them, I should both lose myself and time; for I have an impatient understanding, that must be satisfied at first: what I do not discern at once is by persistence rendered more obscure. I do nothing without gaiety; continuation and a too obstinate endeavour, darkens, stupefies, and tires my judgment. My sight is confounded and dissipated with poring; I must withdraw it, and refer my discovery to new attempts; just as, to judge rightly of the lustre of scarlet, we are taught to pass the eye lightly over it, and again to run it over at several sudden and reiterated glances. If one book do not please me, I take another; and I never meddle with any, but at such times as I am weary of doing nothing. I care not much for new ones, because the old seem fuller and stronger; neither do I converse much with Greek authors, because my judgment cannot do its work with imperfect intelligence of the material.",
+      "themes": [
+        "play",
+        "patience",
+        "non_forcing"
+      ]
+    },
+    "b3_of_repentance_p3": {
+      "title": "Of Repentance · Book 3 · paragraph 3",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 3,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "Be pleased here to excuse what I often repeat, that I very rarely repent, and that my conscience is satisfied with itself, not as the conscience of an angel, or that of a horse, but as the conscience of a man; always adding this clause, not one of ceremony, but a true and real submission, that I speak inquiring and doubting, purely and simply referring myself to the common and accepted beliefs for the resolution."
+        },
+        {
+          "label": "2",
+          "text": "I do not teach; I only relate."
+        }
+      ],
+      "text": "Be pleased here to excuse what I often repeat, that I very rarely repent, and that my conscience is satisfied with itself, not as the conscience of an angel, or that of a horse, but as the conscience of a man; always adding this clause, not one of ceremony, but a true and real submission, that I speak inquiring and doubting, purely and simply referring myself to the common and accepted beliefs for the resolution. I do not teach; I only relate.",
+      "themes": [
+        "humility",
+        "truthfulness",
+        "uncertainty"
+      ]
+    },
+    "b3_of_repentance_p5": {
+      "title": "Of Repentance · Book 3 · paragraph 5",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 5,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "There is likewise no virtue which does not rejoice a well-descended nature: there is a kind of, I know not what, congratulation in well-doing that gives us an inward satisfaction, and a generous boldness that accompanies a good conscience: a soul daringly vicious may, peradventure, arm itself with security, but it cannot supply itself with this complacency and satisfaction."
+        },
+        {
+          "label": "2",
+          "text": "‘Tis no little satisfaction to feel a man’s self preserved from the contagion of so depraved an age, and to say to himself: “Whoever could penetrate into my soul would not there find me guilty either of the affliction or ruin of any one, or of revenge or envy, or any offence against the public laws, or of innovation or disturbance, or failure of my word; and though the licence of the time permits and teaches every one so to do, yet have I not plundered any Frenchman’s goods, or taken his money, and have lived upon what is my own, in war as well as in peace; neither have I set any man to work without paying him his hire.” These testimonies of a good conscience please, and this natural rejoicing is very beneficial to us, and the only reward that we can never fail of."
+        }
+      ],
+      "text": "There is likewise no virtue which does not rejoice a well-descended nature: there is a kind of, I know not what, congratulation in well-doing that gives us an inward satisfaction, and a generous boldness that accompanies a good conscience: a soul daringly vicious may, peradventure, arm itself with security, but it cannot supply itself with this complacency and satisfaction. ‘Tis no little satisfaction to feel a man’s self preserved from the contagion of so depraved an age, and to say to himself: “Whoever could penetrate into my soul would not there find me guilty either of the affliction or ruin of any one, or of revenge or envy, or any offence against the public laws, or of innovation or disturbance, or failure of my word; and though the licence of the time permits and teaches every one so to do, yet have I not plundered any Frenchman’s goods, or taken his money, and have lived upon what is my own, in war as well as in peace; neither have I set any man to work without paying him his hire.” These testimonies of a good conscience please, and this natural rejoicing is very beneficial to us, and the only reward that we can never fail of.",
+      "themes": [
+        "integrity",
+        "generosity"
+      ]
+    },
+    "b3_of_repentance_p6": {
+      "title": "Of Repentance · Book 3 · paragraph 6",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 6,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "To ground the recompense of virtuous actions upon the approbation of others is too uncertain and unsafe a foundation, especially in so corrupt and ignorant an age as this, wherein the good opinion of the vulgar is injurious: upon whom do you rely to show you what is recommendable?"
+        },
+        {
+          "label": "2",
+          "text": "God defend me from being an honest man, according to the descriptions of honour I daily see every one make of himself:"
+        }
+      ],
+      "text": "To ground the recompense of virtuous actions upon the approbation of others is too uncertain and unsafe a foundation, especially in so corrupt and ignorant an age as this, wherein the good opinion of the vulgar is injurious: upon whom do you rely to show you what is recommendable? God defend me from being an honest man, according to the descriptions of honour I daily see every one make of himself:",
+      "themes": [
+        "integrity",
+        "response"
+      ]
+    },
+    "b3_of_repentance_p13": {
+      "title": "Of Repentance · Book 3 · paragraph 13",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 13,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "They who in my time have attempted to correct the manners of the world by new opinions, reform seeming vices; but the essential vices they leave as they were, if indeed they do not augment them, and augmentation is therein to be feared; we defer all other well doing upon the account of these external reformations, of less cost and greater show, and thereby expiate good cheap, for the other natural, consubstantial, and intestine vices."
+        },
+        {
+          "label": "2",
+          "text": "Look a little into our experience: there is no man, if he listen to himself, who does not in himself discover a particular and governing form of his own, that jostles his education, and wrestles with the tempest of passions that are contrary to it."
+        },
+        {
+          "label": "3",
+          "text": "For my part, I seldom find myself agitated with surprises; I always find myself in my place, as heavy and unwieldy bodies do; if I am not at home, I am always near at hand; my dissipations do not transport me very far; there is nothing strange or extreme in the case; and yet I have sound and vigorous turns."
+        }
+      ],
+      "text": "They who in my time have attempted to correct the manners of the world by new opinions, reform seeming vices; but the essential vices they leave as they were, if indeed they do not augment them, and augmentation is therein to be feared; we defer all other well doing upon the account of these external reformations, of less cost and greater show, and thereby expiate good cheap, for the other natural, consubstantial, and intestine vices. Look a little into our experience: there is no man, if he listen to himself, who does not in himself discover a particular and governing form of his own, that jostles his education, and wrestles with the tempest of passions that are contrary to it. For my part, I seldom find myself agitated with surprises; I always find myself in my place, as heavy and unwieldy bodies do; if I am not at home, I am always near at hand; my dissipations do not transport me very far; there is nothing strange or extreme in the case; and yet I have sound and vigorous turns.",
+      "themes": [
+        "attention",
+        "discipline"
+      ]
+    },
+    "b3_of_repentance_p17": {
+      "title": "Of Repentance · Book 3 · paragraph 17",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 17,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "They act quite contrary to the stoical precepts, who do indeed command us to correct the imperfections and vices we know ourselves guilty of, but forbid us therefore to disturb the repose of our souls: these make us believe that they have great grief and remorse within: but of amendment, correction, or interruption, they make nothing appear."
+        },
+        {
+          "label": "2",
+          "text": "It cannot be a cure if the malady be not wholly discharged; if repentance were laid upon the scale of the balance, it would weigh down sin."
+        },
+        {
+          "label": "3",
+          "text": "I find no quality so easy to counterfeit as devotion, if men do not conform their manners and life to the profession; its essence is abstruse and occult; the appearance easy and ostentatious."
+        }
+      ],
+      "text": "They act quite contrary to the stoical precepts, who do indeed command us to correct the imperfections and vices we know ourselves guilty of, but forbid us therefore to disturb the repose of our souls: these make us believe that they have great grief and remorse within: but of amendment, correction, or interruption, they make nothing appear. It cannot be a cure if the malady be not wholly discharged; if repentance were laid upon the scale of the balance, it would weigh down sin. I find no quality so easy to counterfeit as devotion, if men do not conform their manners and life to the profession; its essence is abstruse and occult; the appearance easy and ostentatious.",
+      "themes": [
+        "integrity",
+        "discipline"
+      ]
+    },
+    "b3_of_repentance_p20": {
+      "title": "Of Repentance · Book 3 · paragraph 20",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 20,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "Phocion, having given the Athenians an advice that was not followed, and the affair nevertheless succeeding contrary to his opinion, some one said to him, “Well, Phocion, art thou content that matters go so well?”—“I am very well content,” replied he, “that this has happened so well, but I do not repent that I counselled the other.” When any of my friends address themselves to me for advice, I give it candidly and clearly, without sticking, as almost all other men do, at the hazard of the thing’s falling out contrary to my opinion, and that I may be reproached for my counsel; I am very indifferent as to that, for the fault will be theirs for having consulted me, and I could not refuse them that office. —[We may give advice to others, says Rochefoucauld, but we cannot supply them with the wit to profit by it.]"
+        }
+      ],
+      "text": "Phocion, having given the Athenians an advice that was not followed, and the affair nevertheless succeeding contrary to his opinion, some one said to him, “Well, Phocion, art thou content that matters go so well?”—“I am very well content,” replied he, “that this has happened so well, but I do not repent that I counselled the other.” When any of my friends address themselves to me for advice, I give it candidly and clearly, without sticking, as almost all other men do, at the hazard of the thing’s falling out contrary to my opinion, and that I may be reproached for my counsel; I am very indifferent as to that, for the fault will be theirs for having consulted me, and I could not refuse them that office. —[We may give advice to others, says Rochefoucauld, but we cannot supply them with the wit to profit by it.]",
+      "themes": [
+        "uncertainty",
+        "friendship"
+      ]
+    },
+    "b3_of_repentance_p22": {
+      "title": "Of Repentance · Book 3 · paragraph 22",
+      "book": 3,
+      "essay": "OF REPENTANCE",
+      "paragraph": 22,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0095",
+      "units": [
+        {
+          "label": "1",
+          "text": "In all affairs that are past, be it how it will, I have very little regret; for this imagination puts me out of my pain, that they were so to fall out they are in the great revolution of the world, and in the chain of stoical ‘causes: your fancy cannot, by wish and imagination, move one tittle, but that the great current of things will not reverse both the past and the future."
+        }
+      ],
+      "text": "In all affairs that are past, be it how it will, I have very little regret; for this imagination puts me out of my pain, that they were so to fall out they are in the great revolution of the world, and in the chain of stoical ‘causes: your fancy cannot, by wish and imagination, move one tittle, but that the great current of things will not reverse both the past and the future.",
+      "themes": [
+        "surrender",
+        "impermanence"
+      ]
+    },
+    "b3_of_the_art_of_conference_p7": {
+      "title": "Of The Art Of Conference · Book 3 · paragraph 7",
+      "book": 3,
+      "essay": "OF THE ART OF CONFERENCE",
+      "paragraph": 7,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0101",
+      "units": [
+        {
+          "label": "1",
+          "text": "When any one contradicts me, he raises my attention, not my anger: I advance towards him who controverts, who instructs me; the cause of truth ought to be the common cause both of the one and the other."
+        },
+        {
+          "label": "2",
+          "text": "What will the angry man answer?"
+        },
+        {
+          "label": "3",
+          "text": "Passion has already confounded his judgment; agitation has usurped the place of reason."
+        },
+        {
+          "label": "4",
+          "text": "It were not amiss that the decision of our disputes should pass by wager: that there might be a material mark of our losses, to the end we might the better remember them; and that my man might tell me: “Your ignorance and obstinacy cost you last year, at several times, a hundred crowns.” I hail and caress truth in what quarter soever I find it, and cheerfully surrender myself, and open my conquered arms as far off as I can discover it; and, provided it be not too imperiously, take a pleasure in being reproved, and accommodate myself to my accusers, very often more by reason of civility than amendment, loving to gratify and nourish the liberty of admonition by my facility of submitting to it, and this even at my own expense."
+        }
+      ],
+      "text": "When any one contradicts me, he raises my attention, not my anger: I advance towards him who controverts, who instructs me; the cause of truth ought to be the common cause both of the one and the other. What will the angry man answer? Passion has already confounded his judgment; agitation has usurped the place of reason. It were not amiss that the decision of our disputes should pass by wager: that there might be a material mark of our losses, to the end we might the better remember them; and that my man might tell me: “Your ignorance and obstinacy cost you last year, at several times, a hundred crowns.” I hail and caress truth in what quarter soever I find it, and cheerfully surrender myself, and open my conquered arms as far off as I can discover it; and, provided it be not too imperiously, take a pleasure in being reproved, and accommodate myself to my accusers, very often more by reason of civility than amendment, loving to gratify and nourish the liberty of admonition by my facility of submitting to it, and this even at my own expense.",
+      "themes": [
+        "humility",
+        "judgment",
+        "anger"
+      ]
+    },
+    "b3_of_the_art_of_conference_p20": {
+      "title": "Of The Art Of Conference · Book 3 · paragraph 20",
+      "book": 3,
+      "essay": "OF THE ART OF CONFERENCE",
+      "paragraph": 20,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0101",
+      "units": [
+        {
+          "label": "1",
+          "text": "I hate all sorts of tyranny, both in word and deed."
+        },
+        {
+          "label": "2",
+          "text": "I am very ready to oppose myself against those vain circumstances that delude our judgments by the senses; and keeping my eye close upon those extraordinary greatnesses, I find that at best they are men, as others are:"
+        }
+      ],
+      "text": "I hate all sorts of tyranny, both in word and deed. I am very ready to oppose myself against those vain circumstances that delude our judgments by the senses; and keeping my eye close upon those extraordinary greatnesses, I find that at best they are men, as others are:",
+      "themes": [
+        "equality",
+        "judgment"
+      ]
+    },
+    "b3_of_managing_the_will_p11": {
+      "title": "Of Managing The Will · Book 3 · paragraph 11",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 11,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "The principal charge we have is, to every one his own conduct; and ‘tis for this only that we here are."
+        },
+        {
+          "label": "2",
+          "text": "As he who should forget to live a virtuous and holy life, and should think he acquitted himself of his duty in instructing and training others up to it, would be a fool; even so he who abandons his own particular healthful and pleasant living to serve others therewith, takes, in my opinion, a wrong and unnatural course."
+        }
+      ],
+      "text": "The principal charge we have is, to every one his own conduct; and ‘tis for this only that we here are. As he who should forget to live a virtuous and holy life, and should think he acquitted himself of his duty in instructing and training others up to it, would be a fool; even so he who abandons his own particular healthful and pleasant living to serve others therewith, takes, in my opinion, a wrong and unnatural course.",
+      "themes": [
+        "boundaries",
+        "service"
+      ]
+    },
+    "b3_of_managing_the_will_p17": {
+      "title": "Of Managing The Will · Book 3 · paragraph 17",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 17,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "Consider, that even in vain and frivolous actions, as at chess, tennis, and the like, this eager and ardent engaging with an impetuous desire, immediately throws the mind and members into indiscretion and disorder: a man astounds and hinders himself; he who carries himself more moderately, both towards gain and loss, has always his wits about him; the less peevish and passionate he is at play, he plays much more advantageously and surely."
+        }
+      ],
+      "text": "Consider, that even in vain and frivolous actions, as at chess, tennis, and the like, this eager and ardent engaging with an impetuous desire, immediately throws the mind and members into indiscretion and disorder: a man astounds and hinders himself; he who carries himself more moderately, both towards gain and loss, has always his wits about him; the less peevish and passionate he is at play, he plays much more advantageously and surely.",
+      "themes": [
+        "play",
+        "non_forcing"
+      ]
+    },
+    "b3_of_managing_the_will_p18": {
+      "title": "Of Managing The Will · Book 3 · paragraph 18",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 18,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "As to the rest, we hinder the mind’s grasp and hold, in giving it so many things to seize upon; some things we should only offer to it; tie it to others, and with others incorporate it."
+        },
+        {
+          "label": "2",
+          "text": "It can feel and discern all things, but ought to feed upon nothing but itself; and should be instructed in what properly concerns itself, and that is properly of its own having and substance."
+        },
+        {
+          "label": "3",
+          "text": "The laws of nature teach us what justly we need."
+        },
+        {
+          "label": "4",
+          "text": "After the sages have told us that no one is indigent according to nature, and that every one is so according to opinion, they very subtly distinguish betwixt the desires that proceed from her, and those that proceed from the disorder of our own fancy: those of which we can see the end are hers; those that fly before us, and of which we can see no end, are our own: the poverty of goods is easily cured; the poverty of the soul is irreparable:"
+        }
+      ],
+      "text": "As to the rest, we hinder the mind’s grasp and hold, in giving it so many things to seize upon; some things we should only offer to it; tie it to others, and with others incorporate it. It can feel and discern all things, but ought to feed upon nothing but itself; and should be instructed in what properly concerns itself, and that is properly of its own having and substance. The laws of nature teach us what justly we need. After the sages have told us that no one is indigent according to nature, and that every one is so according to opinion, they very subtly distinguish betwixt the desires that proceed from her, and those that proceed from the disorder of our own fancy: those of which we can see the end are hers; those that fly before us, and of which we can see no end, are our own: the poverty of goods is easily cured; the poverty of the soul is irreparable:",
+      "themes": [
+        "craving",
+        "boundaries"
+      ]
+    },
+    "b3_of_managing_the_will_p26": {
+      "title": "Of Managing The Will · Book 3 · paragraph 26",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 26,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "We must play our part properly, but withal as a part of a borrowed personage; we must not make real essence of a mask and outward appearance; nor of a strange person, our own; we cannot distinguish the skin from the shirt: ‘tis enough to meal the face, without mealing the breast."
+        },
+        {
+          "label": "2",
+          "text": "I see some who transform and transubstantiate themselves into as many new shapes and new beings as they undertake new employments; and who strut and fume even to the heart and liver, and carry their state along with them even to the close-stool: I cannot make them distinguish the salutations made to themselves from those made to their commission, their train, or their mule:"
+        }
+      ],
+      "text": "We must play our part properly, but withal as a part of a borrowed personage; we must not make real essence of a mask and outward appearance; nor of a strange person, our own; we cannot distinguish the skin from the shirt: ‘tis enough to meal the face, without mealing the breast. I see some who transform and transubstantiate themselves into as many new shapes and new beings as they undertake new employments; and who strut and fume even to the heart and liver, and carry their state along with them even to the close-stool: I cannot make them distinguish the salutations made to themselves from those made to their commission, their train, or their mule:",
+      "themes": [
+        "integrity",
+        "play"
+      ]
+    },
+    "b3_of_managing_the_will_p27": {
+      "title": "Of Managing The Will · Book 3 · paragraph 27",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 27,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "They swell and puff up their souls, and their natural way of speaking, according to the height of their magisterial place."
+        },
+        {
+          "label": "2",
+          "text": "The Mayor of Bordeaux and Montaigne have ever been two by very manifest separation."
+        },
+        {
+          "label": "3",
+          "text": "Because one is an advocate or a financier, he must not ignore the knavery there is in such callings; an honest man is not accountable for the vice or absurdity of his employment, and ought not on that account refuse to take the calling upon him: ‘tis the usage of his country, and there is money to be got by it; a man must live by the world; and make his best of it, such as it is."
+        },
+        {
+          "label": "4",
+          "text": "But the judgment of an emperor ought to be above his empire, and see and consider it as a foreign accident; and he ought to know how to enjoy himself apart from it, and to communicate himself as James and Peter, to himself, at all events."
+        }
+      ],
+      "text": "They swell and puff up their souls, and their natural way of speaking, according to the height of their magisterial place. The Mayor of Bordeaux and Montaigne have ever been two by very manifest separation. Because one is an advocate or a financier, he must not ignore the knavery there is in such callings; an honest man is not accountable for the vice or absurdity of his employment, and ought not on that account refuse to take the calling upon him: ‘tis the usage of his country, and there is money to be got by it; a man must live by the world; and make his best of it, such as it is. But the judgment of an emperor ought to be above his empire, and see and consider it as a foreign accident; and he ought to know how to enjoy himself apart from it, and to communicate himself as James and Peter, to himself, at all events.",
+      "themes": [
+        "integrity",
+        "humility"
+      ]
+    },
+    "b3_of_managing_the_will_p28": {
+      "title": "Of Managing The Will · Book 3 · paragraph 28",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 28,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "I cannot engage myself so deep and so entire; when my will gives me to anything, ‘tis not with so violent an obligation that my judgment is infected with it."
+        },
+        {
+          "label": "2",
+          "text": "In the present broils of this kingdom, my own interest has not made me blind to the laudable qualities of our adversaries, nor to those that are reproachable in those men of our party."
+        },
+        {
+          "label": "3",
+          "text": "Others adore all of their own side; for my part, I do not so much as excuse most things in those of mine: a good work has never the worst grace with me for being made against me."
+        },
+        {
+          "label": "4",
+          "text": "The knot of the controversy excepted, I have always kept myself in equanimity and pure indifference:"
+        }
+      ],
+      "text": "I cannot engage myself so deep and so entire; when my will gives me to anything, ‘tis not with so violent an obligation that my judgment is infected with it. In the present broils of this kingdom, my own interest has not made me blind to the laudable qualities of our adversaries, nor to those that are reproachable in those men of our party. Others adore all of their own side; for my part, I do not so much as excuse most things in those of mine: a good work has never the worst grace with me for being made against me. The knot of the controversy excepted, I have always kept myself in equanimity and pure indifference:",
+      "themes": [
+        "judgment",
+        "paradox"
+      ]
+    },
+    "b3_of_managing_the_will_p32": {
+      "title": "Of Managing The Will · Book 3 · paragraph 32",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 32,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "Heaven never saw a greater animosity than that betwixt Caesar and Pompey, nor ever shall; and yet I observe, methinks, in those brave souls, a great moderation towards one another: it was a jealousy of honour and command, which did not transport them to a furious and indiscreet hatred, and was without malignity and detraction: in their hottest exploits upon one another, I discover some remains of respect and good-will: and am therefore of opinion that, had, it been possible, each of them would rather have done his business without the ruin of the other than with it."
+        },
+        {
+          "label": "2",
+          "text": "Take notice how much otherwise matters went with Marius and Sylla."
+        }
+      ],
+      "text": "Heaven never saw a greater animosity than that betwixt Caesar and Pompey, nor ever shall; and yet I observe, methinks, in those brave souls, a great moderation towards one another: it was a jealousy of honour and command, which did not transport them to a furious and indiscreet hatred, and was without malignity and detraction: in their hottest exploits upon one another, I discover some remains of respect and good-will: and am therefore of opinion that, had, it been possible, each of them would rather have done his business without the ruin of the other than with it. Take notice how much otherwise matters went with Marius and Sylla.",
+      "themes": [
+        "kindness",
+        "anger"
+      ]
+    },
+    "b3_of_managing_the_will_p39": {
+      "title": "Of Managing The Will · Book 3 · paragraph 39",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 39,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "Such as say that they have reason for their revenging passion, or any other sort of troublesome agitation of mind, often say true, as things now are, but not as they were: they speak to us when the causes of their error are by themselves nourished and advanced; but look backward—recall these causes to their beginning—and there you will put them to a nonplus."
+        },
+        {
+          "label": "2",
+          "text": "Will they have their faults less, for being of longer continuance; and that of an unjust beginning, the sequel can be just?"
+        },
+        {
+          "label": "3",
+          "text": "Whoever shall desire the good of his country, as I do, without fretting or pining himself, will be troubled, but will not swoon to see it threatening either its own ruin, or a no less ruinous continuance; poor vessel, that the waves, the winds, and the pilot toss and steer to so contrary designs!"
+        }
+      ],
+      "text": "Such as say that they have reason for their revenging passion, or any other sort of troublesome agitation of mind, often say true, as things now are, but not as they were: they speak to us when the causes of their error are by themselves nourished and advanced; but look backward—recall these causes to their beginning—and there you will put them to a nonplus. Will they have their faults less, for being of longer continuance; and that of an unjust beginning, the sequel can be just? Whoever shall desire the good of his country, as I do, without fretting or pining himself, will be troubled, but will not swoon to see it threatening either its own ruin, or a no less ruinous continuance; poor vessel, that the waves, the winds, and the pilot toss and steer to so contrary designs!",
+      "themes": [
+        "anger",
+        "response"
+      ]
+    },
+    "b3_of_managing_the_will_p46": {
+      "title": "Of Managing The Will · Book 3 · paragraph 46",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 46,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "A little thing will engage you in it; but being once embarked, all the cords draw; great provisions are then required, more hard and more important."
+        },
+        {
+          "label": "2",
+          "text": "How much easier is it not to enter in than it is to get out?"
+        },
+        {
+          "label": "3",
+          "text": "Now we should proceed contrary to the reed, which, at its first springing, produces a long and straight shoot, but afterwards, as if tired and out of breath, it runs into thick and frequent joints and knots, as so many pauses which demonstrate that it has no more its first vigour and firmness; ‘twere better to begin gently and coldly, and to keep one’s breath and vigorous efforts for the height and stress of the business."
+        },
+        {
+          "label": "4",
+          "text": "We guide affairs in their beginnings, and have them in our own power; but afterwards, when they are once at work, ‘tis they that guide and govern us, and we are to follow them."
+        }
+      ],
+      "text": "A little thing will engage you in it; but being once embarked, all the cords draw; great provisions are then required, more hard and more important. How much easier is it not to enter in than it is to get out? Now we should proceed contrary to the reed, which, at its first springing, produces a long and straight shoot, but afterwards, as if tired and out of breath, it runs into thick and frequent joints and knots, as so many pauses which demonstrate that it has no more its first vigour and firmness; ‘twere better to begin gently and coldly, and to keep one’s breath and vigorous efforts for the height and stress of the business. We guide affairs in their beginnings, and have them in our own power; but afterwards, when they are once at work, ‘tis they that guide and govern us, and we are to follow them.",
+      "themes": [
+        "patience",
+        "discipline"
+      ]
+    },
+    "b3_of_managing_the_will_p50": {
+      "title": "Of Managing The Will · Book 3 · paragraph 50",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 50,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "The births of all things are weak and tender; and therefore we should have our eyes intent on beginnings; for as when, in its infancy, the danger is not perceived, so when it is grown up, the remedy is as little to be found."
+        },
+        {
+          "label": "2",
+          "text": "I had every day encountered a million of crosses, harder to digest in the progress of ambition, than it has been hard for me to curb the natural propension that inclined me to it:"
+        }
+      ],
+      "text": "The births of all things are weak and tender; and therefore we should have our eyes intent on beginnings; for as when, in its infancy, the danger is not perceived, so when it is grown up, the remedy is as little to be found. I had every day encountered a million of crosses, harder to digest in the progress of ambition, than it has been hard for me to curb the natural propension that inclined me to it:",
+      "themes": [
+        "attention",
+        "begin_again"
+      ]
+    },
+    "b3_of_managing_the_will_p60": {
+      "title": "Of Managing The Will · Book 3 · paragraph 60",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 60,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "He who will not thank me for the order, the sweet and silent calm that has accompanied my administration, cannot, however, deprive me of the share that belongs to me by title of my good fortune."
+        },
+        {
+          "label": "2",
+          "text": "And I am of such a composition, that I would as willingly be lucky as wise, and had rather owe my successes purely to the favour of Almighty God, than to any operation of my own."
+        },
+        {
+          "label": "3",
+          "text": "I had sufficiently published to the world my unfitness for such public offices; but I have something in me yet worse than incapacity itself; which is, that I am not much displeased at it, and that I do not much go about to cure it, considering the course of life that I have proposed to myself."
+        }
+      ],
+      "text": "He who will not thank me for the order, the sweet and silent calm that has accompanied my administration, cannot, however, deprive me of the share that belongs to me by title of my good fortune. And I am of such a composition, that I would as willingly be lucky as wise, and had rather owe my successes purely to the favour of Almighty God, than to any operation of my own. I had sufficiently published to the world my unfitness for such public offices; but I have something in me yet worse than incapacity itself; which is, that I am not much displeased at it, and that I do not much go about to cure it, considering the course of life that I have proposed to myself.",
+      "themes": [
+        "humility",
+        "trust"
+      ]
+    },
+    "b3_of_managing_the_will_p61": {
+      "title": "Of Managing The Will · Book 3 · paragraph 61",
+      "book": 3,
+      "essay": "OF MANAGING THE WILL",
+      "paragraph": 61,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0103",
+      "units": [
+        {
+          "label": "1",
+          "text": "Neither have I satisfied myself in this employment; but I have very near arrived at what I expected from my own performance, and have much surpassed what I promised them with whom I had to do: for I am apt to promise something less than what I am able to do, and than what I hope to make good."
+        },
+        {
+          "label": "2",
+          "text": "I assure myself that I have left no offence or hatred behind me; to leave regret or desire for me amongst them, I at least know very well that I never much aimed at it:"
+        }
+      ],
+      "text": "Neither have I satisfied myself in this employment; but I have very near arrived at what I expected from my own performance, and have much surpassed what I promised them with whom I had to do: for I am apt to promise something less than what I am able to do, and than what I hope to make good. I assure myself that I have left no offence or hatred behind me; to leave regret or desire for me amongst them, I at least know very well that I never much aimed at it:",
+      "themes": [
+        "integrity",
+        "purpose"
+      ]
+    },
+    "b3_of_experience_p3": {
+      "title": "Of Experience · Book 3 · paragraph 3",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 3,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Dissimilitude intrudes itself of itself in our works; no art can arrive at perfect similitude: neither Perrozet nor any other can so carefully polish and blanch the backs of his cards that some gamesters will not distinguish them by seeing them only shuffled by another."
+        },
+        {
+          "label": "2",
+          "text": "Resemblance does not so much make one as difference makes another."
+        },
+        {
+          "label": "3",
+          "text": "Nature has obliged herself to make nothing other that was not unlike."
+        }
+      ],
+      "text": "Dissimilitude intrudes itself of itself in our works; no art can arrive at perfect similitude: neither Perrozet nor any other can so carefully polish and blanch the backs of his cards that some gamesters will not distinguish them by seeing them only shuffled by another. Resemblance does not so much make one as difference makes another. Nature has obliged herself to make nothing other that was not unlike.",
+      "themes": [
+        "paradox",
+        "wonder"
+      ]
+    },
+    "b3_of_experience_p8": {
+      "title": "Of Experience · Book 3 · paragraph 8",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 8,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "As you see children trying to bring a mass of quicksilver to a certain number of parts, the more they press and work it and endeavour to reduce it to their own will, the more they irritate the liberty of this generous metal; it evades their endeavour and sprinkles itself into so many separate bodies as frustrate all reckoning; so is it here, for in subdividing these subtilties we teach men to increase their doubts; they put us into a way of extending and diversifying difficulties, and lengthen and disperse them."
+        },
+        {
+          "label": "2",
+          "text": "In sowing and retailing questions they make the world fructify and increase in uncertainties and disputes, as the earth is made fertile by being crumbled and dug deep."
+        }
+      ],
+      "text": "As you see children trying to bring a mass of quicksilver to a certain number of parts, the more they press and work it and endeavour to reduce it to their own will, the more they irritate the liberty of this generous metal; it evades their endeavour and sprinkles itself into so many separate bodies as frustrate all reckoning; so is it here, for in subdividing these subtilties we teach men to increase their doubts; they put us into a way of extending and diversifying difficulties, and lengthen and disperse them. In sowing and retailing questions they make the world fructify and increase in uncertainties and disputes, as the earth is made fertile by being crumbled and dug deep.",
+      "themes": [
+        "non_forcing",
+        "uncertainty"
+      ]
+    },
+    "b3_of_experience_p9": {
+      "title": "Of Experience · Book 3 · paragraph 9",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 9,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "We doubted of Ulpian, and are still now more perplexed with Bartolus and Baldus."
+        },
+        {
+          "label": "2",
+          "text": "We should efface the trace of this innumerable diversity of opinions; not adorn ourselves with it, and fill posterity with crotchets."
+        },
+        {
+          "label": "3",
+          "text": "I know not what to say to it; but experience makes it manifest, that so many interpretations dissipate truth and break it."
+        },
+        {
+          "label": "4",
+          "text": "Aristotle wrote to be understood; if he could not do this, much less will another that is not so good at it; and a third than he, who expressed his own thoughts."
+        },
+        {
+          "label": "5",
+          "text": "We open the matter, and spill it in pouring out: of one subject we make a thousand, and in multiplying and subdividing them, fall again into the infinity of atoms of Epicurus."
+        },
+        {
+          "label": "6",
+          "text": "Never did two men make the same judgment of the same thing; and ‘tis impossible to find two opinions exactly alike, not only in several men, but in the same man, at diverse hours."
+        },
+        {
+          "label": "7",
+          "text": "I often find matter of doubt in things of which the commentary has disdained to take notice; I am most apt to stumble in an even country, like some horses that I have known, that make most trips in the smoothest way."
+        }
+      ],
+      "text": "We doubted of Ulpian, and are still now more perplexed with Bartolus and Baldus. We should efface the trace of this innumerable diversity of opinions; not adorn ourselves with it, and fill posterity with crotchets. I know not what to say to it; but experience makes it manifest, that so many interpretations dissipate truth and break it. Aristotle wrote to be understood; if he could not do this, much less will another that is not so good at it; and a third than he, who expressed his own thoughts. We open the matter, and spill it in pouring out: of one subject we make a thousand, and in multiplying and subdividing them, fall again into the infinity of atoms of Epicurus. Never did two men make the same judgment of the same thing; and ‘tis impossible to find two opinions exactly alike, not only in several men, but in the same man, at diverse hours. I often find matter of doubt in things of which the commentary has disdained to take notice; I am most apt to stumble in an even country, like some horses that I have known, that make most trips in the smoothest way.",
+      "themes": [
+        "uncertainty",
+        "humility"
+      ]
+    },
+    "b3_of_experience_p12": {
+      "title": "Of Experience · Book 3 · paragraph 12",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 12,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "There is more ado to interpret interpretations than to interpret things, and more books upon books than upon any other subject; we do nothing but comment upon one another."
+        },
+        {
+          "label": "2",
+          "text": "Every place swarms with commentaries; of authors there is great scarcity."
+        },
+        {
+          "label": "3",
+          "text": "Is it not the principal and most reputed knowledge of our later ages to understand the learned?"
+        },
+        {
+          "label": "4",
+          "text": "Is it not the common and final end of all studies?"
+        },
+        {
+          "label": "5",
+          "text": "Our opinions are grafted upon one another; the first serves as a stock to the second, the second to the third, and so forth; thus step by step we climb the ladder; whence it comes to pass that he who is mounted highest has often more honour than merit, for he is got up but an inch upon the shoulders of the last, but one."
+        }
+      ],
+      "text": "There is more ado to interpret interpretations than to interpret things, and more books upon books than upon any other subject; we do nothing but comment upon one another. Every place swarms with commentaries; of authors there is great scarcity. Is it not the principal and most reputed knowledge of our later ages to understand the learned? Is it not the common and final end of all studies? Our opinions are grafted upon one another; the first serves as a stock to the second, the second to the third, and so forth; thus step by step we climb the ladder; whence it comes to pass that he who is mounted highest has often more honour than merit, for he is got up but an inch upon the shoulders of the last, but one.",
+      "themes": [
+        "humility",
+        "judgment"
+      ]
+    },
+    "b3_of_experience_p24": {
+      "title": "Of Experience · Book 3 · paragraph 24",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 24,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Judgment holds in me a magisterial seat; at least it carefully endeavours to make it so: it leaves my appetites to take their own course, hatred and friendship, nay, even that I bear to myself, without change or corruption; if it cannot reform the other parts according to its own model, at least it suffers not itself to be corrupted by them, but plays its game apart."
+        }
+      ],
+      "text": "Judgment holds in me a magisterial seat; at least it carefully endeavours to make it so: it leaves my appetites to take their own course, hatred and friendship, nay, even that I bear to myself, without change or corruption; if it cannot reform the other parts according to its own model, at least it suffers not itself to be corrupted by them, but plays its game apart.",
+      "themes": [
+        "judgment",
+        "response"
+      ]
+    },
+    "b3_of_experience_p21": {
+      "title": "Of Experience · Book 3 · paragraph 21",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 21,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Now, the laws keep up their credit, not for being just, but because they are laws; ‘tis the mystic foundation of their authority; they have no other, and it well answers their purpose."
+        },
+        {
+          "label": "2",
+          "text": "They are often made by fools, still oftener by men who, out of hatred to equality, fail in equity, but always by men, vain and irresolute authors."
+        },
+        {
+          "label": "3",
+          "text": "There is nothing so much, nor so grossly, nor so ordinarily faulty, as the laws."
+        },
+        {
+          "label": "4",
+          "text": "Whoever obeys them because they are just, does not justly obey them as he ought."
+        },
+        {
+          "label": "5",
+          "text": "Our French laws, by their irregularity and deformity, lend, in some sort, a helping hand to the disorder and corruption that all manifest in their dispensation and execution: the command is so perplexed and inconstant, that it in some sort excuses alike disobedience and defect in the interpretation, the administration and the observation of it."
+        },
+        {
+          "label": "6",
+          "text": "What fruit then soever we may extract from experience, that will little advantage our institution, which we draw from foreign examples, if we make so little profit of that we have of our own, which is more familiar to us, and, doubtless, sufficient to instruct us in that whereof we have need."
+        },
+        {
+          "label": "7",
+          "text": "I study myself more than any other subject; ‘tis my metaphysic, my physic:"
+        }
+      ],
+      "text": "Now, the laws keep up their credit, not for being just, but because they are laws; ‘tis the mystic foundation of their authority; they have no other, and it well answers their purpose. They are often made by fools, still oftener by men who, out of hatred to equality, fail in equity, but always by men, vain and irresolute authors. There is nothing so much, nor so grossly, nor so ordinarily faulty, as the laws. Whoever obeys them because they are just, does not justly obey them as he ought. Our French laws, by their irregularity and deformity, lend, in some sort, a helping hand to the disorder and corruption that all manifest in their dispensation and execution: the command is so perplexed and inconstant, that it in some sort excuses alike disobedience and defect in the interpretation, the administration and the observation of it. What fruit then soever we may extract from experience, that will little advantage our institution, which we draw from foreign examples, if we make so little profit of that we have of our own, which is more familiar to us, and, doubtless, sufficient to instruct us in that whereof we have need. I study myself more than any other subject; ‘tis my metaphysic, my physic:",
+      "themes": [
+        "humility",
+        "attention",
+        "judgment"
+      ]
+    },
+    "b3_of_experience_p29": {
+      "title": "Of Experience · Book 3 · paragraph 29",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 29,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "The wise speak and deliver their fancies more specifically, and piece by piece; I, who see no further into things than as use informs me, present mine generally without rule and experimentally: I pronounce my opinion by disjointed articles, as a thing that cannot be spoken at once and in gross; relation and conformity are not to be found in such low and common souls as ours."
+        },
+        {
+          "label": "2",
+          "text": "Wisdom is a solid and entire building, of which every piece keeps its place and bears its mark:"
+        }
+      ],
+      "text": "The wise speak and deliver their fancies more specifically, and piece by piece; I, who see no further into things than as use informs me, present mine generally without rule and experimentally: I pronounce my opinion by disjointed articles, as a thing that cannot be spoken at once and in gross; relation and conformity are not to be found in such low and common souls as ours. Wisdom is a solid and entire building, of which every piece keeps its place and bears its mark:",
+      "themes": [
+        "uncertainty",
+        "humility"
+      ]
+    },
+    "b3_of_experience_p93": {
+      "title": "Of Experience · Book 3 · paragraph 93",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 93,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "The ancient Greeks and Romans had more reason than we in setting apart for eating, which is a principal action of life, if they were not prevented by other extraordinary business, many hours and the greatest part of the night; eating and drinking more deliberately than we do, who perform all our actions post-haste; and in extending this natural pleasure to more leisure and better use, intermixing with profitable conversation."
+        }
+      ],
+      "text": "The ancient Greeks and Romans had more reason than we in setting apart for eating, which is a principal action of life, if they were not prevented by other extraordinary business, many hours and the greatest part of the night; eating and drinking more deliberately than we do, who perform all our actions post-haste; and in extending this natural pleasure to more leisure and better use, intermixing with profitable conversation.",
+      "themes": [
+        "presence",
+        "friendship"
+      ]
+    },
+    "b3_of_experience_p97": {
+      "title": "Of Experience · Book 3 · paragraph 97",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 97,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Death mixes and confounds itself throughout with life; decay anticipates its hour, and shoulders itself even into the course of our advance."
+        },
+        {
+          "label": "2",
+          "text": "I have portraits of myself taken at five-and-twenty and five-and-thirty years of age."
+        },
+        {
+          "label": "3",
+          "text": "I compare them with that lately drawn: how many times is it no longer me; how much more is my present image unlike the former, than unlike my dying one?"
+        },
+        {
+          "label": "4",
+          "text": "It is too much to abuse nature, to make her trot so far that she must be forced to leave us, and abandon our conduct, our eyes, teeth, legs, and all the rest to the mercy of a foreign and haggard countenance, and to resign us into the hands of art, being weary of following us herself."
+        }
+      ],
+      "text": "Death mixes and confounds itself throughout with life; decay anticipates its hour, and shoulders itself even into the course of our advance. I have portraits of myself taken at five-and-twenty and five-and-thirty years of age. I compare them with that lately drawn: how many times is it no longer me; how much more is my present image unlike the former, than unlike my dying one? It is too much to abuse nature, to make her trot so far that she must be forced to leave us, and abandon our conduct, our eyes, teeth, legs, and all the rest to the mercy of a foreign and haggard countenance, and to resign us into the hands of art, being weary of following us herself.",
+      "themes": [
+        "mortality",
+        "impermanence"
+      ]
+    },
+    "b3_of_experience_p107": {
+      "title": "Of Experience · Book 3 · paragraph 107",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 107,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "‘Tis indecent, besides the hurt it does to one’s health, and even to the pleasure of eating, to eat greedily as I do; I often bite my tongue, and sometimes my fingers, in my haste."
+        },
+        {
+          "label": "2",
+          "text": "Diogenes, meeting a boy eating after that manner, gave his tutor a box on the ear!"
+        },
+        {
+          "label": "3",
+          "text": "There were men at Rome that taught people to chew, as well as to walk, with a good grace."
+        },
+        {
+          "label": "4",
+          "text": "I lose thereby the leisure of speaking, which gives great relish to the table, provided the discourse be suitable, that is, pleasant and short."
+        }
+      ],
+      "text": "‘Tis indecent, besides the hurt it does to one’s health, and even to the pleasure of eating, to eat greedily as I do; I often bite my tongue, and sometimes my fingers, in my haste. Diogenes, meeting a boy eating after that manner, gave his tutor a box on the ear! There were men at Rome that taught people to chew, as well as to walk, with a good grace. I lose thereby the leisure of speaking, which gives great relish to the table, provided the discourse be suitable, that is, pleasant and short.",
+      "themes": [
+        "presence",
+        "attention"
+      ]
+    },
+    "b3_of_experience_p109": {
+      "title": "Of Experience · Book 3 · paragraph 109",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 109,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "I, who boast that I so curiously and particularly embrace the conveniences of life, find them, when I most nearly consider them, very little more than wind."
+        },
+        {
+          "label": "2",
+          "text": "But what?"
+        },
+        {
+          "label": "3",
+          "text": "We are all wind throughout; and, moreover, the wind itself, more discreet than we, loves to bluster and shift from corner to corner, and contents itself with its proper offices without desiring stability and solidity-qualities not its own."
+        }
+      ],
+      "text": "I, who boast that I so curiously and particularly embrace the conveniences of life, find them, when I most nearly consider them, very little more than wind. But what? We are all wind throughout; and, moreover, the wind itself, more discreet than we, loves to bluster and shift from corner to corner, and contents itself with its proper offices without desiring stability and solidity-qualities not its own.",
+      "themes": [
+        "impermanence",
+        "play"
+      ]
+    },
+    "b3_of_experience_p110": {
+      "title": "Of Experience · Book 3 · paragraph 110",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 110,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "The pure pleasures, as well as the pure displeasures, of the imagination, say some, are the greatest, as was expressed by the balance of Critolaiis."
+        },
+        {
+          "label": "2",
+          "text": "‘Tis no wonder; it makes them to its own liking, and cuts them out of the whole cloth; of this I every day see notable examples, and, peradventure, to be desired."
+        },
+        {
+          "label": "3",
+          "text": "But I, who am of a mixed and heavy condition, cannot snap so soon at this one simple object, but that I negligently suffer myself to be carried away with the present pleasures of the, general human law, intellectually sensible, and sensibly intellectual."
+        },
+        {
+          "label": "4",
+          "text": "The Cyrenaic philosophers will have it that as corporal pains, so corporal pleasures are more powerful, both as double and as more just."
+        },
+        {
+          "label": "5",
+          "text": "There are some, as Aristotle says, who out of a savage kind of stupidity dislike them; and I know others who out of ambition do the same."
+        },
+        {
+          "label": "6",
+          "text": "Why do they not, moreover, forswear breathing? why do they not live of their own? why not refuse light, because it is gratuitous, and costs them neither invention nor exertion?"
+        },
+        {
+          "label": "7",
+          "text": "Let Mars, Pallas, or Mercury afford them their light by which to see, instead of Venus, Ceres, and Bacchus."
+        },
+        {
+          "label": "8",
+          "text": "These boastful humours may counterfeit some content, for what will not fancy do?"
+        },
+        {
+          "label": "9",
+          "text": "But as to wisdom, there is no touch of it."
+        },
+        {
+          "label": "10",
+          "text": "Will they not seek the quadrature of the circle, even when on their wives?"
+        },
+        {
+          "label": "11",
+          "text": "I hate that we should be enjoined to have our minds in the clouds, when our bodies are at table; I would not have the mind nailed there, nor wallow there; I would have it take place there and sit, but not lie down."
+        },
+        {
+          "label": "12",
+          "text": "Aristippus maintained nothing but the body, as if we had no soul; Zeno comprehended only the soul, as if we had no body: both of them faultily."
+        },
+        {
+          "label": "13",
+          "text": "Pythagoras, they say, followed a philosophy that was all contemplation, Socrates one that was all conduct and action; Plato found a mean betwixt the two; but they only say this for the sake of talking."
+        },
+        {
+          "label": "14",
+          "text": "The true temperament is found in Socrates; and, Plato is much more Socratic than Pythagoric, and it becomes him better."
+        },
+        {
+          "label": "15",
+          "text": "When I dance, I dance; when I sleep, I sleep."
+        },
+        {
+          "label": "16",
+          "text": "Nay, when I walk alone in a beautiful orchard, if my thoughts are some part of the time taken up with external occurrences, I some part of the time call them back again to my walk, to the orchard, to the sweetness of that solitude, and to myself."
+        }
+      ],
+      "text": "The pure pleasures, as well as the pure displeasures, of the imagination, say some, are the greatest, as was expressed by the balance of Critolaiis. ‘Tis no wonder; it makes them to its own liking, and cuts them out of the whole cloth; of this I every day see notable examples, and, peradventure, to be desired. But I, who am of a mixed and heavy condition, cannot snap so soon at this one simple object, but that I negligently suffer myself to be carried away with the present pleasures of the, general human law, intellectually sensible, and sensibly intellectual. The Cyrenaic philosophers will have it that as corporal pains, so corporal pleasures are more powerful, both as double and as more just. There are some, as Aristotle says, who out of a savage kind of stupidity dislike them; and I know others who out of ambition do the same. Why do they not, moreover, forswear breathing? why do they not live of their own? why not refuse light, because it is gratuitous, and costs them neither invention nor exertion? Let Mars, Pallas, or Mercury afford them their light by which to see, instead of Venus, Ceres, and Bacchus. These boastful humours may counterfeit some content, for what will not fancy do? But as to wisdom, there is no touch of it. Will they not seek the quadrature of the circle, even when on their wives? I hate that we should be enjoined to have our minds in the clouds, when our bodies are at table; I would not have the mind nailed there, nor wallow there; I would have it take place there and sit, but not lie down. Aristippus maintained nothing but the body, as if we had no soul; Zeno comprehended only the soul, as if we had no body: both of them faultily. Pythagoras, they say, followed a philosophy that was all contemplation, Socrates one that was all conduct and action; Plato found a mean betwixt the two; but they only say this for the sake of talking. The true temperament is found in Socrates; and, Plato is much more Socratic than Pythagoric, and it becomes him better. When I dance, I dance; when I sleep, I sleep. Nay, when I walk alone in a beautiful orchard, if my thoughts are some part of the time taken up with external occurrences, I some part of the time call them back again to my walk, to the orchard, to the sweetness of that solitude, and to myself.",
+      "themes": [
+        "presence",
+        "embodiment",
+        "solitude"
+      ]
+    },
+    "b3_of_experience_p112": {
+      "title": "Of Experience · Book 3 · paragraph 112",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 112,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "The glorious masterpiece of man is to live to purpose; all other things: to reign, to lay up treasure, to build, are but little appendices and props."
+        },
+        {
+          "label": "2",
+          "text": "I take pleasure in seeing a general of an army, at the foot of a breach he is presently to assault, give himself up entire and free at dinner, to talk and be merry with his friends."
+        },
+        {
+          "label": "3",
+          "text": "And Brutus, when heaven and earth were conspired against him and the Roman liberty, stealing some hour of the night from his rounds to read and scan Polybius in all security."
+        },
+        {
+          "label": "4",
+          "text": "‘Tis for little souls, buried under the weight of affairs, not from them to know how clearly to disengage themselves, not to know how to lay them aside and take them up again:"
+        }
+      ],
+      "text": "The glorious masterpiece of man is to live to purpose; all other things: to reign, to lay up treasure, to build, are but little appendices and props. I take pleasure in seeing a general of an army, at the foot of a breach he is presently to assault, give himself up entire and free at dinner, to talk and be merry with his friends. And Brutus, when heaven and earth were conspired against him and the Roman liberty, stealing some hour of the night from his rounds to read and scan Polybius in all security. ‘Tis for little souls, buried under the weight of affairs, not from them to know how clearly to disengage themselves, not to know how to lay them aside and take them up again:",
+      "themes": [
+        "purpose",
+        "joy"
+      ]
+    },
+    "b3_of_experience_p114": {
+      "title": "Of Experience · Book 3 · paragraph 114",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 114,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Relaxation and facility, methinks, wonderfully honour and best become a strong and generous soul."
+        },
+        {
+          "label": "2",
+          "text": "Epaminondas did not think that to take part, and that heartily, in songs and sports and dances with the young men of his city, were things that in any way derogated from the honour of his glorious victories and the perfect purity of manners that was in him."
+        },
+        {
+          "label": "3",
+          "text": "And amongst so many admirable actions of Scipio the grandfather, a person worthy to be reputed of a heavenly extraction, there is nothing that gives him a greater grace than to see him carelessly and childishly trifling at gathering and selecting cockle shells, and playing at quoits,"
+        }
+      ],
+      "text": "Relaxation and facility, methinks, wonderfully honour and best become a strong and generous soul. Epaminondas did not think that to take part, and that heartily, in songs and sports and dances with the young men of his city, were things that in any way derogated from the honour of his glorious victories and the perfect purity of manners that was in him. And amongst so many admirable actions of Scipio the grandfather, a person worthy to be reputed of a heavenly extraction, there is nothing that gives him a greater grace than to see him carelessly and childishly trifling at gathering and selecting cockle shells, and playing at quoits,",
+      "themes": [
+        "joy",
+        "play"
+      ]
+    },
+    "b3_of_experience_p116": {
+      "title": "Of Experience · Book 3 · paragraph 116",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 116,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Greatness of soul consists not so much in mounting and in pressing forward, as in knowing how to govern and circumscribe itself; it takes everything for great, that is enough, and demonstrates itself in preferring moderate to eminent things."
+        },
+        {
+          "label": "2",
+          "text": "There is nothing so fine and legitimate as well and duly to play the man; nor science so arduous as well and naturally to know how to live this life; and of all the infirmities we have, ‘tis the most barbarous to despise our being."
+        }
+      ],
+      "text": "Greatness of soul consists not so much in mounting and in pressing forward, as in knowing how to govern and circumscribe itself; it takes everything for great, that is enough, and demonstrates itself in preferring moderate to eminent things. There is nothing so fine and legitimate as well and duly to play the man; nor science so arduous as well and naturally to know how to live this life; and of all the infirmities we have, ‘tis the most barbarous to despise our being.",
+      "themes": [
+        "embodiment",
+        "humility"
+      ]
+    },
+    "b3_of_experience_p117": {
+      "title": "Of Experience · Book 3 · paragraph 117",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 117,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Whoever has a mind to isolate his spirit, when the body is ill at ease, to preserve it from the contagion, let him by all means do it if he can: but otherwise let him on the contrary favour and assist it, and not refuse to participate of its natural pleasures with a conjugal complacency, bringing to it, if it be the wiser, moderation, lest by indiscretion they should get confounded with displeasure."
+        },
+        {
+          "label": "2",
+          "text": "Intemperance is the pest of pleasure; and temperance is not its scourge, but rather its seasoning."
+        },
+        {
+          "label": "3",
+          "text": "Euxodus, who therein established the sovereign good, and his companions, who set so high a value upon it, tasted it in its most charming sweetness, by the means of temperance, which in them was singular and exemplary."
+        }
+      ],
+      "text": "Whoever has a mind to isolate his spirit, when the body is ill at ease, to preserve it from the contagion, let him by all means do it if he can: but otherwise let him on the contrary favour and assist it, and not refuse to participate of its natural pleasures with a conjugal complacency, bringing to it, if it be the wiser, moderation, lest by indiscretion they should get confounded with displeasure. Intemperance is the pest of pleasure; and temperance is not its scourge, but rather its seasoning. Euxodus, who therein established the sovereign good, and his companions, who set so high a value upon it, tasted it in its most charming sweetness, by the means of temperance, which in them was singular and exemplary.",
+      "themes": [
+        "embodiment",
+        "craving"
+      ]
+    },
+    "b3_of_experience_p120": {
+      "title": "Of Experience · Book 3 · paragraph 120",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 120,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "I have a special vocabulary of my own; I “pass away time,” when it is ill and uneasy, but when ‘tis good I do not pass it away: “I taste it over again and adhere to it”; one must run over the ill and settle upon the good."
+        },
+        {
+          "label": "2",
+          "text": "This ordinary phrase of pastime, and passing away the time, represents the usage of those wise sort of people who think they cannot do better with their lives than to let them run out and slide away, pass them over, and baulk them, and, as much as they can, ignore them and shun them as a thing of troublesome and contemptible quality: but I know it to be another kind of thing, and find it both valuable and commodious, even in its latest decay, wherein I now enjoy it; and nature has delivered it into our hands in such and so favourable circumstances that we have only ourselves to blame if it be troublesome to us, or escapes us unprofitably:"
+        }
+      ],
+      "text": "I have a special vocabulary of my own; I “pass away time,” when it is ill and uneasy, but when ‘tis good I do not pass it away: “I taste it over again and adhere to it”; one must run over the ill and settle upon the good. This ordinary phrase of pastime, and passing away the time, represents the usage of those wise sort of people who think they cannot do better with their lives than to let them run out and slide away, pass them over, and baulk them, and, as much as they can, ignore them and shun them as a thing of troublesome and contemptible quality: but I know it to be another kind of thing, and find it both valuable and commodious, even in its latest decay, wherein I now enjoy it; and nature has delivered it into our hands in such and so favourable circumstances that we have only ourselves to blame if it be troublesome to us, or escapes us unprofitably:",
+      "themes": [
+        "presence",
+        "gratitude"
+      ]
+    },
+    "b3_of_experience_p121": {
+      "title": "Of Experience · Book 3 · paragraph 121",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 121,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "Nevertheless I compose myself to lose mine without regret; but withal as a thing that is perishable by its condition, not that it molests or annoys me."
+        },
+        {
+          "label": "2",
+          "text": "Nor does it properly well become any not to be displeased when they die, excepting such as are pleased to live."
+        },
+        {
+          "label": "3",
+          "text": "There is good husbandry in enjoying it: I enjoy it double to what others do; for the measure of its fruition depends upon our more or less application to it."
+        },
+        {
+          "label": "4",
+          "text": "Chiefly that I perceive mine to be so short in time, I desire to extend it in weight; I will stop the promptitude of its flight by the promptitude of my grasp; and by the vigour of using it compensate the speed of its running away."
+        },
+        {
+          "label": "5",
+          "text": "In proportion as the possession of life is more short, I must make it so much deeper and fuller."
+        }
+      ],
+      "text": "Nevertheless I compose myself to lose mine without regret; but withal as a thing that is perishable by its condition, not that it molests or annoys me. Nor does it properly well become any not to be displeased when they die, excepting such as are pleased to live. There is good husbandry in enjoying it: I enjoy it double to what others do; for the measure of its fruition depends upon our more or less application to it. Chiefly that I perceive mine to be so short in time, I desire to extend it in weight; I will stop the promptitude of its flight by the promptitude of my grasp; and by the vigour of using it compensate the speed of its running away. In proportion as the possession of life is more short, I must make it so much deeper and fuller.",
+      "themes": [
+        "mortality",
+        "joy"
+      ]
+    },
+    "b3_of_experience_p127": {
+      "title": "Of Experience · Book 3 · paragraph 127",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 127,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "This is not what Socrates says, who is its master and ours: he values, as he ought, bodily pleasure; but he prefers that of the mind as having more force, constancy, facility, variety, and dignity."
+        },
+        {
+          "label": "2",
+          "text": "This, according to him, goes by no means alone—he is not so fantastic—but only it goes first; temperance with him is the moderatrix, not the adversary of pleasure."
+        },
+        {
+          "label": "3",
+          "text": "Nature is a gentle guide, but not more sweet and gentle than prudent and just."
+        }
+      ],
+      "text": "This is not what Socrates says, who is its master and ours: he values, as he ought, bodily pleasure; but he prefers that of the mind as having more force, constancy, facility, variety, and dignity. This, according to him, goes by no means alone—he is not so fantastic—but only it goes first; temperance with him is the moderatrix, not the adversary of pleasure. Nature is a gentle guide, but not more sweet and gentle than prudent and just.",
+      "themes": [
+        "embodiment",
+        "nature"
+      ]
+    },
+    "b3_of_experience_p132": {
+      "title": "Of Experience · Book 3 · paragraph 132",
+      "book": 3,
+      "essay": "OF EXPERIENCE",
+      "paragraph": 132,
+      "source_url": "https://www.gutenberg.org/files/3600/3600-h/3600-h.htm#link2HCH0106",
+      "units": [
+        {
+          "label": "1",
+          "text": "The pretty inscription wherewith the Athenians honoured the entry of Pompey into their city is conformable to my sense: “By so much thou art a god, as thou confessest thee a man.” ‘Tis an absolute and, as it were, a divine perfection, for a man to know how loyally to enjoy his being."
+        },
+        {
+          "label": "2",
+          "text": "We seek other conditions, by reason we do not understand the use of our own; and go out of ourselves, because we know not how there to reside."
+        },
+        {
+          "label": "3",
+          "text": "‘Tis to much purpose to go upon stilts, for, when upon stilts, we must yet walk with our legs; and when seated upon the most elevated throne in the world, we are but seated upon our breech."
+        },
+        {
+          "label": "4",
+          "text": "The fairest lives, in my opinion, are those which regularly accommodate themselves to the common and human model without miracle, without extravagance."
+        },
+        {
+          "label": "5",
+          "text": "Old age stands a little in need of a more gentle treatment."
+        },
+        {
+          "label": "6",
+          "text": "Let us recommend that to God, the protector of health and wisdom, but let it be gay and sociable:"
+        }
+      ],
+      "text": "The pretty inscription wherewith the Athenians honoured the entry of Pompey into their city is conformable to my sense: “By so much thou art a god, as thou confessest thee a man.” ‘Tis an absolute and, as it were, a divine perfection, for a man to know how loyally to enjoy his being. We seek other conditions, by reason we do not understand the use of our own; and go out of ourselves, because we know not how there to reside. ‘Tis to much purpose to go upon stilts, for, when upon stilts, we must yet walk with our legs; and when seated upon the most elevated throne in the world, we are but seated upon our breech. The fairest lives, in my opinion, are those which regularly accommodate themselves to the common and human model without miracle, without extravagance. Old age stands a little in need of a more gentle treatment. Let us recommend that to God, the protector of health and wisdom, but let it be gay and sociable:",
+      "themes": [
+        "humility",
+        "joy"
+      ]
+    }
+  }
+}

@@ -1,5 +1,25 @@
 # Daily Discipline morning freshness controller
 
+## October 31 seven-voice release
+
+Owner reviewed the local prototype and approved publication: Montaigne joins the library;
+all seven authors can lead, accompany, or Echo. No Tao percentage is reserved.
+A proposed theme from the existing 40-lens map guides soft word-hint retrieval.
+History first balances least-used lead voices and total companion/Echo exposure;
+the editor may follow a different supported lens or allow disagreement.
+`reading_rotation.py` versions new balance history so the old four-author lead
+cycle does not create catch-up debt. Passage freshness still uses all history.
+Manual reruns count only their last edition per day for exposure balancing.
+`build_montaigne.py` manually archives 43 curated Cotton/Hazlitt prose paragraphs
+as consecutive complete-sentence excerpts. It is not a daily network dependency.
+Local examples are labelled assistant-authored commentary, not Claude API runs.
+The release uses the existing GitHub-to-Pages path and one deliberate refresh.
+The matching landing card and generated footer describe the seven-voice flow.
+Existing reading history is preserved; workflow, cron, and provider configuration
+stay unchanged. Local inspection files are not copied into production output.
+
+## Existing production controller and prior release evidence
+
 October 6, 2026 acceptance: encrypted `GITHUB_TOKEN` stored by the owner;
 private Cloudflare RPC authenticated to GitHub and validated the live full
 edition; guarded `ensure_fresh` run 37568899207 succeeded without changing the

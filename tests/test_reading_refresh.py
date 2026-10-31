@@ -49,7 +49,7 @@ class ReadingRefreshTests(unittest.TestCase):
                         reading = discipline.passage_from_entry(source, key, entry, target)
                         groups = choose.call_args.args[0]
                         self.assertEqual([unit for group in groups for unit in group], entry["units"])
-                        self.assertEqual(reading["passage_text"], "\n\n".join(unit["text"] for unit in groups[-1]))
+                        self.assertEqual(reading["passage_text"], source.get("unit_separator", "\n\n").join(unit["text"] for unit in groups[-1]))
                         if len(groups) > 1:
                             self.assertIn("excerpt", reading["passage_title"])
 
@@ -86,19 +86,21 @@ class ReadingRefreshTests(unittest.TestCase):
             companion = discipline.pick_companion(lead, {}, self.day)
             self.assertTrue(discipline.pick_echo_candidates(lead, companion, {}, self.day))
 
-    def test_full_year_tao_lead_share_and_balanced_companions(self):
-        # A multiple of the four-day lead and five-companion cycles.
-        start = datetime.date.fromordinal(self.day.toordinal() - self.day.toordinal() % 20)
+    def test_history_balances_all_seven_leads_instead_of_reserving_tao(self):
+        start = self.day
         leads, companions = [], []
-        for offset in range(400):
+        state = {"history": []}
+        for offset in range(70):
             day = start + datetime.timedelta(days=offset)
-            lead = discipline.pick_lead({}, day)
-            companion = discipline.pick_companion(lead, {}, day)
+            lead = discipline.pick_lead(state, day)
+            companion = discipline.pick_companion(lead, state, day)
+            echo = discipline.pick_echo_candidates(lead, companion, state, day)[0]
             leads.append(lead["source"]["id"])
             companions.append(companion["source"]["id"])
-        for source_id in ("tao", "chuangtzu", "epictetus", "dhammapada"):
-            self.assertEqual(leads.count(source_id), 100)
-        self.assertLess(max(companions.count(source_id) for source_id in set(companions)), 150)
+            state["history"].append(discipline.history_entry(lead, companion, echo, day=day))
+        for source in discipline.READING_SOURCES:
+            self.assertEqual(leads.count(source["id"]), 10)
+        self.assertEqual(set(companions), {s["id"] for s in discipline.READING_SOURCES})
 
     def test_history_and_trail_keep_retired_authors_honestly(self):
         entries = [{"date": self.day.isoformat(), "lead": "brother_lawrence:letter_1", "companion": "psalms:23"}]

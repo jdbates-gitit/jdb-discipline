@@ -38,7 +38,7 @@ class FreshnessTests(unittest.TestCase):
         manifest = validate_page(self.page, DAY)
         self.assertEqual(manifest["editorial_mode"], "fixed")
         self.assertIn("fixed reflection prompts today", self.page)
-        self.assertIn("Echo was not thematically matched", self.page)
+        self.assertIn("Soft theme hints guided the source search", self.page)
         for reading in self.readings:
             self.assertIn(reading["passage_text"], self.page)
 

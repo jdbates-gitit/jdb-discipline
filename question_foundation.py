@@ -1,7 +1,8 @@
-"""An open editorial map, never a filter on which source passages may be read.
+"""An open editorial map that can guide, never dictate, the reading search.
 
 These are human-authored reading lenses, not claims that every author shares a
-belief or that this list exhausts their works. Selection happens AFTER readings.
+belief or that this list exhausts their works. A proposed theme starts the
+search; the actual passages may open another lens or remain in disagreement.
 """
 import datetime
 import random

@@ -14,17 +14,10 @@ import discipline_dashboard as discipline
 
 
 class DisciplineGeneratorTests(unittest.TestCase):
-    def test_four_day_lead_cycle_is_balanced(self):
+    def test_all_seven_voices_are_eligible_for_every_role(self):
         sources = [source for source in discipline.READING_SOURCES if source["lead"]]
-        cycle_start_ordinal = 739500 - (739500 % len(sources))
-        days = [datetime.date.fromordinal(cycle_start_ordinal + offset) for offset in range(4)]
-        selected = [
-            discipline.balanced_source_order(sources, day, "lead")[0]["id"]
-            for day in days
-        ]
-        self.assertEqual(
-            set(selected), {"tao", "chuangtzu", "epictetus", "dhammapada"}
-        )
+        self.assertEqual(len(sources), 7)
+        self.assertTrue(all(s[role] for s in sources for role in ("lead", "companion", "echo")))
 
     def test_recent_reading_is_excluded_when_unused_options_exist(self):
         today = datetime.date(2026, 9, 20)
@@ -54,7 +47,7 @@ class DisciplineGeneratorTests(unittest.TestCase):
         self.assertEqual(len(readings["23"]["verses"]), 6)
         self.assertNotIn("Project Gutenberg", readings["150"]["text"])
 
-    def test_new_rotation_has_tao_quarter_and_no_retired_sources(self):
+    def test_new_rotation_balances_seven_leads_and_has_no_retired_sources(self):
         start = datetime.date(2026, 10, 3)
         state = {"history": []}
         leads, companions = [], []
@@ -69,8 +62,9 @@ class DisciplineGeneratorTests(unittest.TestCase):
             for reading in (lead, companion, *candidates):
                 self.assertNotIn(reading["source"]["id"], {"psalms", "brother_lawrence"})
             self.assertTrue(all(c["source"]["id"] not in {lead["source"]["id"], companion["source"]["id"]} for c in candidates))
-            state["history"].append({"date": day.isoformat(), "lead": lead["selection_key"], "companion": companion["selection_key"]})
-        self.assertEqual(leads.count("tao"), 14)
+            state["history"].append(discipline.history_entry(lead, companion, candidates[0], day=day))
+        for source in discipline.READING_SOURCES:
+            self.assertEqual(leads.count(source["id"]), 8)
         self.assertEqual(set(companions), {source["id"] for source in discipline.READING_SOURCES})
         self.assertLess(max(companions.count(source) for source in set(companions)), 28)
 
@@ -165,7 +159,9 @@ class DisciplineGeneratorTests(unittest.TestCase):
             "carry_question": "What loving action is available in the next moment?",
         }
         rendered = discipline.build_html(reading, reading, reading, editorial)
-        self.assertIn("the Tao leads 25% of days", rendered)
+        self.assertIn("Tao has no reserved share", rendered)
+        self.assertIn("all seven voices can lead", rendered)
+        self.assertIn("Montaigne", rendered)
         self.assertNotIn("Psalms is the companion every other day", rendered)
         self.assertIn("Dhammapada", rendered)
         self.assertIn("Walt Whitman", rendered)

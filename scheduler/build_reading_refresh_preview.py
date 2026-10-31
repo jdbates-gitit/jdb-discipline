@@ -1,4 +1,6 @@
-"""Render clearly labelled, local-only editorial examples and the theme map.
+"""Historical October 17 reading-refresh examples; not the current rotation demo.
+
+For the seven-voice theme-guided inspection, use build_montaigne_preview.py.
 
 No provider calls, no run_state/index writes, and no workflow or deployment.
 The sample editorials are authored for review, not evidence of a live AI run.
