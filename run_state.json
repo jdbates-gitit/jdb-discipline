@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-31",
+  "date": "2026-11-01",
   "morning": true,
   "history": [
     {
@@ -611,6 +611,26 @@
       "daily_action": "When an outcome I cannot control presents itself today, pause and notice: am I resisting what is, or moving into it with actual attention?",
       "evening_question": "Did I meet any moment today where I stopped dividing my attention between what I wanted and what was actually here?",
       "selection_theme": "trust"
+    },
+    {
+      "date": "2026-11-01",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "whitman:open_road_5",
+      "lead_title": "Song of the Open Road \u00b7 section 5",
+      "companion": "tao:6",
+      "companion_title": "Chapter 6",
+      "echo": "montaigne:b3_of_experience_p120",
+      "echo_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 120 \u00b7 sentence 2",
+      "editorial_mode": "ai",
+      "daily_question": "When Whitman says he will scatter gladness among people and some will deny him without troubling him, what am I actually protecting when I hold back joy today?",
+      "carry_question": "Today, when I offer something or speak honestly, can I notice whether I am waiting for permission to have already given it?",
+      "question_theme": "joy",
+      "question_family": "wonder",
+      "question_style": "honesty",
+      "surrender_question": "What small approval or guarantee am I still hunting for that I might set down long enough to discover what I actually want to do?",
+      "daily_action": "Offer one small thing today\u2014a word, an attention, a kindness\u2014without monitoring whether it lands well or changes anything.",
+      "evening_question": "What did I notice about my own joy or hesitation when I moved toward someone or something today without requiring them to want it?",
+      "selection_theme": "joy"
     }
   ]
 }
