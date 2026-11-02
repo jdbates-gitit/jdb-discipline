@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-01",
+  "date": "2026-11-02",
   "morning": true,
   "history": [
     {
@@ -631,6 +631,26 @@
       "daily_action": "Offer one small thing today\u2014a word, an attention, a kindness\u2014without monitoring whether it lands well or changes anything.",
       "evening_question": "What did I notice about my own joy or hesitation when I moved toward someone or something today without requiring them to want it?",
       "selection_theme": "joy"
+    },
+    {
+      "date": "2026-11-02",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "heraclitus:20",
+      "lead_title": "Fragment 20",
+      "companion": "chuangtzu:23",
+      "companion_title": "Keng Sang Ch'u \u00b7 excerpt",
+      "echo": "montaigne:b3_of_experience_p3",
+      "echo_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 3 \u00b7 sentence 1\u20133",
+      "editorial_mode": "ai",
+      "daily_question": "When I encounter something today that refuses to stay the same\u2014a person's mood, a plan that shifts, my own unexpected reaction\u2014what am I actually trusting in that moment?",
+      "carry_question": "What in today's encounters refuses to stay put, and what happens when I notice instead of resist it?",
+      "question_theme": "trust",
+      "question_family": "meaning",
+      "question_style": "notice",
+      "surrender_question": "What assumption about how things 'should' work am I willing to set aside today and simply watch?",
+      "daily_action": "Notice one moment today when something or someone did not behave as expected, and pause before correcting it\u2014just watch the particularity for ten seconds.",
+      "evening_question": "What did I learn about what I actually trust by watching today without insisting on order?",
+      "selection_theme": "trust"
     }
   ]
 }
