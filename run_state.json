@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-02",
+  "date": "2026-11-03",
   "morning": true,
   "history": [
     {
@@ -651,6 +651,26 @@
       "daily_action": "Notice one moment today when something or someone did not behave as expected, and pause before correcting it\u2014just watch the particularity for ten seconds.",
       "evening_question": "What did I learn about what I actually trust by watching today without insisting on order?",
       "selection_theme": "trust"
+    },
+    {
+      "date": "2026-11-03",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "epictetus:XI",
+      "lead_title": "Encheiridion XI",
+      "companion": "tao:69",
+      "companion_title": "Chapter 69",
+      "echo": "dhammapada:v334_336",
+      "echo_title": "Craving \u00b7 verses 334\u2013336",
+      "editorial_mode": "ai",
+      "daily_question": "When I treat something as borrowed\u2014not mine to grip\u2014what actually changes in how I move through this day?",
+      "carry_question": "What am I treating as permanently mine that I might, just for today, hold as a guest holds an inn?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "Can I set aside the belief that holding something tight keeps it safe, and notice what that belief actually costs?",
+      "daily_action": "Choose one ordinary thing you care for today\u2014a tool, a conversation, a role\u2014and consciously treat it as borrowed. Notice what shifts when you do.",
+      "evening_question": "What did I notice when I held something as a loan rather than a possession? Did it feel lighter, or did old habits pull back?",
+      "selection_theme": "kindness"
     }
   ]
 }
