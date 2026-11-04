@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "morning": true,
   "history": [
     {
@@ -671,6 +671,26 @@
       "daily_action": "Choose one ordinary thing you care for today\u2014a tool, a conversation, a role\u2014and consciously treat it as borrowed. Notice what shifts when you do.",
       "evening_question": "What did I notice when I held something as a loan rather than a possession? Did it feel lighter, or did old habits pull back?",
       "selection_theme": "kindness"
+    },
+    {
+      "date": "2026-11-04",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "tao:20",
+      "lead_title": "Chapter 20",
+      "companion": "whitman:open_road_14",
+      "companion_title": "Song of the Open Road \u00b7 section 14",
+      "echo": "heraclitus:43",
+      "echo_title": "Fragment 43",
+      "editorial_mode": "ai",
+      "daily_question": "When the Tao speaker claims to have lost everything while others seem full, and Whitman says greater struggle emerges from every success, what am I actually seeing in each man's account of emptiness?",
+      "carry_question": "When I encounter someone today who seems satisfied in a way I don't feel, can I notice what I'm actually judging\u2014them or myself?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "tension",
+      "surrender_question": "What assumption about what I should have or accomplish am I willing to set aside long enough to notice what's actually here?",
+      "daily_action": "When I catch myself reaching for the next thing or bracing for the next fight, pause and notice: What am I actually protecting in this moment?",
+      "evening_question": "Did I notice today a moment when stepping back changed something? Or when pushing through did? What did each teach?",
+      "selection_theme": "response"
     }
   ]
 }
