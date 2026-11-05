@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04",
+  "date": "2026-11-05",
   "morning": true,
   "history": [
     {
@@ -691,6 +691,26 @@
       "daily_action": "When I catch myself reaching for the next thing or bracing for the next fight, pause and notice: What am I actually protecting in this moment?",
       "evening_question": "Did I notice today a moment when stepping back changed something? Or when pushing through did? What did each teach?",
       "selection_theme": "response"
+    },
+    {
+      "date": "2026-11-05",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "dhammapada:v146_148",
+      "lead_title": "Old Age \u00b7 verses 146\u2013148",
+      "companion": "montaigne:b3_of_managing_the_will_p46",
+      "companion_title": "Of Managing The Will \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 46 \u00b7 sentence 1\u20134",
+      "echo": "chuangtzu:13",
+      "echo_title": "The Tao of God \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When the Dhammapada asks why we laugh while the world burns, and Montaigne warns that small beginnings demand vigilance because affairs then govern us\u2014am I confusing acceptance of impermanence with passivity about what I actually set in motion?",
+      "carry_question": "When I notice myself hurrying into something today, can I pause and ask what I actually want to govern\u2014and what I am willing to let go?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "tension",
+      "surrender_question": "What small commitment have I already made that I now treat as burden instead of choice\u2014and might I reclaim it or release it honestly?",
+      "daily_action": "Notice one small decision today before acting on it: not to delay, but to feel the weight of beginning, and to choose with eyes open rather than drift in.",
+      "evening_question": "What did I set in motion today, lightly or seriously? What surprised me about where it led, and what do I actually want to tend tomorrow?",
+      "selection_theme": "purpose"
     }
   ]
 }
