@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-05",
+  "date": "2026-11-06",
   "morning": true,
   "history": [
     {
@@ -711,6 +711,26 @@
       "daily_action": "Notice one small decision today before acting on it: not to delay, but to feel the weight of beginning, and to choose with eyes open rather than drift in.",
       "evening_question": "What did I set in motion today, lightly or seriously? What surprised me about where it led, and what do I actually want to tend tomorrow?",
       "selection_theme": "purpose"
+    },
+    {
+      "date": "2026-11-06",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "montaigne:b3_of_experience_p29",
+      "lead_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 29 \u00b7 sentence 1\u20132",
+      "companion": "whitman:miracles",
+      "companion_title": "Miracles \u00b7 excerpt, stanza 1",
+      "echo": "heraclitus:92",
+      "echo_title": "Fragment 92",
+      "editorial_mode": "ai",
+      "daily_question": "When Whitman names honey-bees and sundown as miracles equal to talking with someone I love, what am I actually attending to when I notice a living thing today?",
+      "carry_question": "What living thing can I actually see today without naming what it should teach me?",
+      "question_theme": "nature",
+      "question_family": "wonder",
+      "question_style": "encounter",
+      "surrender_question": "Can I set aside, for one hour, the habit of turning what I notice into a lesson about myself?",
+      "daily_action": "Walk or sit somewhere with animals or plants present. Watch one creature or growth for five minutes without interpretation. Notice what draws your eye.",
+      "evening_question": "Did I see anything today simply as itself, not as a mirror or a message? What was that like?",
+      "selection_theme": "nature"
     }
   ]
 }
