@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-06",
+  "date": "2026-11-07",
   "morning": true,
   "history": [
     {
@@ -731,6 +731,26 @@
       "daily_action": "Walk or sit somewhere with animals or plants present. Watch one creature or growth for five minutes without interpretation. Notice what draws your eye.",
       "evening_question": "Did I see anything today simply as itself, not as a mirror or a message? What was that like?",
       "selection_theme": "nature"
+    },
+    {
+      "date": "2026-11-07",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "whitman:rolling_earth_2",
+      "lead_title": "A Song of the Rolling Earth \u00b7 section 2",
+      "companion": "epictetus:XXXV",
+      "companion_title": "Encheiridion XXXV",
+      "echo": "tao:5",
+      "echo_title": "Chapter 5",
+      "editorial_mode": "ai",
+      "daily_question": "When I do something I believe is right, what am I actually afraid of losing\u2014and is that fear itself trying to teach me something true?",
+      "carry_question": "When I notice someone watching me today, what part of me shifts\u2014and what do I actually want to protect?",
+      "question_theme": "integrity",
+      "question_family": "meaning",
+      "question_style": "encounter",
+      "surrender_question": "Could I release the need to prove my action was right, and simply notice what it actually produced in me and around me?",
+      "daily_action": "Today, do one thing you believe is right in a way that others will see it, and notice\u2014without judgment\u2014what you actually feel in your body when they watch.",
+      "evening_question": "What did I learn about myself by acting visibly today, and what surprised me about what I feared and what actually happened?",
+      "selection_theme": "generosity"
     }
   ]
 }
