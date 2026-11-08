@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-07",
+  "date": "2026-11-08",
   "morning": true,
   "history": [
     {
@@ -751,6 +751,26 @@
       "daily_action": "Today, do one thing you believe is right in a way that others will see it, and notice\u2014without judgment\u2014what you actually feel in your body when they watch.",
       "evening_question": "What did I learn about myself by acting visibly today, and what surprised me about what I feared and what actually happened?",
       "selection_theme": "generosity"
+    },
+    {
+      "date": "2026-11-08",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "montaigne:b2_of_books_p3",
+      "lead_title": "Of Books \u00b7 excerpt \u00b7 Book II \u00b7 paragraph 3 \u00b7 sentence 1\u20136",
+      "companion": "epictetus:XVI",
+      "companion_title": "Encheiridion XVI",
+      "echo": "dhammapada:v318_319",
+      "echo_title": "The State of Woe \u00b7 verses 318\u2013319",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself withdrawing from something hard today\u2014a conversation, a task, a person\u2014am I protecting my judgment or avoiding the actual difficulty itself?",
+      "carry_question": "Today, when I feel pulled to explain or defend myself, what am I actually seeing in this moment before the story arrives?",
+      "question_theme": "clear_seeing",
+      "question_family": "attention",
+      "question_style": "notice",
+      "surrender_question": "What if my impatience\u2014my sense that something is not working\u2014is itself worth trusting as information, not something to overcome?",
+      "daily_action": "When I notice myself persisting at something that grows more confused the harder I push, I will stop, step back, and return to it fresh later without shame.",
+      "evening_question": "What did I actually see today that I almost missed by holding too tight to what I expected to see?",
+      "selection_theme": "clear_seeing"
     }
   ]
 }
