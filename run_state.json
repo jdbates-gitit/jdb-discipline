@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-08",
+  "date": "2026-11-09",
   "morning": true,
   "history": [
     {
@@ -771,6 +771,26 @@
       "daily_action": "When I notice myself persisting at something that grows more confused the harder I push, I will stop, step back, and return to it fresh later without shame.",
       "evening_question": "What did I actually see today that I almost missed by holding too tight to what I expected to see?",
       "selection_theme": "clear_seeing"
+    },
+    {
+      "date": "2026-11-09",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "tao:32",
+      "lead_title": "Chapter 32",
+      "companion": "chuangtzu:32",
+      "companion_title": "Lieh Tzu \u00b7 excerpt",
+      "echo": "heraclitus:11",
+      "echo_title": "Fragment 11",
+      "editorial_mode": "ai",
+      "daily_question": "When the Tao speaker describes a king who holds something without grasping it, and Chuang Tzu shows a man who bows lower with each honor, what am I actually protecting when I say no today?",
+      "carry_question": "When I set a boundary today, am I protecting something real or performing restraint for an audience?",
+      "question_theme": "boundaries",
+      "question_family": "agency",
+      "question_style": "honesty",
+      "surrender_question": "What assumption about how love should look am I willing to examine without immediately fixing it?",
+      "daily_action": "Name one boundary you need today\u2014a conversation to defer, a request to decline\u2014and notice whether you can hold it without explaining or apologizing.",
+      "evening_question": "What did I learn about the difference between protecting myself and withdrawing from someone today?",
+      "selection_theme": "boundaries"
     }
   ]
 }
