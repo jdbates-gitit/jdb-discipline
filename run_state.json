@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-09",
+  "date": "2026-11-10",
   "morning": true,
   "history": [
     {
@@ -791,6 +791,26 @@
       "daily_action": "Name one boundary you need today\u2014a conversation to defer, a request to decline\u2014and notice whether you can hold it without explaining or apologizing.",
       "evening_question": "What did I learn about the difference between protecting myself and withdrawing from someone today?",
       "selection_theme": "boundaries"
+    },
+    {
+      "date": "2026-11-10",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "chuangtzu:18",
+      "lead_title": "Perfect Happiness \u00b7 excerpt",
+      "companion": "whitman:myself_2",
+      "companion_title": "Song of Myself \u00b7 section 2 \u00b7 excerpt, stanza 4\u20136",
+      "echo": "dhammapada:v285_287",
+      "echo_title": "The Path \u00b7 verses 285\u2013287",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself explaining or defending something today, am I actually protecting the thing\u2014or protecting my grip on it?",
+      "carry_question": "Today, what am I actually trying to hold or prove when I explain myself to someone?",
+      "question_theme": "play",
+      "question_family": "perspective",
+      "question_style": "notice",
+      "surrender_question": "What assumption about what I owe another person might I set aside long enough to see what they actually need?",
+      "daily_action": "Notice one moment today when I want to explain or convince someone of something. Pause. Ask: Am I protecting them, or protecting my version? Then choose: speak plainly or stay quiet.",
+      "evening_question": "Did I notice the difference between protecting something and protecting my grip on it? What happened when I chose differently?",
+      "selection_theme": "play"
     }
   ]
 }
