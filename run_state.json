@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "morning": true,
   "history": [
     {
@@ -811,6 +811,26 @@
       "daily_action": "Notice one moment today when I want to explain or convince someone of something. Pause. Ask: Am I protecting them, or protecting my version? Then choose: speak plainly or stay quiet.",
       "evening_question": "Did I notice the difference between protecting something and protecting my grip on it? What happened when I chose differently?",
       "selection_theme": "play"
+    },
+    {
+      "date": "2026-11-11",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "dhammapada:v235_237",
+      "lead_title": "Impurity \u00b7 verses 235\u2013237",
+      "companion": "epictetus:L",
+      "companion_title": "Encheiridion L \u00b7 excerpt",
+      "echo": "heraclitus:8",
+      "echo_title": "Fragment 8",
+      "editorial_mode": "ai",
+      "daily_question": "When the Dhammapada says I have made no provision for the journey, and Epictetus says I defer correction by waiting for tomorrow\u2014am I actually unprepared, or refusing to begin?",
+      "carry_question": "Today, when I feel urged to prepare or improve, can I notice whether I am actually moving or mainly disturbing the earth?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "encounter",
+      "surrender_question": "What if the provision I think I lack is something I am already doing\u2014and what I need to surrender is the story that I am not ready?",
+      "daily_action": "Name one thing I have deferred\u2014a conversation, a choice, a small practice\u2014and do it today without rewriting the story of why I waited.",
+      "evening_question": "Did I notice any moment today when stopping the search itself revealed something I was too busy digging to see?",
+      "selection_theme": "mortality"
     }
   ]
 }
