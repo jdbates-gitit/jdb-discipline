@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-11",
+  "date": "2026-11-12",
   "morning": true,
   "history": [
     {
@@ -831,6 +831,26 @@
       "daily_action": "Name one thing I have deferred\u2014a conversation, a choice, a small practice\u2014and do it today without rewriting the story of why I waited.",
       "evening_question": "Did I notice any moment today when stopping the search itself revealed something I was too busy digging to see?",
       "selection_theme": "mortality"
+    },
+    {
+      "date": "2026-11-12",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "epictetus:XXVII",
+      "lead_title": "Encheiridion XXVII",
+      "companion": "tao:39",
+      "companion_title": "Chapter 39 \u00b7 excerpt",
+      "echo": "montaigne:b3_of_experience_p8",
+      "echo_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 8 \u00b7 sentence 1",
+      "editorial_mode": "ai",
+      "daily_question": "When Epictetus says evil has no mark in the world, and the Tao speaker shows a king holding something without grasping it, what am I actually doing when I try to correct or fix something today?",
+      "carry_question": "When I notice something today that I want to fix or improve, what am I actually trying to grip?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "What if the thing I am trying to correct does not need my force\u2014only my honest attention and willingness to act without insisting on the outcome?",
+      "daily_action": "Choose one small matter today where you usually push for resolution. Notice instead: What happens if I name the aim clearly, then hold it without strain, and let my action be precise rather than forceful?",
+      "evening_question": "What did I notice today about the difference between aiming clearly and gripping tightly\u2014and did loosening one change what the other could do?",
+      "selection_theme": "purpose"
     }
   ]
 }
