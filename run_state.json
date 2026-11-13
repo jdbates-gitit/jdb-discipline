@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-13",
   "morning": true,
   "history": [
     {
@@ -851,6 +851,26 @@
       "daily_action": "Choose one small matter today where you usually push for resolution. Notice instead: What happens if I name the aim clearly, then hold it without strain, and let my action be precise rather than forceful?",
       "evening_question": "What did I notice today about the difference between aiming clearly and gripping tightly\u2014and did loosening one change what the other could do?",
       "selection_theme": "purpose"
+    },
+    {
+      "date": "2026-11-13",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "heraclitus:45",
+      "lead_title": "Fragment 45",
+      "companion": "whitman:open_road_7",
+      "companion_title": "Song of the Open Road \u00b7 section 7",
+      "echo": "chuangtzu:21",
+      "echo_title": "T'ien Tzu Fang \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself drawn to someone or something today, what am I actually exchanging\u2014and does naming it change what happens between us?",
+      "carry_question": "Today, what actual interchange happens between me and someone I encounter that I normally pass without naming?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "notice",
+      "surrender_question": "What expectation about connection or understanding am I holding that might be preventing me from simply noticing what is actually there?",
+      "daily_action": "In one conversation or moment with another person today, notice the actual current between us without trying to name, fix, or explain it. Simply stay present to it.",
+      "evening_question": "What did I notice moving between myself and another person today that I had not expected, and does it still matter if I cannot explain it?",
+      "selection_theme": "generosity"
     }
   ]
 }
