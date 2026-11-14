@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-13",
+  "date": "2026-11-14",
   "morning": true,
   "history": [
     {
@@ -871,6 +871,26 @@
       "daily_action": "In one conversation or moment with another person today, notice the actual current between us without trying to name, fix, or explain it. Simply stay present to it.",
       "evening_question": "What did I notice moving between myself and another person today that I had not expected, and does it still matter if I cannot explain it?",
       "selection_theme": "generosity"
+    },
+    {
+      "date": "2026-11-14",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "dhammapada:v306_308",
+      "lead_title": "The State of Woe \u00b7 verses 306\u2013308",
+      "companion": "epictetus:IX",
+      "companion_title": "Encheiridion IX",
+      "echo": "montaigne:b3_of_managing_the_will_p26",
+      "echo_title": "Of Managing The Will \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 26 \u00b7 sentence 1",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice myself denying or reframing something I've actually done, what am I protecting\u2014and what does that protection cost?",
+      "carry_question": "When I notice myself explaining something I did, am I actually claiming it or rewriting it?",
+      "question_theme": "response",
+      "question_family": "agency",
+      "question_style": "honesty",
+      "surrender_question": "Can I set aside the need to make my action sound reasonable and simply see what I actually did?",
+      "daily_action": "Today, notice one moment when you explain or defend something you've done. Pause. Say aloud to yourself what happened without the explanation, and notice what you feel.",
+      "evening_question": "When did I see myself clearly today, and what became possible when I stopped rewriting what I'd actually done?",
+      "selection_theme": "response"
     }
   ]
 }
