@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-14",
+  "date": "2026-11-15",
   "morning": true,
   "history": [
     {
@@ -891,6 +891,26 @@
       "daily_action": "Today, notice one moment when you explain or defend something you've done. Pause. Say aloud to yourself what happened without the explanation, and notice what you feel.",
       "evening_question": "When did I see myself clearly today, and what became possible when I stopped rewriting what I'd actually done?",
       "selection_theme": "response"
+    },
+    {
+      "date": "2026-11-15",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "whitman:open_road_12",
+      "lead_title": "Song of the Open Road \u00b7 section 12",
+      "companion": "heraclitus:85",
+      "companion_title": "Fragment 85",
+      "echo": "chuangtzu:25",
+      "echo_title": "Tse Yang \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I encounter someone today\u2014a friend, a stranger, even my own resistance\u2014am I actually listening to who they are, or only to how they fit my idea of companionship?",
+      "carry_question": "When I am with someone today, what am I actually attending to\u2014their face, or my next response?",
+      "question_theme": "friendship",
+      "question_family": "belonging",
+      "question_style": "notice",
+      "surrender_question": "What expectation of what friendship should deliver might I set aside today to see what friendship actually is?",
+      "daily_action": "Notice one person today without planning what to say or do next. Listen to one thing they say that surprises you. Tell no one unless they ask.",
+      "evening_question": "When did I actually hear someone today\u2014not fix, advise, or comfort them, but truly listen? What did that cost me, and what did it give?",
+      "selection_theme": "friendship"
     }
   ]
 }
