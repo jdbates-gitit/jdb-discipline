@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "morning": true,
   "history": [
     {
@@ -911,6 +911,26 @@
       "daily_action": "Notice one person today without planning what to say or do next. Listen to one thing they say that surprises you. Tell no one unless they ask.",
       "evening_question": "When did I actually hear someone today\u2014not fix, advise, or comfort them, but truly listen? What did that cost me, and what did it give?",
       "selection_theme": "friendship"
+    },
+    {
+      "date": "2026-11-16",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "chuangtzu:19",
+      "lead_title": "The Secret of Life \u00b7 excerpt",
+      "companion": "tao:12",
+      "companion_title": "Chapter 12",
+      "echo": "montaigne:b3_of_experience_p114",
+      "echo_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 114 \u00b7 sentence 1\u20132",
+      "editorial_mode": "ai",
+      "daily_question": "When I care for my body today\u2014eating, resting, moving\u2014am I doing it from necessity or from some hidden demand that it prove something?",
+      "carry_question": "When I notice hunger or fatigue today, what am I actually hearing\u2014the body's actual need, or my story about what needing means?",
+      "question_theme": "non_forcing",
+      "question_family": "change",
+      "question_style": "tension",
+      "surrender_question": "Can I let go of the need to make my ordinary self-care into proof of spiritual seriousness\u2014and simply do it?",
+      "daily_action": "Today, eat or rest once without mentally framing it as discipline, healing, or virtue. Notice what happens when you stop narrating.",
+      "evening_question": "Did I experience my body today as a necessary home, an insatiable appetite, a source of joy, or something I could not quite name? What did that feel like?",
+      "selection_theme": "kindness"
     }
   ]
 }
