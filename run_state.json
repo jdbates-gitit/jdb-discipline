@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "morning": true,
   "history": [
     {
@@ -931,6 +931,26 @@
       "daily_action": "Today, eat or rest once without mentally framing it as discipline, healing, or virtue. Notice what happens when you stop narrating.",
       "evening_question": "Did I experience my body today as a necessary home, an insatiable appetite, a source of joy, or something I could not quite name? What did that feel like?",
       "selection_theme": "kindness"
+    },
+    {
+      "date": "2026-11-17",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "epictetus:XXXIV",
+      "lead_title": "Encheiridion XXXIV",
+      "companion": "whitman:myself_21",
+      "companion_title": "Song of Myself \u00b7 section 21 \u00b7 excerpt, stanza 1\u20136",
+      "echo": "tao:7",
+      "echo_title": "Chapter 7",
+      "editorial_mode": "ai",
+      "daily_question": "When Epictetus asks me to pause before pleasure and weigh both times, and Whitman presses close to night with nothing held back, what am I actually doing when I say yes or no today?",
+      "carry_question": "When I notice myself about to say yes or no to something today, am I actually present to what I am choosing?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "notice",
+      "surrender_question": "What would it cost me to pause without then deciding I was right to wait, or right to go forward?",
+      "daily_action": "Before one clear choice today\u2014a conversation, a response, a commitment\u2014pause long enough to name both what will happen and what will happen after. Then act without explaining the pause.",
+      "evening_question": "Did the moment of waiting change what I actually chose, or did I already know the answer before I paused?",
+      "selection_theme": "gratitude"
     }
   ]
 }
