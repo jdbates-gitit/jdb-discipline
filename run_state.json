@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-17",
+  "date": "2026-11-18",
   "morning": true,
   "history": [
     {
@@ -951,6 +951,26 @@
       "daily_action": "Before one clear choice today\u2014a conversation, a response, a commitment\u2014pause long enough to name both what will happen and what will happen after. Then act without explaining the pause.",
       "evening_question": "Did the moment of waiting change what I actually chose, or did I already know the answer before I paused?",
       "selection_theme": "gratitude"
+    },
+    {
+      "date": "2026-11-18",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "montaigne:b3_of_experience_p97",
+      "lead_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 97 \u00b7 sentence 1\u20134",
+      "companion": "heraclitus:47",
+      "companion_title": "Fragment 47",
+      "echo": "dhammapada:v244_247",
+      "echo_title": "Impurity \u00b7 verses 244\u2013247",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice my body changing or wearing\u2014a stiffness, a forgetting, a slowness I didn't have before\u2014what am I actually resisting about time moving through me?",
+      "carry_question": "When I move through today, what small change in my body or habit do I actually notice before I explain it away?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "Am I willing to see one small way I am becoming different, without immediately deciding whether that is loss or gain?",
+      "daily_action": "Compare one specific thing you do now with how you did it five years ago\u2014not to judge yourself, only to notice. Write it down or speak it aloud.",
+      "evening_question": "What did I learn about myself by noticing one small change without rushing to fix it or deny it?",
+      "selection_theme": "patience"
     }
   ]
 }
