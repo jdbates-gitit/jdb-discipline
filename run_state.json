@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-18",
+  "date": "2026-11-19",
   "morning": true,
   "history": [
     {
@@ -971,6 +971,26 @@
       "daily_action": "Compare one specific thing you do now with how you did it five years ago\u2014not to judge yourself, only to notice. Write it down or speak it aloud.",
       "evening_question": "What did I learn about myself by noticing one small change without rushing to fix it or deny it?",
       "selection_theme": "patience"
+    },
+    {
+      "date": "2026-11-19",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "tao:21",
+      "lead_title": "Chapter 21",
+      "companion": "epictetus:XLII",
+      "companion_title": "Encheiridion XLII",
+      "echo": "heraclitus:2",
+      "echo_title": "Fragment 2",
+      "editorial_mode": "ai",
+      "daily_question": "When someone acts from their own sense of what is right, and I feel wronged, what am I actually judging\u2014their action or my grip on how things should be?",
+      "carry_question": "When I feel wronged today, can I pause and name what belief about rightness the other person is actually following?",
+      "question_theme": "judgment",
+      "question_family": "agency",
+      "question_style": "experiment",
+      "surrender_question": "Am I willing to set aside, for one encounter, my certainty that I know what someone should have done?",
+      "daily_action": "In one moment of friction today, speak only the fact of what happened, not your judgment of their intent. Notice what becomes possible.",
+      "evening_question": "When I stepped back from my judgment today, did I learn anything true about what the other person actually wanted or feared?",
+      "selection_theme": "judgment"
     }
   ]
 }
