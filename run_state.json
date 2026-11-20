@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "morning": true,
   "history": [
     {
@@ -991,6 +991,26 @@
       "daily_action": "In one moment of friction today, speak only the fact of what happened, not your judgment of their intent. Notice what becomes possible.",
       "evening_question": "When I stepped back from my judgment today, did I learn anything true about what the other person actually wanted or feared?",
       "selection_theme": "judgment"
+    },
+    {
+      "date": "2026-11-20",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "heraclitus:74",
+      "lead_title": "Fragment 74",
+      "companion": "chuangtzu:11",
+      "companion_title": "On Letting Alone \u00b7 excerpt",
+      "echo": "whitman:myself_46",
+      "echo_title": "Song of Myself \u00b7 section 46 \u00b7 excerpt, stanza 8\u201310",
+      "editorial_mode": "ai",
+      "daily_question": "When Heraclitus says the dry soul is wisest, and Chuang Tzu speaks of preserving the original One while resting in harmony with externals, what am I actually doing when I call something dried out or depleted today?",
+      "carry_question": "When I encounter something natural today\u2014light, weather, another person's presence\u2014am I actually there, or only half-awake?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "What idea about how I should feel or how the day should unfold am I willing to lay down before it begins?",
+      "daily_action": "Notice one moment today when you are fully awake to what is actually happening\u2014not interpreting it, not planning around it, simply present to it. Name it quietly.",
+      "evening_question": "What was most vivid or actual today, and what was I doing when I stopped thinking about it and simply experienced it?",
+      "selection_theme": "nature"
     }
   ]
 }
