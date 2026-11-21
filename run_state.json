@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "morning": true,
   "history": [
     {
@@ -1011,6 +1011,26 @@
       "daily_action": "Notice one moment today when you are fully awake to what is actually happening\u2014not interpreting it, not planning around it, simply present to it. Name it quietly.",
       "evening_question": "What was most vivid or actual today, and what was I doing when I stopped thinking about it and simply experienced it?",
       "selection_theme": "nature"
+    },
+    {
+      "date": "2026-11-21",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "tao:13",
+      "lead_title": "Chapter 13",
+      "companion": "dhammapada:v36_38",
+      "companion_title": "The Mind \u00b7 verses 36\u201338",
+      "echo": "whitman:open_road_1",
+      "echo_title": "Song of the Open Road \u00b7 section 1 \u00b7 excerpt, stanza 1\u20132",
+      "editorial_mode": "ai",
+      "daily_question": "When the Tao speaker warns that honouring my own body makes me liable to calamity, and Whitman calls me to the open road needing nothing, am I actually free\u2014or just trading one grip for another?",
+      "carry_question": "When I meet someone today whose status or usefulness differs from mine, do I actually see them\u2014or see only the distance?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "What if I stopped trying to prove I am detached, independent, or spiritually advanced\u2014and simply noticed what I actually grip?",
+      "daily_action": "Today, when I feel drawn to protect my image or position, pause and ask: Am I honouring this, or grasping it? Then take one small action from the lighter answer.",
+      "evening_question": "Where did I grip today, and where did I move more freely? What made the difference\u2014and was it what I expected?",
+      "selection_theme": "equality"
     }
   ]
 }
