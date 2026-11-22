@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-21",
+  "date": "2026-11-22",
   "morning": true,
   "history": [
     {
@@ -1031,6 +1031,26 @@
       "daily_action": "Today, when I feel drawn to protect my image or position, pause and ask: Am I honouring this, or grasping it? Then take one small action from the lighter answer.",
       "evening_question": "Where did I grip today, and where did I move more freely? What made the difference\u2014and was it what I expected?",
       "selection_theme": "equality"
+    },
+    {
+      "date": "2026-11-22",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "chuangtzu:24",
+      "lead_title": "Hsu Wu Kuei \u00b7 excerpt",
+      "companion": "epictetus:XXXI",
+      "companion_title": "Encheiridion XXXI \u00b7 excerpt",
+      "echo": "dhammapada:v143_145",
+      "echo_title": "Violence \u00b7 verses 143\u2013145 \u00b7 excerpt, verse 145",
+      "editorial_mode": "ai",
+      "daily_question": "When I watch myself govern something small today\u2014my choices, my attention, my response to a person\u2014am I actually seeing what needs care, or performing the role of someone in control?",
+      "carry_question": "What is actually present in front of me right now that asks for care, separate from the story I'm telling about it?",
+      "question_theme": "clear_seeing",
+      "question_family": "attention",
+      "question_style": "honesty",
+      "surrender_question": "What role or title am I protecting today that I could set down without abandoning the actual work?",
+      "daily_action": "In one conversation or task today, notice when you shift from seeing what is needed to defending how you're handling it. Pause there. See if the work continues without the defense.",
+      "evening_question": "When I actually stopped adding my own story to something today, what became visible that I couldn't see before?",
+      "selection_theme": "clear_seeing"
     }
   ]
 }
