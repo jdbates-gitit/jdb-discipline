@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-22",
+  "date": "2026-11-23",
   "morning": true,
   "history": [
     {
@@ -1051,6 +1051,26 @@
       "daily_action": "In one conversation or task today, notice when you shift from seeing what is needed to defending how you're handling it. Pause there. See if the work continues without the defense.",
       "evening_question": "When I actually stopped adding my own story to something today, what became visible that I couldn't see before?",
       "selection_theme": "clear_seeing"
+    },
+    {
+      "date": "2026-11-23",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "epictetus:XII",
+      "lead_title": "Encheiridion XII",
+      "companion": "montaigne:b3_of_experience_p132",
+      "companion_title": "Of Experience \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 132 \u00b7 sentence 1\u20136",
+      "echo": "whitman:ferry_3",
+      "echo_title": "Crossing Brooklyn Ferry \u00b7 section 3 \u00b7 excerpt, stanza 1",
+      "editorial_mode": "ai",
+      "daily_question": "When Epictetus says freedom costs the spilled oil, and Montaigne says the fairest life accommodates itself to the common human model, am I actually choosing what matters\u2014or trading one demand for another?",
+      "carry_question": "When I move through today's small inconveniences, do I actually notice who else is nearby, also inconvenienced, also moving on?",
+      "question_theme": "paradox",
+      "question_family": "perspective",
+      "question_style": "tension",
+      "surrender_question": "What assumption about myself being separate or special might I set aside long enough to recognize an ordinary kinship with someone I encounter today?",
+      "daily_action": "In one moment of friction today\u2014a delay, a disappointment, a small loss\u2014pause and notice one other person affected by the same thing. Say nothing. Notice.",
+      "evening_question": "Did I find the company of that kinship, even briefly? What happened to my grip on the moment when I remembered I was not alone in it?",
+      "selection_theme": "surrender"
     }
   ]
 }
