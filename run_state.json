@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "morning": true,
   "history": [
     {
@@ -1071,6 +1071,26 @@
       "daily_action": "In one moment of friction today\u2014a delay, a disappointment, a small loss\u2014pause and notice one other person affected by the same thing. Say nothing. Notice.",
       "evening_question": "Did I find the company of that kinship, even briefly? What happened to my grip on the moment when I remembered I was not alone in it?",
       "selection_theme": "surrender"
+    },
+    {
+      "date": "2026-11-24",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "montaigne:b3_of_managing_the_will_p50",
+      "lead_title": "Of Managing The Will \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 50 \u00b7 sentence 1\u20132",
+      "companion": "chuangtzu:26",
+      "companion_title": "Contingencies \u00b7 excerpt",
+      "echo": "dhammapada:v227_229",
+      "echo_title": "Anger \u00b7 verses 227\u2013229",
+      "editorial_mode": "ai",
+      "daily_question": "When I notice a small choice forming today\u2014to speak, to act, to wait\u2014what am I actually uncertain about, and does naming it change how I move?",
+      "carry_question": "What small habit or choice am I leaving unexamined today, assuming it needs no attention yet?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "Am I insisting that careful attention should protect me from consequences, or can I act thoughtfully and still be caught by what I cannot foresee?",
+      "daily_action": "Notice one choice today where you feel uncertain or slightly afraid. Name what you are actually uncertain about\u2014not to solve it, but to see it. Then act anyway, as clearly as you can.",
+      "evening_question": "Did naming my uncertainty change how I moved, or did I act the same? Either way, what did I learn about my own character today?",
+      "selection_theme": "courage"
     }
   ]
 }
