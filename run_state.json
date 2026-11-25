@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "morning": true,
   "history": [
     {
@@ -1091,6 +1091,26 @@
       "daily_action": "Notice one choice today where you feel uncertain or slightly afraid. Name what you are actually uncertain about\u2014not to solve it, but to see it. Then act anyway, as clearly as you can.",
       "evening_question": "Did naming my uncertainty change how I moved, or did I act the same? Either way, what did I learn about my own character today?",
       "selection_theme": "courage"
+    },
+    {
+      "date": "2026-11-25",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "whitman:ferry_9",
+      "lead_title": "Crossing Brooklyn Ferry \u00b7 section 9 \u00b7 excerpt, stanza 1",
+      "companion": "tao:22",
+      "companion_title": "Chapter 22",
+      "echo": "heraclitus:78",
+      "echo_title": "Fragment 78",
+      "editorial_mode": "ai",
+      "daily_question": "When Whitman calls everything to flourish and show itself fully, and I notice myself editing what I offer or receive today, what am I actually protecting?",
+      "carry_question": "When I move through today, am I holding back something true, or offering something not yet honest?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "notice",
+      "surrender_question": "What if I stopped believing I need to know whether to show myself or conceal myself, and simply noticed what wants to emerge today?",
+      "daily_action": "In one conversation today, notice what you naturally hold back. Name it to yourself without judgment. Let that be enough.",
+      "evening_question": "What did I actually offer or receive today that surprised me\u2014and did I let it be itself, or try to manage how it looked?",
+      "selection_theme": "service"
     }
   ]
 }
