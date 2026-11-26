@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "morning": true,
   "history": [
     {
@@ -1111,6 +1111,26 @@
       "daily_action": "In one conversation today, notice what you naturally hold back. Name it to yourself without judgment. Let that be enough.",
       "evening_question": "What did I actually offer or receive today that surprised me\u2014and did I let it be itself, or try to manage how it looked?",
       "selection_theme": "service"
+    },
+    {
+      "date": "2026-11-26",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "dhammapada:v290_292",
+      "lead_title": "Miscellaneous \u00b7 verses 290\u2013292",
+      "companion": "montaigne:b3_of_the_art_of_conference_p7",
+      "companion_title": "Of The Art Of Conference \u00b7 excerpt \u00b7 Book III \u00b7 paragraph 7 \u00b7 sentence 1\u20134",
+      "echo": "epictetus:XIII",
+      "echo_title": "Encheiridion XIII",
+      "editorial_mode": "ai",
+      "daily_question": "When someone contradicts me today, can I notice whether I'm defending a grip on being right, or actually curious about what I'm missing?",
+      "carry_question": "When I'm about to explain myself to someone who doubts me, what actually matters more\u2014my defense or their question?",
+      "question_theme": "humility",
+      "question_family": "practice",
+      "question_style": "tension",
+      "surrender_question": "Can I set aside, just for today, the need to prove I already know what someone is about to tell me?",
+      "daily_action": "In one conversation today where I feel misunderstood, I'll pause and ask a genuine question before answering, noticing what I learn.",
+      "evening_question": "Did I actually hear anyone today, or did I spend my energy building a case while they were speaking?",
+      "selection_theme": "anger"
     }
   ]
 }
