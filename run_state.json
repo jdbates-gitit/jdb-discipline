@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-26",
+  "date": "2026-11-27",
   "morning": true,
   "history": [
     {
@@ -1131,6 +1131,26 @@
       "daily_action": "In one conversation today where I feel misunderstood, I'll pause and ask a genuine question before answering, noticing what I learn.",
       "evening_question": "Did I actually hear anyone today, or did I spend my energy building a case while they were speaking?",
       "selection_theme": "anger"
+    },
+    {
+      "date": "2026-11-27",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "heraclitus:95",
+      "lead_title": "Fragment 95",
+      "companion": "tao:50",
+      "companion_title": "Chapter 50",
+      "echo": "chuangtzu:3",
+      "echo_title": "Nourishment of the Soul \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When I move through today half-awake in habit, what am I actually missing that the waking world around me is showing?",
+      "carry_question": "In one ordinary conversation today, am I listening to what the person is actually saying, or only to my prepared response?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "possibility",
+      "surrender_question": "What small habit of defending or explaining myself could I set aside for one hour, just to notice what happens when I do?",
+      "daily_action": "Before responding to someone today, pause and notice one specific thing they said that surprised me or that I did not expect.",
+      "evening_question": "When did I feel most actually present today, and what was I not trying to control in that moment?",
+      "selection_theme": "purpose"
     }
   ]
 }
