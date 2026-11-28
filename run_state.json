@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-27",
+  "date": "2026-11-28",
   "morning": true,
   "history": [
     {
@@ -1151,6 +1151,26 @@
       "daily_action": "Before responding to someone today, pause and notice one specific thing they said that surprised me or that I did not expect.",
       "evening_question": "When did I feel most actually present today, and what was I not trying to control in that moment?",
       "selection_theme": "purpose"
+    },
+    {
+      "date": "2026-11-28",
+      "selection_version": "seven-voices-theme-v1",
+      "lead": "whitman:myself_44",
+      "lead_title": "Song of Myself \u00b7 section 44 \u00b7 excerpt, stanza 10\u201316",
+      "companion": "epictetus:XLI",
+      "companion_title": "Encheiridion XLI",
+      "echo": "tao:51",
+      "echo_title": "Chapter 51 \u00b7 excerpt",
+      "editorial_mode": "ai",
+      "daily_question": "When Whitman traces the vast care that brought me here\u2014cycles, stars, generations, monstrous creatures\u2014what am I actually doing when I call something mine or claim credit for what I do?",
+      "carry_question": "When I act today\u2014speak, choose, make\u2014am I aware of what I did not create that made the action possible?",
+      "question_theme": "open_reading",
+      "question_family": "open",
+      "question_style": "experiment",
+      "surrender_question": "What small assumption of sole credit or private ownership can I notice and set down, without performing surrender as another achievement?",
+      "daily_action": "Notice one moment today when something worked, went well, or moved forward. Pause and name aloud one thing you did not make or choose that allowed it.",
+      "evening_question": "What did I notice today that I had not made? Did naming it change how I felt about my own choices?",
+      "selection_theme": "surrender"
     }
   ]
 }
